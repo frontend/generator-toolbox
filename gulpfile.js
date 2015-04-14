@@ -13,4 +13,4 @@ var gulp          = require('gulp'),
     del           = require('del');
 
 
-require('./tasks/vendors')(gulp, $, config);
+require(config.app.taskspath + 'vendors')(gulp, $, config);

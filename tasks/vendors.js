@@ -8,7 +8,7 @@ module.exports = function(gulp, $, config) {
   });
 
  /*
-  * CSS VENDORS
+  * CSS Vendors
   */
   gulp.task('css-vendors', function() {
     return gulp.src(config.vendors.css)
@@ -19,7 +19,7 @@ module.exports = function(gulp, $, config) {
   });
 
  /*
-  * JS VENDORS
+  * JS Vendors
   */
   gulp.task('js-vendors', function() {
     return gulp.src(config.vendors.js)
@@ -30,16 +30,16 @@ module.exports = function(gulp, $, config) {
   });
 
  /*
-  * FONTS SOURCES
+  * Fonts Sources
   */
   gulp.task('fonts', function() {
-    return gulp.src(config.vendors.css)
+    return gulp.src(config.vendors.fonts)
       .pipe($.size({title: "FONTS"}))
       .pipe(gulp.dest(config.app.buildpath + 'fonts'));
   });
 
  /*
-  * POLYFILLS SOURCES
+  * Polyfills Sources
   */
   gulp.task('polyfills', function() {
     return gulp.src(config.vendors.polyfills)

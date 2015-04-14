@@ -28,6 +28,7 @@
     ]
   },
   "app": {
+    "taskspath": "./tasks/",
     "buildpath": "build/"
   }
 }
