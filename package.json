@@ -2,18 +2,6 @@
   "name": "NAME",
   "version": "0.0.0",
   "main": "index.html",
-  "scripts": {
-    "gulp": "gulp",
-  },
-  "licenses": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "REPO"
-  },
-  "engines": {
-    "node": ">=0.10.0",
-    "npm": ">=2.0.0"
-  },
   "devDependencies": {
     "autoprefixer-core": "^5.1.7",
     "babel-core": "5.1.5",
