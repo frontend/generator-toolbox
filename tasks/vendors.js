@@ -15,7 +15,7 @@ module.exports = function(gulp, $, config) {
       .pipe($.concat('vendors.min.css'))
       .pipe($.minifyCss())
       .pipe($.size({title: "CSS VENDORS", showFiles: true}))
-      .pipe(gulp.dest(config.app.buildpath + 'css'));
+      .pipe(gulp.dest(config.build.path + 'css'));
   });
 
  /*
@@ -26,7 +26,7 @@ module.exports = function(gulp, $, config) {
       .pipe($.concat('vendors.min.js'))
       .pipe($.uglify())
       .pipe($.size({title: "JS VENDORS", showFiles: true}))
-      .pipe(gulp.dest(config.app.buildpath + 'js'));
+      .pipe(gulp.dest(config.build.path + 'js'));
   });
 
  /*
@@ -35,7 +35,7 @@ module.exports = function(gulp, $, config) {
   gulp.task('fonts', function() {
     return gulp.src(config.vendors.fonts)
       .pipe($.size({title: "FONTS"}))
-      .pipe(gulp.dest(config.app.buildpath + 'fonts'));
+      .pipe(gulp.dest(config.build.path + 'fonts'));
   });
 
  /*
@@ -46,7 +46,7 @@ module.exports = function(gulp, $, config) {
       .pipe($.concat('polyfills.min.js'))
       .pipe($.uglify())
       .pipe($.size({title: "POLYFILLS", showFiles: true}))
-      .pipe(gulp.dest(config.app.buildpath + 'js'));
+      .pipe(gulp.dest(config.build.path + 'js'));
   });
 
 }

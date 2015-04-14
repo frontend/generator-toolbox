@@ -1,4 +1,8 @@
 {
+  "app": {
+    "basedir": ".",
+    "ghpages": "."
+  },
   "vendors": {
     "css": [
       ""
@@ -27,8 +31,17 @@
       "bower_components/respond/dest/respond.src.js"
     ]
   },
-  "app": {
-    "taskspath": "./tasks/",
-    "buildpath": "build/"
-  }
+  "tasks":  {
+    "path": "./tasks/"
+  },
+  "assets": {
+    "path": "assets/"
+  },
+  "build": {
+    "path": "build/"
+  },
+  "images": [
+    "assets/img/**/*"
+  ],
+  "browsers": ["last 2 versions", "safari 5", "ie 8", "ie 9", "ff 27", "opera 12.1"]
 }
