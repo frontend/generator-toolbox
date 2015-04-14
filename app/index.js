@@ -17,10 +17,22 @@ module.exports = yeoman.generators.Base.extend({
     ));
 
     var prompts = [{
-      type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
-      default: true
+      type: 'input',
+      name: 'name',
+      message: "What's the name of your project?",
+      default: 'Toolbox'
+    },{
+      type: "checkbox",
+      name: "tools",
+      message: "What would you like to use in your project?",
+      choices: [ "Gulp", "Styleguide" ]
+    },{
+      type: "list",
+      name: "finish",
+      default: 1,
+      message: "Finish ?",
+      choices: [ "Yes", "No" ],
+      filter: function( val ) { return val.toLowerCase(); }
     }];
 
     this.prompt(prompts, function (props) {
@@ -33,25 +45,11 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
-      this.fs.copy(
-        this.templatePath('_package.json'),
-        this.destinationPath('package.json')
-      );
-      this.fs.copy(
-        this.templatePath('_bower.json'),
-        this.destinationPath('bower.json')
-      );
+      
     },
 
     projectfiles: function () {
-      this.fs.copy(
-        this.templatePath('editorconfig'),
-        this.destinationPath('.editorconfig')
-      );
-      this.fs.copy(
-        this.templatePath('jshintrc'),
-        this.destinationPath('.jshintrc')
-      );
+      
     }
   },
 
