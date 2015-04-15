@@ -3,3 +3,4 @@ bower_components
 dist
 build
 .sass-cache
+*.DS_Store
