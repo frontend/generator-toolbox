@@ -1,4 +1,4 @@
-module.exports = function(gulp, $, config) {
+module.exports = function(gulp, $, config, argv) {
 
   /**
    * Build styles from SCSS files
@@ -8,7 +8,7 @@ module.exports = function(gulp, $, config) {
     if (argv.production) { console.log('[styles] Production mode' ); }
     else { console.log('[styles] Dev mode') }
 
-    return gulp.src(config.assets.path + 'sass/main.scss')
+    return gulp.src(config.assets + 'sass/main.scss')
       .pipe($.if(!argv.production, $.sourcemaps.init()))
       .pipe($.sass({
         outputStyle: 'nested', // libsass doesn't support expanded yet
@@ -34,7 +34,7 @@ module.exports = function(gulp, $, config) {
       .pipe($.if(!argv.production, $.sourcemaps.write()))
       .pipe($.if(argv.production, $.minifyCss()))
       .pipe($.size({title: "STYLES", showFiles: true}))
-      .pipe(gulp.dest(config.build.path + '/css'));
+      .pipe(gulp.dest(config.build + '/css'));
   });
 
 }

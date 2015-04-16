@@ -1,7 +1,8 @@
 {
   "app": {
-    "basedir": ".",
-    "ghpages": "."
+    "env": "dev",
+    "basedir": "styleguide",
+    "ghpages": "styleguide"
   },
   "vendors": {
     "css": [
@@ -31,17 +32,25 @@
       "bower_components/respond/dest/respond.src.js"
     ]
   },
-  "tasks":  {
-    "path": "./tasks/"
-  },
-  "assets": {
-    "path": "assets/"
-  },
-  "build": {
-    "path": "build/"
-  },
   "images": [
     "assets/img/**/*"
   ],
-  "browsers": ["last 2 versions", "safari 5", "ie 8", "ie 9", "ff 27", "opera 12.1"]
+  "tasks":  "./tasks/",
+  "assets": "assets/",
+  "build": "build/",
+  "browsers": ["last 2 versions", "safari 5", "ie 8", "ie 9", "ff 27", "opera 12.1"],
+  "styleguide": {
+    "assets": "bower_components/fabricator/src/assets/fabricator/",
+    "layout": "default",
+    "layouts": "assets/templates/views/layouts/*",
+    "layoutIncludes": "assets/templates/views/layouts/includes/*",
+    "views": [
+      "assets/templates/**/*",
+      "!assets/templates/views/+(layouts)/**"
+    ],
+    "materials": "assets/components/**/*",
+    "data": "assets/data/**/*.{json,yml}",
+    "docs": "assets/docs/**/*.md",
+    "dest": "styleguide"
+  }
 }

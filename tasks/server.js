@@ -12,14 +12,17 @@ module.exports = function(gulp, $, config, browserSync, runSequence) {
       },
       open: false
     });
-    gulp.watch([config.assets.path + 'sass/**/*.scss'], function() {
-      runSequence('styles', reload);
+    gulp.watch([config.assets + 'sass/**/*.scss'], function() {
+      runSequence('styles', 'styleguide', reload);
     });
-    gulp.watch([config.assets.path + 'img/**/*'], function() {
-      runSequence('img', reload);
+    gulp.watch([config.assets + 'img/**/*'], function() {
+      runSequence('img', 'styleguide', reload);
     });
-    gulp.watch([config.assets.path + 'js/**/*.js'], function() {
-      runSequence('scripts', reload);
+    gulp.watch([config.assets + 'js/**/*.js'], function() {
+      runSequence('scripts', 'styleguide', reload);
+    });
+    gulp.watch([config.assets + 'components/**/*.html', config.assets + 'templates/**/*.html', config.assets + 'docs/**/*.md', config.assets + 'data/**/*..{json,yml}'], function() {
+      runSequence('styleguide', reload);
     });
   });
 

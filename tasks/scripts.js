@@ -6,15 +6,15 @@ module.exports = function(gulp, $, config) {
    * And jshint check to highlight errors as we go.
    */
   gulp.task('scripts', function() {
-    return gulp.src(config.assets.path + 'js/*.js')
+    return gulp.src(config.assets + 'js/*.js')
       .pipe($.jshint())
       .pipe($.jshint.reporter('jshint-stylish'))
       .pipe($.concat('main.js'))
-      .pipe(gulp.dest(config.build.path + 'js'))
+      .pipe(gulp.dest(config.build + 'js'))
       .pipe($.rename({ suffix: '.min' }))
       .pipe($.uglify())
       .pipe($.size({title: "JS SCRIPTS", showFiles: true}))
-      .pipe(gulp.dest(config.build.path + 'js'));
+      .pipe(gulp.dest(config.build + 'js'));
   });
 
 }

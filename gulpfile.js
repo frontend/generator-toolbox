@@ -12,11 +12,13 @@ var gulp          = require('gulp'),
     del           = require('del');
 
 
-require(config.tasks.path + 'vendors')(gulp, $, config);
-require(config.tasks.path + 'images')(gulp, $, config);
-require(config.tasks.path + 'sass')(gulp, $, config);
-require(config.tasks.path + 'clean')(gulp, $, config, del);
-require(config.tasks.path + 'server')(gulp, $, config, browserSync, runSequence);
+require(config.tasks + 'vendors')(gulp, $, config);
+require(config.tasks + 'images')(gulp, $, config);
+require(config.tasks + 'styles')(gulp, $, config, argv);
+require(config.tasks + 'scripts')(gulp, $, config);
+require(config.tasks + 'clean')(gulp, $, config, del);
+require(config.tasks + 'styleguide')(gulp, $, config, assemble);
+require(config.tasks + 'server')(gulp, $, config, browserSync, runSequence);
 
 
 /**
@@ -31,4 +33,6 @@ gulp.task('build',['clean'], function() {
 /**
  * Default task
  */
-gulp.task('default', ['clean', 'vendors', 'img', 'styles', 'scripts']);
+gulp.task('default', ['clean'], function(done){
+  runSequence(['css-vendors', 'js-vendors', 'fonts', 'polyfills', 'styleguide-styles', 'styleguide-scripts', 'img', 'styles', 'scripts'], 'styleguide', done);
+});
