@@ -13,17 +13,17 @@ module.exports = function(gulp, $, config, browserSync, runSequence) {
       open: false
     });
     gulp.watch([config.assets + 'sass/**/*.scss'], function() {
-      runSequence('styles', 'styleguide', reload);
-    });
+      runSequence('styles'<% if (props.tools.indexOf("Fabricator") > -1) { %>, 'styleguide'<% } %>, reload);
+    });<% if (props.tools.indexOf("Fabricator") > -1) { %>
     gulp.watch([config.assets + 'sass/styleguide.scss'], function() {
-      runSequence('styleguide-styles', 'styleguide', reload);
-    });
+      runSequence('styleguide-styles'<% if (props.tools.indexOf("Fabricator") > -1) { %>, 'styleguide'<% } %>, reload);
+    });<% } %>
     gulp.watch([config.assets + 'img/**/*'], function() {
-      runSequence('img', 'styleguide', reload);
+      runSequence('img'<% if (props.tools.indexOf("Fabricator") > -1) { %>, 'styleguide'<% } %>, reload);
     });
     gulp.watch([config.assets + 'js/**/*.js'], function() {
-      runSequence('scripts', 'styleguide', reload);
-    });
+      runSequence('scripts'<% if (props.tools.indexOf("Fabricator") > -1) { %>, 'styleguide'<% } %>, reload);
+    });<% if (props.tools.indexOf("Fabricator") > -1) { %>
     gulp.watch([
       config.assets + 'components/**/*.html',
       config.assets + 'templates/**/*.html',
@@ -31,7 +31,7 @@ module.exports = function(gulp, $, config, browserSync, runSequence) {
       config.assets + 'data/**/*.{json,yml}'
     ], function() {
       runSequence('styleguide', reload);
-    });
+    });<% } %>
   });
 
 }
