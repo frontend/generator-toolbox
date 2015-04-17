@@ -1,0 +1,9 @@
+---
+notes: |
+  ##### Usage : `{{> label }}`
+  ##### Options :
+  - **modifiers** - String
+  - **content** - String
+---
+
+<span class="label {{#if modifiers}}{{modifiers}}{{^}}label-primary{{/if}}">{{#if content}}{{content}}{{^}}My label{{/if}}</span>

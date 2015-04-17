@@ -1,0 +1,15 @@
+---
+notes: |
+  ##### Usage : `{{> input.checkbox }}`
+  ##### Options :
+  - **label** - String
+  - **value** - String
+  - **inline** - Boolean
+  - **attributes** - String
+---
+
+{{#unless inline}}<div class="checkbox">{{/unless}}
+  <label{{#if inline}} class="checkbox-inline"{{/if}}>
+    <input type="checkbox" value="{{#if value}}{{value}}{{^}}custom{{/if}}"{{#if attributes}} {{attributes}}{{/if}}> {{#if label}}{{label}}{{^}}Checkbox label{{/if}}
+  </label>
+{{#unless inline}}</div>{{/unless}}

@@ -1,0 +1,16 @@
+---
+notes: |
+  ##### Usage : `{{> paragraph }}`
+  ##### Options :
+  - **class** - String
+  - **attributes** - String
+  - **content** - String
+---
+
+<p{{#if class}} class="{{class}}"{{/if}}{{#if attributes}} {{attributes}}{{/if}}>
+  {{#if content}}
+    {{content}}
+  {{^}}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. An potest, inquit ille, quicquam esse suavius quam nihil dolere? Philosophi autem in suis lectulis plerumque moriuntur. Potius inflammat, ut coercendi magis quam dedocendi esse videantur.
+  {{/if}}
+</p>

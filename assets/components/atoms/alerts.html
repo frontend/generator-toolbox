@@ -1,0 +1,15 @@
+---
+notes: |
+  ##### Usage : `{{> alert }}`
+  ##### Options :
+  - **modifiers** - String
+  - **content** - String
+---
+
+<div class="alert {{#if modifiers}}{{modifiers}}{{^}}alert-success{{/if}}">
+  {{#if content}}
+    {{content}}
+  {{^}}
+    Well done! You successfully read this important alert message.
+  {{/if}}
+</div>

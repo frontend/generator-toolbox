@@ -1,0 +1,11 @@
+---
+src: 'https://unsplash.it/300/300/?random'
+notes: |
+  ##### Usage : `{{> image }}`
+  ##### Options :
+  - **source** - String
+  - **class** - String
+  - **alt** - String
+---
+
+<img src="{{#if source}}{{source}}{{^}}{{src}}{{/if}}" alt="{{#if alt}}{{alt}}{{^}}alt text{{/if}}"{{#if class}} class="{{class}}"{{/if}}>

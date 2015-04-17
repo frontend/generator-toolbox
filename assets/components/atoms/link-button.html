@@ -1,0 +1,11 @@
+---
+notes: |
+  ##### Usage : `{{> link-button }}`
+  ##### Options :
+  - **url** - String
+  - **modifiers** - String
+  - **attributes** - String
+  - **label** - String
+---
+
+<a href="{{#if url}}{{url}}{{^}}#{{/if}}" class="btn{{#if modifiers}} {{modifiers}}{{/if}}"{{#if attributes}} {{attributes}}{{/if}}>{{#if label}}{{label}}{{^}}link{{/if}}</a>

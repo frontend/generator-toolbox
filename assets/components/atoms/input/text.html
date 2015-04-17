@@ -1,0 +1,12 @@
+---
+notes: |
+  ##### Usage : `{{> input.text }}`
+  ##### Options :
+  - **id** - String
+  - **type** - String
+  - **value** - String
+  - **modifiers** - String
+  - **attributes** - String
+---
+
+<input{{#if id}} id="{{id}}"{{/if}} type="{{#if value}}{{value}}{{^}}text{{/if}}" class="form-control{{#if modifiers}} {{modifiers}}{{/if}}" placeholder="{{#if value}}{{value}}{{^}}Text input{{/if}}"{{#if attributes}} {{attributes}}{{/if}}>

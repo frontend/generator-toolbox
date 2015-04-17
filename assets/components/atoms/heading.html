@@ -1,0 +1,11 @@
+---
+notes: |
+  ##### Usage : `{{> heading }}`
+  ##### Options :
+  - **level** - Integer
+  - **class** - String
+  - **attributes** - String
+  - **content** - String
+---
+
+<h{{#if level}}{{level}}{{^}}1{{/if}}{{#if class}} class="{{class}}"{{/if}}{{#if attributes}} {{attributes}}{{/if}}>{{#if content}}{{content}}{{^}}Title{{/if}}</h{{#if level}}{{level}}{{^}}1{{/if}}>

@@ -1,0 +1,15 @@
+---
+notes: |
+  ##### Usage : `{{> well }}`
+  ##### Options :
+  - **modifier** - String
+  - **cotnent** - String
+---
+
+<div class="well{{#if modifiers}} {{modifiers}}{{/if}}">
+  {{#if content}}
+    {{content}}
+  {{^}}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. An potest, inquit ille, quicquam esse suavius quam nihil dolere? Philosophi autem in suis lectulis plerumque moriuntur. Potius inflammat, ut coercendi magis quam dedocendi esse videantur.
+  {{/if}}
+</div>

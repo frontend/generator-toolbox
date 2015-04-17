@@ -1,0 +1,10 @@
+---
+notes: |
+  ##### Usage : `{{> link }}`
+  ##### Options :
+  - **url** - String
+  - **attributes** - String
+  - **label** - String
+---
+
+<a href="{{#if url}}{{url}}{{^}}#{{/if}}"{{#if attributes}} {{attributes}}{{/if}}>{{#if label}}{{label}}{{^}}link{{/if}}</a>

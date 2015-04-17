@@ -1,0 +1,10 @@
+---
+notes: |
+  ##### Usage : `{{> button }}`
+  ##### Options :
+  - **modifiers** - String
+  - **attributes** - String
+  - **label** - String
+---
+
+<button class="btn{{#if modifiers}} {{modifiers}}{{/if}}"{{#if attributes}} {{attributes}}{{/if}}>{{#if label}}{{label}}{{^}}button{{/if}}</button>

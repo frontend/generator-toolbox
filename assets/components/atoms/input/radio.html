@@ -1,0 +1,16 @@
+---
+notes: |
+  ##### Usage : `{{> input.radio }}`
+  ##### Options :
+  - **label** - String
+  - **value** - String
+  - **name** - String
+  - **inline** - Boolean
+  - **attributes** - String
+---
+
+{{#unless inline}}<div class="radio">{{/unless}}
+  <label{{#if inline}} class="radio-inline"{{/if}}>
+    <input type="radio" value="{{#if value}}{{value}}{{^}}custom{{/if}}" name="{{#if name}}{{name}}{{^}}custom{{/if}}"{{#if attributes}} {{attributes}}{{/if}}> {{#if label}}{{label}}{{^}}Radio label{{/if}}
+  </label>
+{{#unless inline}}</div>{{/unless}}

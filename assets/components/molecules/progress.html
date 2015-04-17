@@ -1,0 +1,14 @@
+---
+notes: |
+  ##### Usage : `{{> progress }}`
+  ##### Options :
+  - **width** - integer
+  - **modifier** - String
+  - **content** - String
+---
+
+<div class="progress">
+  <div class="progress-bar{{#if modifiers}} {{modifiers}}{{/if}}" role="progressbar" aria-valuenow="{{#if width}}{{width}}{{^}}60{{/if}}" aria-valuemin="0" aria-valuemax="100" style="width: {{#if width}}{{width}}{{^}}60{{/if}}%;">
+    <span class="sr-only">{{#if content}}{{content}}{{^}}60% completed{{/if}}</span>
+  </div>
+</div>
