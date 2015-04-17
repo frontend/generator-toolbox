@@ -15,6 +15,9 @@ module.exports = function(gulp, $, config, browserSync, runSequence) {
     gulp.watch([config.assets + 'sass/**/*.scss'], function() {
       runSequence('styles', 'styleguide', reload);
     });
+    gulp.watch([config.assets + 'sass/styleguide.scss'], function() {
+      runSequence('styleguide-styles', 'styleguide', reload);
+    });
     gulp.watch([config.assets + 'img/**/*'], function() {
       runSequence('img', 'styleguide', reload);
     });

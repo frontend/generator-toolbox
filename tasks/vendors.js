@@ -1,13 +1,6 @@
 module.exports = function(gulp, $, config) {
 
  /*
-  * Build vendors dependencies
-  */
-  gulp.task('vendors', function() {
-    return gulp.start('css-vendors', 'js-vendors', 'fonts', 'polyfills', 'styleguide-styles', 'styleguide-scripts');
-  });
-
- /*
   * CSS Vendors
   */
   gulp.task('css-vendors', function() {
@@ -32,7 +25,7 @@ module.exports = function(gulp, $, config) {
  /*
   * Fonts Sources
   */
-  gulp.task('fonts', function() {
+  gulp.task('fonts-vendors', function() {
     return gulp.src(config.vendors.fonts)
       .pipe($.size({title: "FONTS"}))
       .pipe(gulp.dest(config.build + 'fonts'));
@@ -41,7 +34,7 @@ module.exports = function(gulp, $, config) {
  /*
   * Polyfills Sources
   */
-  gulp.task('polyfills', function() {
+  gulp.task('polyfills-vendors', function() {
     return gulp.src(config.vendors.polyfills)
       .pipe($.concat('polyfills.min.js'))
       .pipe($.uglify())
@@ -50,39 +43,10 @@ module.exports = function(gulp, $, config) {
   });
 
   /*
-  * Styleguide CSS Vendors
+  * Build vendors dependencies
   */
-  gulp.task('styleguide-styles', function () {
-    return gulp.src(config.styleguide.assets + 'styles/fabricator.scss')
-      .pipe($.sass({
-        errLogToConsole: true
-      }))
-      .pipe($.postcss([
-        require('autoprefixer-core')({
-          browsers: config.browsers,
-          options: {
-            map: true
-          }
-        })
-      ]))
-      .pipe($.rename('styleguide.css'))
-      .pipe($.size({title: "STYLEGUIDE CSS VENDORS", showFiles: true}))
-      .pipe(gulp.dest(config.build + 'css'));
+  gulp.task('vendors', function() {
+    return gulp.start('css-vendors', 'js-vendors', 'fonts-vendors', 'polyfills-vendors');
   });
-
-  /*
-  * Styleguide JS Vendors
-  */
-  gulp.task('styleguide-scripts', function() {
-    return gulp.src([config.styleguide.assets + 'scripts/fabricator.js'])
-      .pipe($.browserify({
-        insertGlobals : true
-      }))
-      .pipe($.concat('styleguide.min.js'))
-      .pipe($.uglify())
-      .pipe($.size({title: "STYLEGUIDE JS VENDORS", showFiles: true}))
-      .pipe(gulp.dest(config.build + 'js'));
-  });
-
 
 }
