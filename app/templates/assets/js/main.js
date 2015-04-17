@@ -1,5 +1,5 @@
 'user strict';
 
 (function(){
-  
-}())
+
+}());

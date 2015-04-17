@@ -20,6 +20,16 @@ require(config.tasks + 'clean')(gulp, $, config, del);                         /
 require(config.tasks + 'styleguide')(gulp, $, config, assemble);               // $ gulp styleguide<% } %>
 require(config.tasks + 'server')(gulp, $, config, browserSync, runSequence);   // $ gulp serve
 
+<% if (props.tools.indexOf("Bootstrap") > -1) { %>
+/**
+ * Init project
+ */
+gulp.task('init', function() {
+  return gulp.src('bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss')
+    .pipe($.rename('bootstrap-variables.scss'))
+    .pipe(gulp.dest('assets/sass'))
+});
+<% } %>
 
 /**
  * Task to build assets on production server
