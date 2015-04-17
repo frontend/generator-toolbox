@@ -1,1 +1,7 @@
-<button class="btn btn-warning">{{#if label}}{{label}}{{^}}Warning{{/if}}</button>
+---
+notes: |
+  ##### Options :
+  - **label** - String | ex: `My button`
+  - **size** - String | ex: `btn-lg`)
+---
+<button class="btn btn-warning{{#if size}} {{size}}{{/if}}">{{#if label}}{{label}}{{^}}Warning{{/if}}</button>
