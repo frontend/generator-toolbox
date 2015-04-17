@@ -24,7 +24,12 @@ module.exports = function(gulp, $, config, browserSync, runSequence) {
     gulp.watch([config.assets + 'js/**/*.js'], function() {
       runSequence('scripts', 'styleguide', reload);
     });
-    gulp.watch([config.assets + 'components/**/*.html', config.assets + 'templates/**/*.html', config.assets + 'docs/**/*.md', config.assets + 'data/**/*..{json,yml}'], function() {
+    gulp.watch([
+      config.assets + 'components/**/*.html',
+      config.assets + 'templates/**/*.html',
+      config.assets + 'docs/**/*.md',
+      config.assets + 'data/**/*.{json,yml}'
+    ], function() {
       runSequence('styleguide', reload);
     });
   });

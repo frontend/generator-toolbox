@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+.spacer {
+  height: 65px;
+  &.spacer-xl {height: 120px;}
+  &.spacer-lg {height: 90px;}
+  &.spacer-md {height: 50px;}
+  &.spacer-sm {height: 30px;}
+  &.spacer-xs {height: 15px;}
+  @media only screen and (max-width: $screen-sm-max) {
+    height: 30px;
+    &.spacer-xl {height: 50px;}
+    &.spacer-lg {height: 50px;}
+    &.spacer-md {height: 30px;}
+    &.spacer-sm {height: 20px;}
+    &.spacer-xs {height: 10px;}
+  }
+}
