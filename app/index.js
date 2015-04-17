@@ -25,7 +25,7 @@ module.exports = yeoman.generators.Base.extend({
       type: "checkbox",
       name: "tools",
       message: "What would you like to use in your project?",
-      choices: [ "Gulp", "Styleguide" ]
+      choices: [ "Gulp (Task runner)", "Fabricator (Styleguide)" ]
     },{
       type: "list",
       name: "finish",
