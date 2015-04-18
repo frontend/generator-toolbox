@@ -5,6 +5,26 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 var slug = require('slug');
 
+var toolboxSay = function() {
+  return  '                                             '+'\n'+
+          '       '+chalk.white('_')+'                                     '+'\n'+
+          '      '+chalk.white('/ \\')+'    '+chalk.white('.-------.')+'                       '+'\n'+
+          '      '+chalk.white('\\ /')+'  '+chalk.white('.\'        |')+'                       '+'\n'+
+          '      '+chalk.white('| |')+'   '+chalk.white('`._______|')+'                       '+'\n'+
+          '      '+chalk.white('| |')+'      '+chalk.yellow('|  |')+'                          '+'\n'+
+          '   '+chalk.red('  .---.')+'     '+chalk.yellow('|  |')+'       '+chalk.red('.-----------------.')+'\n'+
+          '   '+chalk.red('  || ||')+'     '+chalk.yellow('|  |')+'       '+chalk.red('| '+chalk.white('Welcome in the')+'  |')+'\n'+
+          '   '+chalk.red('  || ||')+'     '+chalk.yellow('|  |')+'       '+chalk.red('| '+chalk.white('amazing toolbox')+' |')+'\n'+
+          '   '+chalk.red(' / | | \\')+'    '+chalk.yellow('|  |')+'       '+chalk.red('|   '+chalk.white('generator !')+'   |')+'\n'+
+          '  '+chalk.cyan('+-----------------+')+'     '+chalk.red('\'-----------------\'')+'\n'+
+          '  '+chalk.cyan('|                 |')+'                        '+'\n'+
+          '  '+chalk.cyan('|     '+chalk.yellow('TOOLBOX')+'     |')+'                        '+'\n'+
+          '  '+chalk.cyan('|                 |')+'                        '+'\n'+
+          '  '+chalk.cyan('+-----------------+')+'                        '+'\n'+
+          "\n";
+
+};
+
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
     this.pkg = require('../package.json');
@@ -14,9 +34,7 @@ module.exports = yeoman.generators.Base.extend({
     var done = this.async();
 
     // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to the finest ' + chalk.red('Toolbox') + ' generator!'
-    ));
+    this.log(toolboxSay());
 
     this.slug = slug;
 
