@@ -1,3 +1,3 @@
 # generator-toolbox
 
-> more to come :wink:
+![vault-boy](vault-boy.png)
