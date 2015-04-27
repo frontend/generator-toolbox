@@ -13,15 +13,8 @@ module.exports = function(gulp, $, config, argv) {
       .pipe($.sass({
         outputStyle: 'nested', // libsass doesn't support expanded yet
         precision: 10,
-        includePaths: ['.']
-      }))
-      .on('error', $.notify.onError({
-        title: function(error) {
-          return error.message
-        },
-        message: function(error) {
-          return error.fileName + ':' + error.lineNumber
-        }
+        includePaths: ['.'],
+        errLogToConsole: true
       }))
       .pipe($.postcss([
         require('autoprefixer-core')({
