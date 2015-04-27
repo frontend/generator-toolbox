@@ -13,6 +13,9 @@ module.exports = function(gulp, $, config, assemble) {
       indent_size: 1,
       indent_char: '  ',
       indent_with_tabs: true
+    },
+    helpers: {
+        markdown: require('helper-markdown')
     }
   }
 

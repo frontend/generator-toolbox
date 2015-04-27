@@ -19,6 +19,7 @@ require(config.tasks + 'scripts')(gulp, $, config);                            /
 require(config.tasks + 'clean')(gulp, $, config, del);                         // $ gulp clean<% if (props.tools.indexOf("Fabricator") > -1) { %>
 require(config.tasks + 'styleguide')(gulp, $, config, assemble);               // $ gulp styleguide<% } %>
 require(config.tasks + 'server')(gulp, $, config, browserSync, runSequence);   // $ gulp serve
+require(config.tasks + 'gh-pages')(gulp, $, config);                           // $ gulp deploy
 
 <% if (props.tools.indexOf("Bootstrap") > -1) { %>
 /**
