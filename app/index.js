@@ -46,8 +46,9 @@ module.exports = yeoman.generators.Base.extend({
     },{
       type: 'checkbox',
       name: 'tools',
-      message: 'What would you like to use in your project?',
-      choices: [ 'Gulp', 'Fabricator', 'Bootstrap' ]
+      message: 'What would you like to use in your project? (unselect the ones you don\'t want',
+      choices: [ 'Gulp', 'Fabricator', 'Bootstrap' ],
+      default: [ 'Gulp', 'Fabricator', 'Bootstrap' ]
     }];
 
     this.prompt(prompts, function (props) {
