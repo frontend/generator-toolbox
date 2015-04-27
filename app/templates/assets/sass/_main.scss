@@ -1,10 +1,10 @@
 @charset "UTF-8";
 
 // Init ------------------------------------
-@import 'main-variables';<% if (props.tools.indexOf("Bootstrap") > -1) { %>
+@import 'main-variables';<% if (bootstrapSass) { %>
 @import 'bootstrap';<% } %>
 
-<% if (props.tools.indexOf("Fabricator") > -1) { %>
+<% if (fabricator) { %>
 // Atoms -----------------------------------
 @import 'atoms/alerts';
 @import 'atoms/badges';

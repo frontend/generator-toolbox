@@ -1,5 +1,5 @@
 {
-  "name": "<%= slug(props.name).toLowerCase() %>",
+  "name": "<%= slug(name).toLowerCase() %>",
   "version": "0.0.0",
   "main": "index.html",
   "devDependencies": {

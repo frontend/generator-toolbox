@@ -47,13 +47,30 @@ module.exports = yeoman.generators.Base.extend({
       type: 'checkbox',
       name: 'tools',
       message: 'What would you like to use in your project? (unselect the ones you don\'t want',
-      choices: [ 'Gulp', 'Fabricator', 'Bootstrap' ],
-      default: [ 'Gulp', 'Fabricator', 'Bootstrap' ]
+      choices: [{
+          name: 'Gulp',
+          value: 'gulp',
+          checked: true
+        }, {
+          name: 'Fabricator',
+          value: 'fabricator',
+          checked: true
+        }, {
+          name: 'Bootstrap Sass',
+          value: 'bootstrapSass',
+          checked: true
+        }
+      ]
     }];
 
     this.prompt(prompts, function (props) {
-      this.props = props;
-      // To access props later use this.props.someOption;
+      this.name = props.name;
+      var tools = props.tools;
+      function hasTool(tool) { return tools.indexOf(tool) !== -1; }
+
+      this.gulp = hasTool('gulp');
+      this.fabricator = hasTool('fabricator');
+      this.bootstrapSass = hasTool('bootstrapSass');
 
       done();
     }.bind(this));
@@ -63,7 +80,7 @@ module.exports = yeoman.generators.Base.extend({
     app: function () {
       this.template('_bower.json', 'bower.json');
 
-      if (this.props.tools.indexOf('Gulp') > -1) {
+      if (this.gulp) {
         this.template('_package.json', 'package.json');
         this.template('_gulp_config.json', 'gulp_config.json');
         this.template('_gulpfile.js', 'gulpfile.js');
@@ -73,14 +90,14 @@ module.exports = yeoman.generators.Base.extend({
         this.copy('tasks/gh-pages.js', 'tasks/gh-pages.js');
         this.copy('tasks/images.js', 'tasks/images.js');
         this.copy('tasks/scripts.js', 'tasks/scripts.js');
-        if (this.props.tools.indexOf('Fabricator') > -1) {
+        if (this.fabricator) {
           this.copy('tasks/styleguide.js', 'tasks/styleguide.js');
         }
         this.copy('tasks/styles.js', 'tasks/styles.js');
         this.copy('tasks/vendors.js', 'tasks/vendors.js');
       }
 
-      if (this.props.tools.indexOf('Fabricator') > -1) {
+      if (this.fabricator) {
         this.directory('assets/components', 'assets/components');
         this.directory('assets/templates', 'assets/templates');
         this.directory('assets/data', 'assets/data');
@@ -94,7 +111,7 @@ module.exports = yeoman.generators.Base.extend({
 
       this.directory('assets/js', 'assets/js');
 
-      if (this.props.tools.indexOf('Bootstrap') > -1) {
+      if (this.bootstrapSass) {
         this.copy('assets/sass/bootstrap.scss', 'assets/sass/bootstrap.scss');
       }
 
