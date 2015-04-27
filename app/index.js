@@ -110,6 +110,11 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    this.installDependencies();
+    if (!this.options['skip-install']) {
+      this.installDependencies();
+    }
+
+    var successText = 'The END! Run \n run ' + chalk.cyan('`$ npm start`') + ' now!';
+    this.log(yosay(successText));
   }
 });

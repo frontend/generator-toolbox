@@ -4,6 +4,9 @@
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
+  "scripts": {
+    "start": "npm install && bower install && gulp init"
+  },
   "repository": "frontend/generator-toolbox",
   "author": {
     "url": "https://github.com/frontend"
