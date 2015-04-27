@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(gulp, $, config, argv) {
 
   /**
@@ -6,7 +8,7 @@ module.exports = function(gulp, $, config, argv) {
    */
   gulp.task('styles', function() {
     if (argv.production) { console.log('[styles] Production mode' ); }
-    else { console.log('[styles] Dev mode') }
+    else { console.log('[styles] Dev mode'); }
 
     return gulp.src(config.assets + 'sass/main.scss')
       .pipe($.if(!argv.production, $.sourcemaps.init()))
@@ -26,8 +28,8 @@ module.exports = function(gulp, $, config, argv) {
       ]))
       .pipe($.if(!argv.production, $.sourcemaps.write()))
       .pipe($.if(argv.production, $.minifyCss()))
-      .pipe($.size({title: "STYLES", showFiles: true}))
+      .pipe($.size({title: 'STYLES', showFiles: true}))
       .pipe(gulp.dest(config.build + '/css'));
   });
 
-}
+};

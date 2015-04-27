@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(gulp, $, config) {
 
   /**
@@ -13,8 +15,8 @@ module.exports = function(gulp, $, config) {
       .pipe(gulp.dest(config.build + 'js'))
       .pipe($.rename({ suffix: '.min' }))
       .pipe($.uglify())
-      .pipe($.size({title: "JS SCRIPTS", showFiles: true}))
+      .pipe($.size({title: 'JS SCRIPTS', showFiles: true}))
       .pipe(gulp.dest(config.build + 'js'));
   });
 
-}
+};

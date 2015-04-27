@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(gulp, $, config, browserSync, runSequence) {
 
   var reload = browserSync.reload;

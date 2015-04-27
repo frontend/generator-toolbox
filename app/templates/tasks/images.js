@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(gulp, $, config) {
 
  /**
@@ -5,8 +7,8 @@ module.exports = function(gulp, $, config) {
   */
   gulp.task('img', function() {
     return gulp.src(config.images)
-      .pipe($.size({title: "IMAGES"}))
+      .pipe($.size({title: 'IMAGES'}))
       .pipe(gulp.dest(config.app.buildpath + 'img'));
   });
 
-}
+};

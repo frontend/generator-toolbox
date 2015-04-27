@@ -28,7 +28,7 @@ require(config.tasks + 'gh-pages')(gulp, $, config);                           /
 gulp.task('init', function() {
   return gulp.src('bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss')
     .pipe($.rename('bootstrap-variables.scss'))
-    .pipe(gulp.dest('assets/sass'))
+    .pipe(gulp.dest('assets/sass'));
 });
 <% } %>
 
