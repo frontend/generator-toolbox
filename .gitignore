@@ -4,4 +4,5 @@ dist
 build
 styleguide
 .sass-cache
+.publish
 *.DS_Store
