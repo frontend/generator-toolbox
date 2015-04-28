@@ -35,6 +35,9 @@
   "images": [
     "assets/img/**/*"
   ],
+  "svg": [
+    "assets/svg/**/*"
+  ],
   "tasks":  "./tasks/",
   "assets": "assets/",
   "build": "build/",
