@@ -111,6 +111,10 @@ module.exports = yeoman.generators.Base.extend({
 
       this.directory('assets/js', 'assets/js');
 
+      this.mkdir('assets/img');
+      this.mkdir('assets/svg');
+      this.mkdir('assets/fonts');
+
       if (this.bootstrapSass) {
         this.copy('assets/sass/bootstrap.scss', 'assets/sass/bootstrap.scss');
       }
