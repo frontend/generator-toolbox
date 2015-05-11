@@ -1,7 +1,9 @@
 node_modules
 bower_components
-dist
-build
-styleguide
 .sass-cache
 *.DS_Store
+.publish
+
+/dist
+/build
+/styleguide
