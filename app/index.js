@@ -90,6 +90,7 @@ module.exports = yeoman.generators.Base.extend({
         this.copy('tasks/gh-pages.js', 'tasks/gh-pages.js');
         this.copy('tasks/images.js', 'tasks/images.js');
         this.copy('tasks/scripts.js', 'tasks/scripts.js');
+        this.copy('tasks/icons.js', 'tasks/icons.js');
         if (this.fabricator) {
           this.copy('tasks/styleguide.js', 'tasks/styleguide.js');
         }

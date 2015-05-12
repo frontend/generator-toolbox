@@ -17,6 +17,7 @@
     "gulp-consolidate": "^0.1.2",
     "gulp-gh-pages": "^0.5.1",
     "gulp-hologram": "^1.2.0",
+    "gulp-iconfont": "^1.0.0",
     "gulp-if": "^1.2.5",
     "gulp-imagemin": "^2.2.1",
     "gulp-jshint": "^1.10.0",
