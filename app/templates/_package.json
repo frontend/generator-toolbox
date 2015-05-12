@@ -14,6 +14,7 @@
     "gulp": "^3.8.11",
     "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.5.2",
+    "gulp-consolidate": "^0.1.2",
     "gulp-gh-pages": "^0.5.1",
     "gulp-hologram": "^1.2.0",
     "gulp-if": "^1.2.5",
@@ -32,7 +33,12 @@
     "helper-markdown": "^0.1.1",
     "imagemin-pngquant": "^4.1.0",
     "jshint-stylish": "^1.0.2",
+    "lodash": "^3.8.0",
     "run-sequence": "~1.1.0",
+    "slug": "^0.9.1",
     "yargs": "^3.8.0"
+  },
+  "dependencies": {
+    "toolbox-utils": "0.0.1"
   }
 }

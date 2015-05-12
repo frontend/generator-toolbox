@@ -23,6 +23,9 @@ module.exports = function(gulp, $, config, browserSync, runSequence) {
     gulp.watch([config.assets + 'img/**/*'], function() {
       runSequence('img'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
     });
+    gulp.watch([config.assets + 'icons/**/*'], function() {
+      runSequence('icons'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
+    });
     gulp.watch([config.assets + 'js/**/*.js'], function() {
       runSequence('scripts'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
     });<% if (fabricator) { %>
