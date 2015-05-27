@@ -8,15 +8,15 @@ var gulp          = require('gulp'),
     runSequence   = require('run-sequence');
 
 
-require(config.tasks + 'vendors');     // $ gulp vendors
-require(config.tasks + 'images');      // $ gulp img
-require(config.tasks + 'styles');      // $ gulp styles
-require(config.tasks + 'scripts');     // $ gulp scripts
-require(config.tasks + 'icons');       // $ gulp icons
-require(config.tasks + 'clean');       // $ gulp clean<% if (fabricator) { %>
-require(config.tasks + 'styleguide');  // $ gulp styleguide<% } %>
-require(config.tasks + 'server');      // $ gulp serve
-require(config.tasks + 'gh-pages');    // $ gulp deploy
+require(config.tasks + 'vendors')();     // $ gulp vendors
+require(config.tasks + 'images')();      // $ gulp img
+require(config.tasks + 'styles')();      // $ gulp styles
+require(config.tasks + 'scripts')();     // $ gulp scripts
+require(config.tasks + 'icons')();       // $ gulp icons
+require(config.tasks + 'clean')();       // $ gulp clean<% if (fabricator) { %>
+require(config.tasks + 'styleguide')();  // $ gulp styleguide<% } %>
+require(config.tasks + 'server')();      // $ gulp serve
+require(config.tasks + 'gh-pages')();    // $ gulp deploy
 
 
 <% if (bootstrapSass) { %>
