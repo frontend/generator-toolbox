@@ -1,6 +1,11 @@
 'use strict';
 
-module.exports = function(gulp, $, config, slug) {
+var gulp          = require('gulp'),
+    $             = require('gulp-load-plugins')(),
+    config        = require('../gulp_config.json'),
+    slug          = require('slug');
+
+module.exports = function() {
 
   var name = slug(config.iconsFontName).toLowerCase();
 

@@ -1,6 +1,12 @@
 'use strict';
 
-module.exports = function(gulp, $, config, assemble) {
+var gulp          = require('gulp'),
+    $             = require('gulp-load-plugins')(),
+    config        = require('../gulp_config.json'),
+    assemble      = require('fabricator-assemble');
+
+
+module.exports = function() {
 
   var options = {
     layout: config.styleguide.layout,

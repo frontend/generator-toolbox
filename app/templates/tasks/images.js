@@ -1,6 +1,10 @@
 'use strict';
 
-module.exports = function(gulp, $, config) {
+var gulp          = require('gulp'),
+    $             = require('gulp-load-plugins')(),
+    config        = require('../gulp_config.json');
+
+module.exports = function() {
 
   var pngquant = require('imagemin-pngquant');
 

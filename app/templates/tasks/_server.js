@@ -1,6 +1,12 @@
 'use strict';
 
-module.exports = function(gulp, $, config, browserSync, runSequence) {
+var gulp          = require('gulp'),
+    $             = require('gulp-load-plugins')(),
+    config        = require('../gulp_config.json'),
+    browserSync   = require('browser-sync'),
+    runSequence   = require('run-sequence');
+
+module.exports = function() {
 
   var reload = browserSync.reload;
 

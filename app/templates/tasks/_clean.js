@@ -1,6 +1,11 @@
 'use strict';
 
-module.exports = function(gulp, $, config, del) {
+var gulp          = require('gulp'),
+    $             = require('gulp-load-plugins')(),
+    config        = require('../gulp_config.json'),
+    del           = require('del');
+
+module.exports = function() {
 
  /**
   * Clean output directories
