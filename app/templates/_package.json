@@ -39,8 +39,5 @@
     "slug": "^0.9.1",
     "toolbox-utils": "0.0.1",
     "yargs": "^3.8.0"
-  },
-  "dependencies": {
-    "toolbox-utils": "0.0.1"
   }
 }
