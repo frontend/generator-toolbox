@@ -7,20 +7,20 @@ var slug = require('slug');
 
 var toolboxSay = function() {
   return  '                                             '+'\n'+
-          '       '+chalk.white('_')+'                                     '+'\n'+
-          '      '+chalk.white('/ \\')+'    '+chalk.white('.-------.')+'                       '+'\n'+
-          '      '+chalk.white('\\ /')+'  '+chalk.white('.\'        |')+'                       '+'\n'+
-          '      '+chalk.white('| |')+'   '+chalk.white('`._______|')+'                       '+'\n'+
-          '      '+chalk.white('| |')+'      '+chalk.yellow('|  |')+'                          '+'\n'+
-          '   '+chalk.red('  .---.')+'     '+chalk.yellow('|  |')+'       '+chalk.red('.-----------------.')+'\n'+
-          '   '+chalk.red('  || ||')+'     '+chalk.yellow('|  |')+'       '+chalk.red('| '+chalk.white('Welcome in the')+'  |')+'\n'+
-          '   '+chalk.red('  || ||')+'     '+chalk.yellow('|  |')+'       '+chalk.red('| '+chalk.white('amazing toolbox')+' |')+'\n'+
-          '   '+chalk.red(' / | | \\')+'    '+chalk.yellow('|  |')+'       '+chalk.red('|   '+chalk.white('generator !')+'   |')+'\n'+
-          '  '+chalk.cyan('+-----------------+')+'     '+chalk.red('\'-----------------\'')+'\n'+
-          '  '+chalk.cyan('|                 |')+'                        '+'\n'+
-          '  '+chalk.cyan('|     '+chalk.yellow('TOOLBOX')+'     |')+'                        '+'\n'+
-          '  '+chalk.cyan('|                 |')+'                        '+'\n'+
-          '  '+chalk.cyan('+-----------------+')+'                        '+'\n'+
+          '       '+chalk.blue('_')+'                                     '+'\n'+
+          '      '+chalk.blue('/ \\')+'    '+chalk.red('.-------.')+'                       '+'\n'+
+          '      '+chalk.blue('\\ /')+'  '+chalk.red('.\'        |')+'                       '+'\n'+
+          '      '+chalk.blue('| |')+'   '+chalk.red('`._______|')+'                       '+'\n'+
+          '      '+chalk.blue('| |')+'      '+chalk.blue('|  |')+'                          '+'\n'+
+          '   '+chalk.red('  .---.')+'     '+chalk.blue('|  |')+'       '+chalk.red('.-----------------.')+'\n'+
+          '   '+chalk.red('  || ||')+'     '+chalk.blue('|  |')+'       '+chalk.red('| '+chalk.white('Welcome in the')+'  |')+'\n'+
+          '   '+chalk.red('  || ||')+'     '+chalk.blue('|  |')+'       '+chalk.red('| '+chalk.white('amazing toolbox')+' |')+'\n'+
+          '   '+chalk.red(' / | | \\')+'    '+chalk.blue('|  |')+'       '+chalk.red('|   '+chalk.white('generator !')+'   |')+'\n'+
+          '  '+chalk.blue('+-----------------+')+'     '+chalk.red('\'-----------------\'')+'\n'+
+          '  '+chalk.blue('|                 |')+'                        '+'\n'+
+          '  '+chalk.blue('|     '+chalk.red('TOOLBOX')+'     |')+'                        '+'\n'+
+          '  '+chalk.blue('|                 |')+'                        '+'\n'+
+          '  '+chalk.blue('+-----------------+')+'                        '+'\n'+
           '\n';
 
 };
