@@ -7,3 +7,6 @@ bower_components
 /dist
 /build
 /styleguide
+
+tests/regression/compare
+tests/regression/temp
