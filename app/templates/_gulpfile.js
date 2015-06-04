@@ -34,7 +34,7 @@ gulp.task('init', function() {
  * Task to build assets on production server
  */
 gulp.task('build',['clean'], function() {
-  return gulp.start('vendors', 'styles', 'img', 'scripts');
+  return gulp.start('vendors', 'styles', 'img', 'scripts', 'icons');
 });
 
 

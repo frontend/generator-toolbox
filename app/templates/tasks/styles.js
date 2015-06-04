@@ -18,14 +18,13 @@ module.exports = function() {
     if (argv.production) { console.log('[styles] Production mode' ); }
     else { console.log('[styles] Dev mode'); }
 
-    return gulp.src([config.assets + 'sass/' + iconFontName + '.scss', config.assets + 'sass/main.scss'])
+    gulp.src([config.assets + 'sass/' + iconFontName + '.scss', config.assets + 'sass/main.scss'])
       .pipe($.if(!argv.production, $.sourcemaps.init()))
       .pipe($.sass({
         outputStyle: 'nested', // libsass doesn't support expanded yet
         precision: 10,
-        includePaths: ['.'],
-        errLogToConsole: true
-      }))
+        includePaths: ['.']
+      }).on('error', $.sass.logError))
       .pipe($.postcss([
         require('autoprefixer-core')({
           browsers: config.browsers,
