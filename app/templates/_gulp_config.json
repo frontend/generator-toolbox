@@ -1,8 +1,8 @@
 {
   "app": {
     "env": "dev",
-    "basedir": "<% if (bootstrapSass) { %>styleguide<% } else { %>.<% } %>",
-    "ghpages": "<% if (bootstrapSass) { %>styleguide<% } else { %>.<% } %>"
+    "basedir": "<% if (fabricator) { %>styleguide<% } else { %>.<% } %>",
+    "ghpages": "<% if (fabricator) { %>styleguide<% } else { %>.<% } %>"
   },
   "vendors": {
     "css": [
@@ -25,7 +25,7 @@
     ],
     "fonts": [<% if (bootstrapSass) { %>
       "bower_components/bootstrap-sass/assets/fonts/bootstrap/*",<% } %>
-      "assets/fonts/*"
+      "<%= assets %>fonts/*"
     ],
     "polyfills": [
       "bower_components/html5shiv/dist/html5shiv.js",
@@ -33,28 +33,28 @@
     ]
   },
   "images": [
-    "assets/img/**/*"
+    "<%= assets %>img/**/*"
   ],
   "svg": [
-    "assets/svg/**/*"
+    "<%= assets %>svg/**/*"
   ],
   "tasks":  "./tasks/",
-  "assets": "assets/",
+  "assets": "<%= assets %>",
   "iconsFontName": "icons",
-  "build": "build/",
+  "build": "<%= build %>",
   "browsers": ["last 2 versions", "safari 5", "ie 8", "ie 9", "ff 27", "opera 12.1"]<% if (fabricator) { %>,
   "styleguide": {
     "assets": "bower_components/fabricator/src/assets/fabricator/",
     "layout": "default",
-    "layouts": "assets/templates/views/layouts/*",
-    "layoutIncludes": "assets/templates/views/layouts/includes/*",
+    "layouts": "<%= assets %>templates/views/layouts/*",
+    "layoutIncludes": "<%= assets %>templates/views/layouts/includes/*",
     "views": [
-      "assets/templates/**/*",
-      "!assets/templates/views/+(layouts)/**"
+      "<%= assets %>templates/**/*",
+      "!<%= assets %>templates/views/+(layouts)/**"
     ],
-    "materials": "assets/components/**/*",
-    "data": "assets/data/**/*.{json,yml}",
-    "docs": "assets/docs/**/*.md",
+    "materials": "<%= assets %>components/**/*",
+    "data": "<%= assets %>data/**/*.{json,yml}",
+    "docs": "<%= assets %>docs/**/*.md",
     "dest": "styleguide"
   }<% } %>
 }

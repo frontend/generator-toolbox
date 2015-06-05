@@ -11,7 +11,6 @@ var toolboxSay = function() {
           '      '+chalk.blue('/ \\')+'    '+chalk.red('.-------.')+'                       '+'\n'+
           '      '+chalk.blue('\\ /')+'  '+chalk.red('.\'        |')+'                       '+'\n'+
           '      '+chalk.blue('| |')+'   '+chalk.red('`._______|')+'                       '+'\n'+
-          '      '+chalk.blue('| |')+'      '+chalk.blue('|  |')+'                          '+'\n'+
           '   '+chalk.red('  .---.')+'     '+chalk.blue('|  |')+'       '+chalk.red('.-----------------.')+'\n'+
           '   '+chalk.red('  || ||')+'     '+chalk.blue('|  |')+'       '+chalk.red('| '+chalk.white('Welcome in the')+'  |')+'\n'+
           '   '+chalk.red('  || ||')+'     '+chalk.blue('|  |')+'       '+chalk.red('| '+chalk.white('amazing toolbox')+' |')+'\n'+
@@ -41,41 +40,63 @@ module.exports = yeoman.generators.Base.extend({
     var prompts = [{
       type: 'input',
       name: 'name',
-      message: 'What\'s the name of your project?',
+      message: 'What\'s the name of your project ?',
       default: 'Toolbox'
     },{
       type: 'checkbox',
       name: 'tools',
-      message: 'What would you like to use in your project? (unselect the ones you don\'t want',
+      message: 'What would you like to use in your project ? (unselect the ones you don\'t want) ',
       choices: [{
-          name: 'Gulp',
+          name: 'Task runner (GulpJS)',
           value: 'gulp',
           checked: true
         }, {
-          name: 'Fabricator',
+          name: 'Styleguide (Fabricator)',
           value: 'fabricator',
           checked: true
         }, {
-          name: 'Bootstrap Sass',
+          name: 'Framework (Bootstrap)',
           value: 'bootstrapSass',
           checked: true
         }, {
-          name: 'Tests',
+          name: 'Tests (Mocha, Casperjs and Chai)',
           value: 'tests',
           checked: true
         }
       ]
+    },{
+      type: 'input',
+      name: 'assets',
+      message: 'Where would you like to put your assets ?',
+      default: 'assets/'
+    },{
+      type: 'input',
+      name: 'build',
+      message: 'Where would you like to put your build ?',
+      default: 'build/'
     }];
 
     this.prompt(prompts, function (props) {
       this.name = props.name;
+
       var tools = props.tools;
       function hasTool(tool) { return tools.indexOf(tool) !== -1; }
-
       this.gulp = hasTool('gulp');
       this.fabricator = hasTool('fabricator');
       this.bootstrapSass = hasTool('bootstrapSass');
       this.tests = hasTool('tests');
+
+      if (props.assets.slice(-1) === '/') {
+        this.assets = props.assets;
+      } else {
+        this.assets = props.assets + '/';
+      }
+
+      if (props.build.slice(-1) === '/') {
+        this.build = props.build;
+      } else {
+        this.build = props.build + '/';
+      }
 
       done();
     }.bind(this));
@@ -104,30 +125,30 @@ module.exports = yeoman.generators.Base.extend({
       }
 
       if (this.fabricator) {
-        this.directory('assets/components', 'assets/components');
-        this.directory('assets/templates', 'assets/templates');
-        this.directory('assets/data', 'assets/data');
-        this.directory('assets/docs', 'assets/docs');
-        this.directory('assets/sass/atoms', 'assets/sass/atoms');
-        this.directory('assets/sass/molecules', 'assets/sass/molecules');
-        this.directory('assets/sass/organisms', 'assets/sass/organisms');
-        this.directory('assets/sass/templates', 'assets/sass/templates');
-        this.copy('assets/sass/styleguide.scss', 'assets/sass/styleguide.scss');
+        this.directory('assets/components', this.assets + 'components');
+        this.directory('assets/templates', this.assets + 'templates');
+        this.directory('assets/data', this.assets + 'data');
+        this.directory('assets/docs', this.assets + 'docs');
+        this.directory('assets/sass/atoms', this.assets + 'sass/atoms');
+        this.directory('assets/sass/molecules', this.assets + 'sass/molecules');
+        this.directory('assets/sass/organisms', this.assets + 'sass/organisms');
+        this.directory('assets/sass/templates', this.assets + 'sass/templates');
+        this.copy('assets/sass/styleguide.scss', this.assets + 'sass/styleguide.scss');
       }
 
-      this.directory('assets/js', 'assets/js');
+      this.directory('assets/js', this.assets + 'js');
 
-      this.mkdir('assets/img');
-      this.mkdir('assets/svg');
-      this.mkdir('assets/fonts');
-      this.mkdir('assets/icons');
+      this.mkdir(this.assets + 'img');
+      this.mkdir(this.assets + 'svg');
+      this.mkdir(this.assets + 'fonts');
+      this.mkdir(this.assets + 'icons');
 
       if (this.bootstrapSass) {
-        this.copy('assets/sass/bootstrap.scss', 'assets/sass/bootstrap.scss');
+        this.copy('assets/sass/bootstrap.scss', this.assets + 'sass/bootstrap.scss');
       }
 
-      this.template('assets/sass/_main.scss', 'assets/sass/main.scss');
-      this.copy('assets/sass/main-variables.scss', 'assets/sass/main-variables.scss');
+      this.template('assets/sass/_main.scss', this.assets + 'sass/main.scss');
+      this.copy('assets/sass/main-variables.scss', this.assets + 'sass/main-variables.scss');
 
       if (this.tests) {
         this.directory('tests', 'tests');
