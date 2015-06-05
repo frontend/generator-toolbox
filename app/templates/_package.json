@@ -12,7 +12,7 @@
     "casperjs": "^1.1.0-beta3",
     "del": "~1.1.1",
     "fabricator-assemble": "^1.0.6",
-    "gulp": "^3.8.11",
+    "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
     "gulp-casperjs": "0.0.5",
     "gulp-concat": "^2.5.2",
