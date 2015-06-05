@@ -12,7 +12,8 @@
     "url": "https://github.com/frontend"
   },
   "files": [
-    "app"
+    "app",
+    "component"
   ],
   "keywords": [
     "yeoman-generator",
