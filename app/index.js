@@ -59,6 +59,10 @@ module.exports = yeoman.generators.Base.extend({
           name: 'Bootstrap Sass',
           value: 'bootstrapSass',
           checked: true
+        }, {
+          name: 'Tests',
+          value: 'tests',
+          checked: true
         }
       ]
     }];
@@ -71,6 +75,7 @@ module.exports = yeoman.generators.Base.extend({
       this.gulp = hasTool('gulp');
       this.fabricator = hasTool('fabricator');
       this.bootstrapSass = hasTool('bootstrapSass');
+      this.tests = hasTool('tests');
 
       done();
     }.bind(this));
@@ -123,6 +128,11 @@ module.exports = yeoman.generators.Base.extend({
 
       this.template('assets/sass/_main.scss', 'assets/sass/main.scss');
       this.copy('assets/sass/main-variables.scss', 'assets/sass/main-variables.scss');
+
+      if (this.tests) {
+        this.directory('tests', 'tests');
+        this.copy('tasks/tests-regression.js', 'tasks/tests-regression.js');
+      }
     },
 
     projectfiles: function () {

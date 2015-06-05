@@ -16,8 +16,8 @@ require(config.tasks + 'icons')();              // $ gulp icons
 require(config.tasks + 'clean')();              // $ gulp clean<% if (fabricator) { %>
 require(config.tasks + 'styleguide')();         // $ gulp styleguide<% } %>
 require(config.tasks + 'server')();             // $ gulp serve
-require(config.tasks + 'gh-pages')();           // $ gulp deploy
-require(config.tasks + 'tests-regression');     // $ gulp regression
+require(config.tasks + 'gh-pages')();           // $ gulp deploy<% if (tests) { %>
+require(config.tasks + 'tests-regression');     // $ gulp regression<% } %>
 
 
 <% if (bootstrapSass) { %>
