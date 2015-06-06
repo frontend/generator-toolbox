@@ -152,7 +152,11 @@ module.exports = yeoman.generators.Base.extend({
 
       if (this.tests) {
         this.directory('tests', 'tests');
+        this.mkdir('tests/unit');
+        this.mkdir('tests/navigation');
         this.copy('tasks/tests-regression.js', 'tasks/tests-regression.js');
+        this.copy('tasks/tests-unit.js', 'tasks/tests-unit.js');
+        this.copy('tasks/tests-navigation.js', 'tasks/tests-navigation.js');
       }
     },
 

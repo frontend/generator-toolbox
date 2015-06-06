@@ -17,7 +17,9 @@ require(config.tasks + 'clean')();              // $ gulp clean<% if (fabricator
 require(config.tasks + 'styleguide')();         // $ gulp styleguide<% } %>
 require(config.tasks + 'server')();             // $ gulp serve
 require(config.tasks + 'gh-pages')();           // $ gulp deploy<% if (tests) { %>
-require(config.tasks + 'tests-regression');     // $ gulp regression<% } %>
+require(config.tasks + 'tests-regression');     // $ gulp regression
+require(config.tasks + 'tests-unit')();         // $ gulp test:unit
+require(config.tasks + 'tests-navigation')();   // $ gulp test:navigation<% } %>
 
 
 <% if (bootstrapSass) { %>

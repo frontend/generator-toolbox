@@ -11,7 +11,7 @@ var gulp          = require('gulp'),
 
 module.exports = function(gulp, $, config) {
 
-  gulp.task('regression-references', function () {
+  gulp.task('test:regression:references', function () {
     return gulp.src('tests/regression/references.js')
       .pipe($.casperjs({command:''}))
       .on('error', function(data) {
@@ -19,7 +19,7 @@ module.exports = function(gulp, $, config) {
       });
   });
 
-  gulp.task('regression-temporary', function () {
+  gulp.task('test:regression:temporary', function () {
     return gulp.src('tests/regression/temporary.js')
       .pipe($.casperjs({command:''}))
       .on('error', function(data) {
@@ -27,19 +27,19 @@ module.exports = function(gulp, $, config) {
       });
   });
 
-  gulp.task('regression-comparison', function (){
+  gulp.task('test:regression:comparison', function (){
     return gulp.src('tests/regression/comparison.js')
       .pipe($.phantomcss({
         colorizerType: 'Dummy'
       }));
   });
 
-  gulp.task('regression-clean', del.bind(null, [
+  gulp.task('test:regression:clean', del.bind(null, [
     testConfig.tempPath,
     testConfig.comparisonPath
   ]));
 
-  gulp.task('regression-upload', function (){
+  gulp.task('test:regression:upload', function (){
     fs.readdir(testConfig.comparisonPath, function(err,files){
       if (typeof files !== 'undefined' && files.length > 0) {
         $.util.log($.util.colors.bgRed($.util.colors.white("\n CHECK FAILED : ")));
@@ -57,8 +57,8 @@ module.exports = function(gulp, $, config) {
     });
   });
 
-  gulp.task('regression', function (){
-    runSequence('regression-clean', 'regression-temporary', 'regression-comparison', 'regression-upload');
+  gulp.task('test:regression', function (){
+    runSequence('test:regression:clean', 'test:regression:temporary', 'test:regression:comparison', 'test:regression:upload');
   });
 
 };
