@@ -13,6 +13,7 @@ module.exports = yeoman.generators.Base.extend({
 
   prompting: function () {
     var done = this.async();
+    this.slug = slug;
 
     var prompts = [{
       type: 'list',
@@ -20,19 +21,19 @@ module.exports = yeoman.generators.Base.extend({
       message: 'What kind of component is it ? ',
       choices: [{
           name: 'Atom',
-          value: 'atom',
+          value: 'atoms',
           checked: true
         }, {
           name: 'Molecule',
-          value: 'molecule',
+          value: 'molecules',
           checked: false
         }, {
           name: 'Organism',
-          value: 'organism',
+          value: 'organisms',
           checked: false
         }, {
           name: 'Template',
-          value: 'template',
+          value: 'templates',
           checked: false
         }
       ]
@@ -52,6 +53,18 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: function () {
-    this.log(this.type + ' / ' + this.name)
+    if (this.type !== 'templates') {
+      this.template('_component.hbs', this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.hbs');
+    } else {
+      this.template('component.html', this.config.assets + 'templates/'+ slug(this.name).toLowerCase() +'.html');
+    }
+
+    var plural = '';
+    if (this.type !== 'templates') {
+      plural = 's';
+    }
+
+    this.copy('components.scss', this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + plural +'.scss');
+
   }
 });
