@@ -49,7 +49,7 @@ module.exports = yeoman.generators.Base.extend({
         type: 'input',
         name: 'name',
         message: 'What\'s the name of your component ?',
-        default: 'Toolbox'
+        default: 'component'
       }];
 
       this.prompt(prompts, function (props) {

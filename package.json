@@ -13,7 +13,8 @@
   },
   "files": [
     "app",
-    "component"
+    "component",
+    "script"
   ],
   "keywords": [
     "yeoman-generator",
