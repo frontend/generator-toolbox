@@ -36,7 +36,7 @@ module.exports = function() {
       runSequence('scripts'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
     });<% if (fabricator) { %>
     gulp.watch([
-      config.assets + 'components/**/*.html',
+      config.assets + 'components/**/*.{html,hbs,md}',
       config.assets + 'templates/**/*.html',
       config.assets + 'docs/**/*.md',
       config.assets + 'data/**/*.{json,yml}'
