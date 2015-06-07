@@ -1,0 +1,44 @@
+{
+  "referencePath": "tests/regression/references/",
+  "tempPath": "tests/regression/temp/",
+  "comparisonPath": "tests/regression/compare/",
+  "tolerance": 8,
+  "viewports": [
+    {
+      "name": "phone",
+      "width": 320,
+      "height": 480
+    }, {
+      "name": "desktop",
+      "width": 1920,
+      "height": 1080
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "Demo page",
+      "url": "http://localhost:3000/templates/demo.html",
+      "selectors": [
+        "body",
+        ".navbar",
+        ".jumbotron"
+      ],
+      "hidden": [
+        ".btn-primary"
+      ],
+      "delay": 1
+    },
+    {
+      "name": "Test page",
+      "url": "http://localhost:3000/templates/demo.html",
+      "selectors": [
+        "address",
+        "body"
+      ],
+      "hidden": [
+        ".navbar"
+      ],
+      "delay": 1
+    }
+  ]
+}

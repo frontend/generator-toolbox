@@ -1,4 +1,14 @@
-module.exports = function(gulp, $, config, argv) {
+'use strict';
+
+var gulp          = require('gulp'),
+    $             = require('gulp-load-plugins')(),
+    config        = require('../gulp_config.json'),
+    argv          = require('yargs').argv,
+    slug          = require('slug');
+
+module.exports = function() {
+
+  var iconFontName = slug(config.iconsFontName).toLowerCase();
 
   /**
    * Build styles from SCSS files
@@ -6,23 +16,15 @@ module.exports = function(gulp, $, config, argv) {
    */
   gulp.task('styles', function() {
     if (argv.production) { console.log('[styles] Production mode' ); }
-    else { console.log('[styles] Dev mode') }
+    else { console.log('[styles] Dev mode'); }
 
-    return gulp.src(config.assets + 'sass/main.scss')
+    gulp.src([config.assets + 'sass/' + iconFontName + '.scss', config.assets + 'sass/main.scss'])
       .pipe($.if(!argv.production, $.sourcemaps.init()))
       .pipe($.sass({
         outputStyle: 'nested', // libsass doesn't support expanded yet
         precision: 10,
         includePaths: ['.']
-      }))
-      .on('error', $.notify.onError({
-        title: function(error) {
-          return error.message
-        },
-        message: function(error) {
-          return error.fileName + ':' + error.lineNumber
-        }
-      }))
+      }).on('error', $.sass.logError))
       .pipe($.postcss([
         require('autoprefixer-core')({
           browsers: config.browsers,
@@ -33,8 +35,9 @@ module.exports = function(gulp, $, config, argv) {
       ]))
       .pipe($.if(!argv.production, $.sourcemaps.write()))
       .pipe($.if(argv.production, $.minifyCss()))
-      .pipe($.size({title: "STYLES", showFiles: true}))
+      .pipe($.concat('main.css'))
+      .pipe($.size({title: 'STYLES', showFiles: true}))
       .pipe(gulp.dest(config.build + '/css'));
   });
 
-}
+};

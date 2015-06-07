@@ -1,11 +1,11 @@
 @charset "UTF-8";
 
-// Init ------------------------------------
-@import 'main-variables';<% if (props.tools.indexOf("Bootstrap") > -1) { %>
+// init:
+@import 'main-variables';<% if (bootstrapSass) { %>
 @import 'bootstrap';<% } %>
 
-<% if (props.tools.indexOf("Fabricator") > -1) { %>
-// Atoms -----------------------------------
+<% if (fabricator) { %>
+// atoms:
 @import 'atoms/alerts';
 @import 'atoms/badges';
 @import 'atoms/blockquote';
@@ -21,7 +21,7 @@
 @import 'atoms/list';
 @import 'atoms/paragraph';
 
-// Molecules --------------------------------
+// molecules:
 @import 'molecules/address';
 @import 'molecules/breadcrumb';
 @import 'molecules/button-groups';
@@ -42,7 +42,7 @@
 @import 'molecules/tooltips';
 @import 'molecules/well';
 
-// Organisms --------------------------------
+// organisms:
 @import 'organisms/carousel';
 @import 'organisms/footer';
 @import 'organisms/form';
@@ -50,6 +50,6 @@
 @import 'organisms/jumbotron';
 @import 'organisms/navbar';
 
-// Templates ---------------------------------
+// Templates:
 @import 'templates/demo';
 <% } %>

@@ -1,4 +1,12 @@
-module.exports = function(gulp, $, config, assemble) {
+'use strict';
+
+var gulp          = require('gulp'),
+    $             = require('gulp-load-plugins')(),
+    config        = require('../gulp_config.json'),
+    assemble      = require('fabricator-assemble');
+
+
+module.exports = function() {
 
   var options = {
     layout: config.styleguide.layout,
@@ -17,7 +25,7 @@ module.exports = function(gulp, $, config, assemble) {
     helpers: {
         markdown: require('helper-markdown')
     }
-  }
+  };
 
   /*
   * Styleguide CSS Vendors
@@ -39,7 +47,7 @@ module.exports = function(gulp, $, config, assemble) {
         })
       ]))
       .pipe($.concat('styleguide.css'))
-      .pipe($.size({title: "STYLEGUIDE CSS VENDORS", showFiles: true}))
+      .pipe($.size({title: 'STYLEGUIDE CSS VENDORS', showFiles: true}))
       .pipe(gulp.dest(config.build + 'css'))
       .pipe(gulp.dest(config.styleguide.dest + '/build/css'));
   });
@@ -54,9 +62,9 @@ module.exports = function(gulp, $, config, assemble) {
       }))
       .pipe($.concat('styleguide.min.js'))
       .pipe($.uglify())
-      .pipe($.size({title: "STYLEGUIDE JS VENDORS", showFiles: true}))
+      .pipe($.size({title: 'STYLEGUIDE JS VENDORS', showFiles: true}))
       .pipe(gulp.dest(config.build + 'js'))
-      .pipe(gulp.dest(config.styleguide.dest + '/build/js'));;
+      .pipe(gulp.dest(config.styleguide.dest + '/build/js'));
   });
 
   gulp.task('styleguide-assets', function() {
@@ -70,4 +78,4 @@ module.exports = function(gulp, $, config, assemble) {
   });
 
 
-}
+};

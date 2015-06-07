@@ -1,4 +1,12 @@
-module.exports = function(gulp, $, config, browserSync, runSequence) {
+'use strict';
+
+var gulp          = require('gulp'),
+    $             = require('gulp-load-plugins')(),
+    config        = require('../gulp_config.json'),
+    browserSync   = require('browser-sync'),
+    runSequence   = require('run-sequence');
+
+module.exports = function() {
 
   var reload = browserSync.reload;
 
@@ -13,19 +21,22 @@ module.exports = function(gulp, $, config, browserSync, runSequence) {
       open: false
     });
     gulp.watch([config.assets + 'sass/**/*.scss'], function() {
-      runSequence('styles'<% if (props.tools.indexOf("Fabricator") > -1) { %>, 'styleguide'<% } %>, reload);
-    });<% if (props.tools.indexOf("Fabricator") > -1) { %>
+      runSequence('styles'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
+    });<% if (fabricator) { %>
     gulp.watch([config.assets + 'sass/styleguide.scss'], function() {
-      runSequence('styleguide-styles'<% if (props.tools.indexOf("Fabricator") > -1) { %>, 'styleguide'<% } %>, reload);
+      runSequence('styleguide-styles'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
     });<% } %>
     gulp.watch([config.assets + 'img/**/*'], function() {
-      runSequence('img'<% if (props.tools.indexOf("Fabricator") > -1) { %>, 'styleguide'<% } %>, reload);
+      runSequence('img'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
+    });
+    gulp.watch([config.assets + 'icons/**/*'], function() {
+      runSequence('icons'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
     });
     gulp.watch([config.assets + 'js/**/*.js'], function() {
-      runSequence('scripts'<% if (props.tools.indexOf("Fabricator") > -1) { %>, 'styleguide'<% } %>, reload);
-    });<% if (props.tools.indexOf("Fabricator") > -1) { %>
+      runSequence('scripts'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
+    });<% if (fabricator) { %>
     gulp.watch([
-      config.assets + 'components/**/*.html',
+      config.assets + 'components/**/*.{html,hbs,md}',
       config.assets + 'templates/**/*.html',
       config.assets + 'docs/**/*.md',
       config.assets + 'data/**/*.{json,yml}'

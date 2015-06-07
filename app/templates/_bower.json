@@ -1,8 +1,8 @@
 {
-  "name": "<%= slug(props.name).toLowerCase() %>",
+  "name": "<%= slug(name).toLowerCase() %>",
   "dependencies": {
     "html5shiv": "3.7.2",
-    "respond": "1.4.2",<% if (props.tools.indexOf("Bootstrap") > -1) { %>
+    "respond": "1.4.2",<% if (bootstrapSass) { %>
     "bootstrap-sass": "~3.3.4",<% } %>
     "jquery": "~2.1.1",
     "fabricator": "git@github.com:fbrctr/fabricator.git"

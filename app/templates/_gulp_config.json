@@ -1,15 +1,15 @@
 {
   "app": {
     "env": "dev",
-    "basedir": "<% if (props.tools.indexOf("Bootstrap") > -1) { %>styleguide<% } else { %>.<% } %>",
-    "ghpages": "<% if (props.tools.indexOf("Bootstrap") > -1) { %>styleguide<% } else { %>.<% } %>"
+    "basedir": "<% if (fabricator) { %>styleguide<% } else { %>.<% } %>",
+    "ghpages": "<% if (fabricator) { %>styleguide<% } else { %>.<% } %>"
   },
   "vendors": {
     "css": [
       ""
     ],
     "js": [
-      "bower_components/jquery/dist/jquery.js"<% if (props.tools.indexOf("Bootstrap") > -1) { %>,
+      "bower_components/jquery/dist/jquery.js"<% if (bootstrapSass) { %>,
       "bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js",
       "bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js",
       "bower_components/bootstrap-sass/assets/javascripts/bootstrap/button.js",
@@ -23,9 +23,9 @@
       "bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js",
       "bower_components/bootstrap-sass/assets/javascripts/bootstrap/transition.js"<% } %>
     ],
-    "fonts": [<% if (props.tools.indexOf("Bootstrap") > -1) { %>
+    "fonts": [<% if (bootstrapSass) { %>
       "bower_components/bootstrap-sass/assets/fonts/bootstrap/*",<% } %>
-      "assets/fonts/*"
+      "<%= assets %>fonts/*"
     ],
     "polyfills": [
       "bower_components/html5shiv/dist/html5shiv.js",
@@ -33,24 +33,28 @@
     ]
   },
   "images": [
-    "assets/img/**/*"
+    "<%= assets %>img/**/*"
+  ],
+  "svg": [
+    "<%= assets %>svg/**/*"
   ],
   "tasks":  "./tasks/",
-  "assets": "assets/",
-  "build": "build/",
-  "browsers": ["last 2 versions", "safari 5", "ie 8", "ie 9", "ff 27", "opera 12.1"]<% if (props.tools.indexOf("Fabricator") > -1) { %>,
+  "assets": "<%= assets %>",
+  "iconsFontName": "icons",
+  "build": "<%= build %>",
+  "browsers": ["last 2 versions", "safari 5", "ie 8", "ie 9", "ff 27", "opera 12.1"]<% if (fabricator) { %>,
   "styleguide": {
     "assets": "bower_components/fabricator/src/assets/fabricator/",
     "layout": "default",
-    "layouts": "assets/templates/views/layouts/*",
-    "layoutIncludes": "assets/templates/views/layouts/includes/*",
+    "layouts": "<%= assets %>templates/views/layouts/*",
+    "layoutIncludes": "<%= assets %>templates/views/layouts/includes/*",
     "views": [
-      "assets/templates/**/*",
-      "!assets/templates/views/+(layouts)/**"
+      "<%= assets %>templates/**/*",
+      "!<%= assets %>templates/views/+(layouts)/**"
     ],
-    "materials": "assets/components/**/*",
-    "data": "assets/data/**/*.{json,yml}",
-    "docs": "assets/docs/**/*.md",
+    "materials": "<%= assets %>components/**/*",
+    "data": "<%= assets %>data/**/*.{json,yml}",
+    "docs": "<%= assets %>docs/**/*.md",
     "dest": "styleguide"
   }<% } %>
 }
