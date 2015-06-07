@@ -12,7 +12,7 @@
     "casperjs": "^1.1.0-beta3",
     "chai": "^2.3.0",
     "del": "~1.1.1",
-    "fabricator-assemble": "^1.0.6",
+    "fabricator-assemble": "git@github.com:fbrctr/fabricator-assemble.git#master",
     "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
     "gulp-casperjs": "0.0.5",
