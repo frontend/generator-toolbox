@@ -1,6 +1,6 @@
 # Toolbox Generator
 
-![vault-boy](vault-boy.png)
+![vault-boy](toolbox.png)
 
 This generator sets up the perfect Bootstrap boilerplate for your project's styleguide. It will generate all the files you need to use [bootstrap-sass](https://github.com/twbs/bootstrap-sass) with the amazing [Fabricator](https://github.com/fbrctr/fabricator) tool.
 
@@ -8,10 +8,12 @@ We plan on adding some various options or sub-generators to gernerate a startert
 
 This generator is built with [Yeoman](https://github.com/yeoman/generator).
 
+### [Check the doc !](http://frontend.github.io/toolbox)
+
 ## Installation
 
 ```shell
-$ npm install generator-toolbox -g
+$ npm install -g generator-toolbox
 ```
 
 Then run the Yeoman Generator by running this:
@@ -35,7 +37,7 @@ To build the styleguide, we provide a wide range of gulp tasks. These are the on
 - Build the styleguide in production server: `$ gulp build`
 - Deploy the `/styleguide` folder on your `gh-pages` branch: `$ gulp deploy`
 
-**More to come soon!** 
+More details in the [documentation](http://frontend.github.io/toolbox)
 
 ## License
 
