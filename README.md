@@ -1,6 +1,6 @@
 # Toolbox Generator
 
-![vault-boy](toolbox.png)
+[![toolbox](toolbox.png)](http://frontend.github.io/toolbox)
 
 This generator sets up the perfect Bootstrap boilerplate for your project's styleguide. It will generate all the files you need to use [bootstrap-sass](https://github.com/twbs/bootstrap-sass) with the amazing [Fabricator](https://github.com/fbrctr/fabricator) tool.
 
