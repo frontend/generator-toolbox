@@ -9,7 +9,7 @@ var gulp          = require('gulp'),
     runSequence   = require('run-sequence'),
     testConfig    = require('../tests/regression/regression.json');
 
-module.exports = function(gulp, $, config) {
+module.exports = function() {
 
   gulp.task('test:regression:references', function () {
     return gulp.src('tests/regression/references.js')
