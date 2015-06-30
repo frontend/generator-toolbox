@@ -1,8 +1,8 @@
 var chai      = require("chai"),
     should    = chai.should(),
-    expect		= chai.expect,
+    expect    = chai.expect,
     jsdom     = require("jsdom"),
-    config		= require('./../../gulp_config.json'),
+    config    = require('./../../gulp_config.json'),
     script    = '<%= slug(name).toLowerCase() %>.js';
 
 describe('Testing <%= slug(name).toLowerCase() %>.js', function () {
