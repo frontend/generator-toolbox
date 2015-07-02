@@ -28,7 +28,7 @@ config.scenarios.forEach(function (scenario) {
         onFail: function(test){
           total ++;
           failed ++;
-          console.log("  " + colorizer.colorize("✘ ", "WARNING") + test.filename.split('/')[test.filename.split('/').length - 1] +' with '+ colorizer.colorize(test.mismatch, "WARNING"));
+          console.error("  " + colorizer.colorize("✘ ", "WARNING") + test.filename.split('/')[test.filename.split('/').length - 1] +' with '+ colorizer.colorize(test.mismatch, "WARNING"));
         },
         onPass: function(test){
           total ++;
@@ -47,7 +47,7 @@ config.scenarios.forEach(function (scenario) {
 
 casper.then(function() {
   if (failed === 0) {
-    console.log(colorizer.colorize("\n  RESULTS:     "+total+'/'+total+' tests successfully passed!    ', 'GREEN_BAR') + "\n");
+    console.error(colorizer.colorize("\n  RESULTS:     "+total+'/'+total+' tests successfully passed!    ', 'GREEN_BAR') + "\n");
   } else {
       console.log(colorizer.colorize("\n  RESULTS:     "+failed+'/'+total+' tests failed    ', 'RED_BAR') + "\n");
   }
