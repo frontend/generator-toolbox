@@ -117,6 +117,7 @@ module.exports = yeoman.generators.Base.extend({
         this.copy('tasks/images.js', 'tasks/images.js');
         this.copy('tasks/scripts.js', 'tasks/scripts.js');
         this.copy('tasks/icons.js', 'tasks/icons.js');
+        this.copy('tasks/favicons.js', 'tasks/favicons.js');
         if (this.fabricator) {
           this.copy('tasks/styleguide.js', 'tasks/styleguide.js');
         }
@@ -142,6 +143,7 @@ module.exports = yeoman.generators.Base.extend({
       this.mkdir(this.assets + 'svg');
       this.mkdir(this.assets + 'fonts');
       this.mkdir(this.assets + 'icons');
+      this.mkdir(this.assets + 'favicons');
 
       if (this.bootstrapSass) {
         this.copy('assets/sass/bootstrap.scss', this.assets + 'sass/bootstrap.scss');
