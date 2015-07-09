@@ -13,6 +13,7 @@ require(config.tasks + 'images')();             // $ gulp img
 require(config.tasks + 'styles')();             // $ gulp styles
 require(config.tasks + 'scripts')();            // $ gulp scripts
 require(config.tasks + 'icons')();              // $ gulp icons
+require(config.tasks + 'favicons')();           // $ gulp favicons
 require(config.tasks + 'clean')();              // $ gulp clean<% if (fabricator) { %>
 require(config.tasks + 'styleguide')();         // $ gulp styleguide<% } %>
 require(config.tasks + 'server')();             // $ gulp serve
@@ -45,5 +46,5 @@ gulp.task('build',['clean'], function() {
  * Default task
  */
 gulp.task('default', ['clean'], function(done){
-  runSequence(['css-vendors', 'js-vendors', 'fonts-vendors', 'polyfills-vendors', 'img', 'icons', 'styles', 'scripts'<% if (fabricator) { %>, 'styleguide-styles', 'styleguide-scripts'<% } %>]<% if (fabricator) { %>, 'styleguide'<% } %>, done);
+  runSequence(['css-vendors', 'js-vendors', 'fonts-vendors', 'polyfills-vendors', 'img', 'icons', 'styles', 'scripts'<% if (fabricator) { %>, 'styleguide-styles', 'styleguide-scripts'<% } %>], 'favicons'<% if (fabricator) { %>, 'styleguide'<% } %>, done);
 });
