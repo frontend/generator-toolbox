@@ -28,7 +28,7 @@ require(config.tasks + 'tests-navigation')();   // $ gulp test:navigation<% } %>
  * Init project
  */
 gulp.task('init', function() {
-  return gulp.src('bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss')
+  return gulp.src('node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss')
     .pipe($.rename('bootstrap-variables.scss'))
     .pipe(gulp.dest(config.assets + 'sass/'));
 });

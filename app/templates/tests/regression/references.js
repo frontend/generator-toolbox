@@ -15,7 +15,7 @@ var playScenario = function(scenario, viewport, callback) {
 
   scenario.hidden.forEach(function (hidden) {
     casper.then(function() {
-      this.page.injectJs('../../bower_components/jquery/dist/jquery.js');
+      this.page.injectJs('../../node_modules/jquery/dist/jquery.js');
       this.evaluate(function(hidden) {
         $(hidden).css('opacity', '0');
       }, hidden);
