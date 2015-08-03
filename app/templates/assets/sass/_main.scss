@@ -5,7 +5,11 @@
 @import 'bootstrap';<% } %>
 
 <% if (fabricator) { %>
-// atoms:
+// atoms:<% if (bootstrapSass) { %>
+@import 'atoms/buttons';<% } %><% if (componentVideo) { %>
+@import 'atoms/videos';<% } %><% if (componentSpacer) { %>
+@import 'atoms/spacers';<% } %><% if (componentSeparator) { %>
+@import 'atoms/separators';<% } %>
 
 // molecules:
 
