@@ -2,18 +2,24 @@
   "name": "<%= slug(name).toLowerCase() %>",
   "version": "0.0.0",
   "main": "index.html",
+  "dependencies": {<% if (bootstrapSass) { %>
+    "bootstrap-sass": "~3.3.5",<% } %>
+    "fabricator": "fbrctr/fabricator",
+    "html5shiv": "^3.7.3",
+    "jquery": "^2.1.4",
+    "respond.js": "^1.4.2"
+  },
   "devDependencies": {
     "async": "^1.3.0",
     "autoprefixer-core": "^5.1.11",
     "babel-core": "5.2.17",
     "babel-loader": "5.0.0",
     "backstopjs": "^0.4.3",
-    "bower": "^1.4.1",
     "browser-sync": "^2.7.1",
     "casperjs": "^1.1.0-beta3",
     "chai": "^2.3.0",
     "del": "~1.1.1",
-    "fabricator-assemble": "git@github.com:fbrctr/fabricator-assemble.git#master",
+    "fabricator-assemble": "git@github.com:fbrctr/fabricator-assemble.git#master",<% if (gulp) { %>
     "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
     "gulp-casperjs": "0.0.5",
@@ -36,11 +42,10 @@
     "gulp-size": "^1.2.1",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "~1.2.0",
-    "gulp-util": "^3.0.4",
+    "gulp-util": "^3.0.4",<% } %>
     "helper-markdown": "^0.1.1",
     "imagemin-pngquant": "^4.1.0",
     "imgur": "^0.1.5",
-    "jquery": "^2.1.4",
     "jsdom": "^3.1.2",
     "jshint-stylish": "^1.0.2",
     "lodash": "^3.8.0",

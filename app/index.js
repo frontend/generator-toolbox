@@ -104,10 +104,9 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
-      this.template('_bower.json', 'bower.json');
+    this.template('_package.json', 'package.json');
 
-      if (this.gulp) {
-        this.template('_package.json', 'package.json');
+    if (this.gulp) {
         this.template('_gulp_config.json', 'gulp_config.json');
         this.template('_gulpfile.js', 'gulpfile.js');
 
