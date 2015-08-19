@@ -2,7 +2,8 @@
   "name": "<%= slug(name).toLowerCase() %>",
   "version": "0.0.0",
   "main": "index.html",
-  "dependencies": {<% if (bootstrapSass) { %>
+  "dependencies": {<% if (bootstrap4) { %>
+    "bootstrap": "git@github.com:twbs/bootstrap.git#v4-dev",<% } else if (bootstrapSass) { %>
     "bootstrap-sass": "~3.3.5",<% } %>
     "fabricator": "fbrctr/fabricator",
     "html5shiv": "^3.7.3",

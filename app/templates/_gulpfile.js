@@ -22,8 +22,16 @@ require(config.tasks + 'tests-regression')();   // $ gulp regression
 require(config.tasks + 'tests-unit')();         // $ gulp test:unit
 require(config.tasks + 'tests-navigation')();   // $ gulp test:navigation<% } %>
 
-
-<% if (bootstrapSass) { %>
+<% if (bootstrap4) { %>
+/**
+ * Init project
+ */
+gulp.task('init', function() {
+  return gulp.src('node_modules/bootstrap/scss/_variables.scss')
+    .pipe($.rename('bootstrap-variables.scss'))
+    .pipe(gulp.dest(config.assets + 'sass/'));
+});
+<% } else if (bootstrapSass) { %>
 /**
  * Init project
  */

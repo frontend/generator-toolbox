@@ -1,11 +1,12 @@
 @charset "UTF-8";
 
 // init:
-@import 'main-variables';<% if (bootstrapSass) { %>
+@import 'main-variables';<% if (bootstrap4) { %>
+@import 'bootstrap4';<% } else if (bootstrapSass) { %>
 @import 'bootstrap';<% } %>
 
 <% if (fabricator) { %>
-// atoms:<% if (bootstrapSass) { %>
+// atoms:<% if (componentButton) { %>
 @import 'atoms/buttons';<% } %><% if (componentVideo) { %>
 @import 'atoms/videos';<% } %><% if (componentSpacer) { %>
 @import 'atoms/spacers';<% } %><% if (componentSeparator) { %>

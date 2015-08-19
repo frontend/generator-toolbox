@@ -65,6 +65,15 @@ module.exports = yeoman.generators.Base.extend({
         }
       ]
     },{
+      when: function (response) {
+        // this.log(response);
+        return response.tools.indexOf('bootstrapSass') !== -1;
+      },
+      name: 'bootstrap4',
+      type: 'confirm',
+      message: 'Do you want to use Bootstrap 4 Alpha?',
+      default: false
+    },{
       type: 'checkbox',
       name: 'components',
       message: 'What would you like to have to base components ? (select the ones you want) ',
@@ -104,6 +113,7 @@ module.exports = yeoman.generators.Base.extend({
       this.gulp = hasTool('gulp');
       this.fabricator = hasTool('fabricator');
       this.bootstrapSass = hasTool('bootstrapSass');
+      this.bootstrap4 = props.bootstrap4;
       this.tests = hasTool('tests');
 
       // Components
@@ -193,7 +203,9 @@ module.exports = yeoman.generators.Base.extend({
       this.mkdir(this.assets + 'icons');
       this.mkdir(this.assets + 'favicons');
 
-      if (this.bootstrapSass) {
+      if (this.bootstrap4) {
+        this.copy('assets/sass/bootstrap4.scss', this.assets + 'sass/bootstrap4.scss');
+      } else if (this.bootstrapSass) {
         this.copy('assets/sass/bootstrap.scss', this.assets + 'sass/bootstrap.scss');
       }
 
