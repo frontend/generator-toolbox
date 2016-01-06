@@ -39,7 +39,7 @@ module.exports = function() {
         errLogToConsole: true
       }))
       .pipe($.postcss([
-        require('autoprefixer-core')({
+        require('autoprefixer')({
           browsers: config.browsers,
           options: {
             map: true

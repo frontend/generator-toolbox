@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+$spacer-height: 50px;
+
+.spacer {
+  height: $spacer-height;
+  &.spacer-xl {height: $spacer-height * 2;}
+  &.spacer-lg {height: $spacer-height * 1.5;}
+  &.spacer-md {height: $spacer-height / 1.5;}
+  &.spacer-sm {height: $spacer-height / 3;}
+  &.spacer-xs {height: $spacer-height / 5;}
+  @media only screen and (max-width: $screen-sm-max) {
+    height: $spacer-height / 2;
+    &.spacer-xl {height: $spacer-height;}
+    &.spacer-lg {height: $spacer-height / 1.5;}
+    &.spacer-md {height: $spacer-height / 2;}
+    &.spacer-sm {height: $spacer-height / 5;}
+    &.spacer-xs {height: $spacer-height / 10;}
+  }
+}

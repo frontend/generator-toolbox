@@ -1,55 +1,21 @@
 @charset "UTF-8";
 
 // init:
-@import 'main-variables';<% if (bootstrapSass) { %>
+@import 'main-variables';<% if (bootstrap4) { %>
+@import 'bootstrap4';<% } else if (bootstrapSass) { %>
 @import 'bootstrap';<% } %>
 
 <% if (fabricator) { %>
-// atoms:
-@import 'atoms/alerts';
-@import 'atoms/badges';
-@import 'atoms/blockquote';
-@import 'atoms/button';
-@import 'atoms/description';
-@import 'atoms/heading';
-@import 'atoms/icon';
-@import 'atoms/image';
-@import 'atoms/inline-elements';
-@import 'atoms/input';
-@import 'atoms/labels';
-@import 'atoms/link';
-@import 'atoms/list';
-@import 'atoms/paragraph';
+// atoms:<% if (componentButton) { %>
+@import 'atoms/buttons';<% } %><% if (componentVideo) { %>
+@import 'atoms/videos';<% } %><% if (componentSpacer) { %>
+@import 'atoms/spacers';<% } %><% if (componentSeparator) { %>
+@import 'atoms/separators';<% } %>
 
 // molecules:
-@import 'molecules/address';
-@import 'molecules/breadcrumb';
-@import 'molecules/button-groups';
-@import 'molecules/collapse';
-@import 'molecules/dropdown';
-@import 'molecules/input-groups';
-@import 'molecules/list-group';
-@import 'molecules/media';
-@import 'molecules/modal';
-@import 'molecules/nav';
-@import 'molecules/pager';
-@import 'molecules/paginations';
-@import 'molecules/panels';
-@import 'molecules/popover';
-@import 'molecules/progress';
-@import 'molecules/tab';
-@import 'molecules/thumbnails';
-@import 'molecules/tooltips';
-@import 'molecules/well';
 
 // organisms:
-@import 'organisms/carousel';
-@import 'organisms/footer';
-@import 'organisms/form';
-@import 'organisms/header';
-@import 'organisms/jumbotron';
-@import 'organisms/navbar';
 
-// Templates:
-@import 'templates/demo';
+// templates:
+
 <% } %>
