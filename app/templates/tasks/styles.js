@@ -14,7 +14,7 @@ module.exports = function() {
    * Build styles from SCSS files
    * With error reporting on compiling (so that there's no crash)
    */
-  gulp.task('styles', function() {
+  return gulp.task('styles', function() {
     if (argv.production) { console.log('[styles] Production mode' ); }
     else { console.log('[styles] Dev mode'); }
 
@@ -26,7 +26,7 @@ module.exports = function() {
         includePaths: ['.']
       }).on('error', $.sass.logError))
       .pipe($.postcss([
-        require('autoprefixer-core')({
+        require('autoprefixer')({
           browsers: config.browsers,
           options: {
             map: true
