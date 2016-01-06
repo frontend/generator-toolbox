@@ -22,10 +22,10 @@
     "fabricator"
   ],
   "dependencies": {
-    "chalk": "^1.0.0",
-    "slug": "^0.8.0",
-    "yeoman-generator": "^0.19.0",
-    "yosay": "^1.0.2"
+    "chalk": "^1.1.1",
+    "slug": "^0.9.1",
+    "yeoman-generator": "^0.22.2",
+    "yosay": "^1.1.0"
   },
   "devDependencies": {
     "mocha": "*"
