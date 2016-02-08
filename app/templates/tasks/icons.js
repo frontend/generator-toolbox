@@ -13,17 +13,19 @@ module.exports = function() {
   * Build icons font and stylesheets
   */
   gulp.task('icons', function(){
-    gulp.src(config.assets + 'icons/**/*')
+    gulp.src(config.assets + 'icons/**/*.svg')
       .pipe($.iconfont({
         fontName: name,
         appendCodepoints: true,
         normalize:true,
         fontHeight: 1001
       }))
-      .on('codepoints', function(codepoints, options) {
+      .on('glyphs', function(glyphs, options) {
         gulp.src('node_modules/toolbox-utils/templates/_icons.scss')
           .pipe($.consolidate('lodash', {
-            glyphs: codepoints,
+            glyphs: glyphs.map(function(glyph) {
+              return { name: glyph.name, codepoint: glyph.unicode[0].charCodeAt(0) }
+            }),
             fontName: name,
             fontPath: '../fonts/',
             className: name
