@@ -10,21 +10,30 @@ module.exports = function() {
 
   var iconFontName = slug(config.iconsFontName).toLowerCase();
 
+  function errorAlert(error){
+    if (!argv.production) {
+      $.notify.onError({title: "SCSS Error", message: "Check your terminal", sound: "Sosumi"})(error);
+      $.util.log(error.messageFormatted);
+    }
+    this.emit("end");
+  };
+
   /**
    * Build styles from SCSS files
    * With error reporting on compiling (so that there's no crash)
    */
-  gulp.task('styles', function() {
-    if (argv.production) { console.log('[styles] Production mode' ); }
-    else { console.log('[styles] Dev mode'); }
+  gulp.task('styles', ['styles:lint'], function() {
+    if (argv.production) { $.util.log('[styles] Production mode' ); }
+    else { $.util.log('[styles] Dev mode'); }
 
     return gulp.src([config.assets + 'sass/' + iconFontName + '.scss', config.assets + 'sass/main.scss'])
-      .pipe($.if(!argv.production, $.sourcemaps.init()))
+      .pipe($.plumber({errorHandler: errorAlert}))
+      .pipe(argv.production ? $.util.noop() : $.sourcemaps.init())
       .pipe($.sass({
-        outputStyle: 'nested', // libsass doesn't support expanded yet
-        precision: 10,
+        outputStyle: 'compressed',
+        precision: 5,
         includePaths: ['.']
-      }).on('error', $.sass.logError))
+      }))
       .pipe($.postcss([
         require('autoprefixer')({
           browsers: config.browsers,
@@ -33,11 +42,17 @@ module.exports = function() {
           }
         })
       ]))
-      .pipe($.if(!argv.production, $.sourcemaps.write()))
-      .pipe($.if(argv.production, $.minifyCss()))
+      .pipe(argv.production ? $.util.noop() : $.sourcemaps.write())
+      .pipe(argv.production ? $.minifyCss() : $.util.noop() )
       .pipe($.concat('main.css'))
       .pipe($.size({title: 'STYLES', showFiles: true}))
       .pipe(gulp.dest(config.build + '/css'));
+  });
+
+  gulp.task('styles:lint', function() {
+    return gulp.src([config.assets + 'sass/**/*.s+(a|c)ss', '!' + config.assets + 'sass/+(bootstrap-variables|main|styleguide).scss'])
+        .pipe($.sassLint())
+        .pipe($.sassLint.format());
   });
 
 };

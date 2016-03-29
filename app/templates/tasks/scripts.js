@@ -7,6 +7,14 @@ var gulp          = require('gulp'),
 
 module.exports = function() {
 
+  function errorAlert(error){
+    if (!argv.production) {
+      $.notify.onError({title: "JS Error", message: "Check your terminal", sound: "Sosumi"})(error);
+      $.util.log(error);
+    }
+    this.emit("end");
+  };
+
   /**
    * Build JS
    * With error reporting on compiling (so that there's no crash)
@@ -14,8 +22,10 @@ module.exports = function() {
    */
   gulp.task('scripts', function() {
     return gulp.src(config.assets + 'js/*.js')
-      .pipe($.jshint())
-      .pipe($.jshint.reporter('jshint-stylish'))
+      .pipe($.plumber({errorHandler: errorAlert}))
+      .pipe($.eslint())
+      .pipe($.eslint.format())
+      .pipe($.babel({presets: ['es2015']}))
       .pipe($.concat('main.js'))
       .pipe($.if(argv.production, $.uglify()))
       .pipe($.size({title: 'JS SCRIPTS', showFiles: true}))
