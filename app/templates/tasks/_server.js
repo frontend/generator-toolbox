@@ -26,7 +26,7 @@ module.exports = function() {
     gulp.watch([config.assets + 'sass/styleguide.scss'], function() {
       runSequence('styleguide-styles'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
     });<% } %>
-    gulp.watch([config.assets + 'img/**/*'], function() {
+    gulp.watch([config.assets + 'img/**/*', config.assets + 'svg/**/*'], function() {
       runSequence('img'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
     });
     gulp.watch([config.assets + 'icons/**/*'], function() {
