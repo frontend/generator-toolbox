@@ -23,9 +23,8 @@ module.exports = function() {
   gulp.task('scripts', function() {
     return gulp.src(config.assets + 'js/*.js')
       .pipe($.plumber({errorHandler: errorAlert}))
-      .pipe($.eslint())
-      .pipe($.eslint.format())
-      .pipe($.babel({presets: ['es2015']}))
+      .pipe($.jshint())
+      .pipe($.jshint.reporter('jshint-stylish'))
       .pipe($.concat('main.js'))
       .pipe($.if(argv.production, $.uglify()))
       .pipe($.size({title: 'JS SCRIPTS', showFiles: true}))
