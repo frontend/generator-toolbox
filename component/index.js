@@ -39,10 +39,6 @@ module.exports = yeoman.generators.Base.extend({
             name: 'Organism',
             value: 'organisms',
             checked: false
-          }, {
-            name: 'Template',
-            value: 'templates',
-            checked: false
           }
         ]
       },{
@@ -66,10 +62,10 @@ module.exports = yeoman.generators.Base.extend({
   writing: function () {
     if (typeof this.name !== 'undefined' && typeof this.type !== 'undefined') {
 
-      if (this.type !== 'templates' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.hbs'))) {
-        this.template('_component.hbs', this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.hbs');
-      } else if (this.type === 'templates' && !fs.existsSync(this.destinationPath(this.config.assets + 'templates/'+ slug(this.name).toLowerCase() +'.html'))) {
-        this.template('component.html', this.config.assets + 'templates/'+ slug(this.name).toLowerCase() +'.html');
+      if (this.type !== 'templates' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.swig'))) {
+        this.template('_component.html.swig', this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.swig');
+      } else if (this.type === 'templates' && !fs.existsSync(this.destinationPath(this.config.assets + 'templates/'+ slug(this.name).toLowerCase() +'.html.swig'))) {
+        this.template('component.html.swig', this.config.assets + 'templates/'+ slug(this.name).toLowerCase() +'.html.swig');
       } else {
         this.log(chalk.red(slug(this.name).toLowerCase() + " already founded !") + "\nMake sure that your component doens't already exist.");
       }

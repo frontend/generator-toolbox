@@ -1,3 +1,7 @@
+---
+title: JavaScript
+---
+
 This is a markdown document.
 
 ```javascript
