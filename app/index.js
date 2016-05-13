@@ -47,10 +47,6 @@ module.exports = yeoman.generators.Base.extend({
       name: 'tools',
       message: 'What would you like to use in your project ? (unselect the ones you don\'t want) ',
       choices: [{
-          name: 'Task runner (GulpJS)',
-          value: 'gulp',
-          checked: true
-        }, {
           name: 'Styleguide',
           value: 'fabricator',
           checked: true
@@ -110,7 +106,6 @@ module.exports = yeoman.generators.Base.extend({
       var tools = props.tools;
       function hasTool(tool) { return tools.indexOf(tool) !== -1; }
 
-      this.gulp = hasTool('gulp');
       this.fabricator = hasTool('fabricator');
       this.bootstrapSass = hasTool('bootstrapSass');
       this.bootstrap4 = props.bootstrap4;
@@ -144,23 +139,21 @@ module.exports = yeoman.generators.Base.extend({
     app: function () {
     this.template('_package.json', 'package.json');
 
-    if (this.gulp) {
-        this.template('_gulp_config.json', 'gulp_config.json');
-        this.template('_gulpfile.js', 'gulpfile.js');
+      this.template('_gulp_config.json', 'gulp_config.json');
+      this.template('_gulpfile.js', 'gulpfile.js');
 
-        this.template('tasks/_clean.js', 'tasks/clean.js');
-        this.template('tasks/_server.js', 'tasks/server.js');
-        this.copy('tasks/gh-pages.js', 'tasks/gh-pages.js');
-        this.copy('tasks/images.js', 'tasks/images.js');
-        this.copy('tasks/scripts.js', 'tasks/scripts.js');
-        this.copy('tasks/icons.js', 'tasks/icons.js');
-        this.copy('tasks/favicons.js', 'tasks/favicons.js');
-        if (this.fabricator) {
-          this.copy('tasks/styleguide.js', 'tasks/styleguide.js');
-        }
-        this.copy('tasks/styles.js', 'tasks/styles.js');
-        this.copy('tasks/vendors.js', 'tasks/vendors.js');
+      this.template('tasks/_clean.js', 'tasks/clean.js');
+      this.template('tasks/_server.js', 'tasks/server.js');
+      this.copy('tasks/gh-pages.js', 'tasks/gh-pages.js');
+      this.copy('tasks/images.js', 'tasks/images.js');
+      this.copy('tasks/scripts.js', 'tasks/scripts.js');
+      this.copy('tasks/icons.js', 'tasks/icons.js');
+      this.copy('tasks/favicons.js', 'tasks/favicons.js');
+      if (this.fabricator) {
+        this.copy('tasks/styleguide.js', 'tasks/styleguide.js');
       }
+      this.copy('tasks/styles.js', 'tasks/styles.js');
+      this.copy('tasks/vendors.js', 'tasks/vendors.js');
 
       if (this.fabricator) {
         this.mkdir(this.assets + 'components');
