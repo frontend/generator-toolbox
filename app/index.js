@@ -150,7 +150,8 @@ module.exports = yeoman.generators.Base.extend({
       this.copy('tasks/icons.js', 'tasks/icons.js');
       this.copy('tasks/favicons.js', 'tasks/favicons.js');
       if (this.fabricator) {
-        this.copy('tasks/styleguide.js', 'tasks/styleguide.js');
+        this.copy('tasks/metalsmith.js', 'tasks/metalsmith.js');
+        this.copy('tasks/filters.js', 'tasks/filters.js');
       }
       this.copy('tasks/styles.js', 'tasks/styles.js');
       this.copy('tasks/vendors.js', 'tasks/vendors.js');
@@ -219,7 +220,7 @@ module.exports = yeoman.generators.Base.extend({
       this.copy('editorconfig', '.editorconfig');
       this.copy('gitattributes', '.gitattributes');
       this.copy('gitignore', '.gitignore');
-      this.copy('jshintrc', '.jshintrc');
+      this.copy('eslintrc.yml', '.eslintrc.yml');
       this.copy('sass-lint.yml', '.sass-lint.yml');
     }
   },
