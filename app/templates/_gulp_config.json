@@ -43,18 +43,36 @@
   "iconsFontName": "icons",
   "build": "<%= build %>",
   "browsers": ["last 2 versions", "safari 5", "ie 8", "ie 9", "ff 27", "opera 12.1"]<% if (fabricator) { %>,
-  "styleguide": {
+  "metalsmith": {
     "assets": "node_modules/fabricator/src/assets/fabricator/",
-    "layout": "default",
-    "layouts": "<%= assets %>templates/views/layouts/*",
-    "layoutIncludes": "<%= assets %>templates/views/layouts/includes/*",
-    "views": [
-      "<%= assets %>templates/**/*",
-      "!<%= assets %>templates/views/+(layouts)/**"
-    ],
-    "materials": "<%= assets %>components/**/*",
-    "data": "<%= assets %>data/**/*.{json,yml}",
-    "docs": "<%= assets %>docs/**/*.md",
-    "dest": "styleguide"
+    "dist": "styleguide/",
+    "plugins": {
+      "permalinks": {
+        "pattern": ":collection/:title"
+      },
+      "collections": {
+        "atoms": {
+          "sortBy": "title",
+          "reverse": false
+        },
+        "molecules": {
+          "sortBy": "title",
+          "reverse": false
+        },
+        "organisms": {
+          "sortBy": "title",
+          "reverse": false
+        }
+      },
+      "layouts": {
+        "engine": "swig",
+        "default": "default.html.swig",
+        "directory": "assets/templates",
+        "rename": true
+      },
+      "metalsmithinplace": {
+        "engine": "swig"
+      }
+    }
   }<% } %>
 }
