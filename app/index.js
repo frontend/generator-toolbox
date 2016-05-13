@@ -51,7 +51,7 @@ module.exports = yeoman.generators.Base.extend({
           value: 'gulp',
           checked: true
         }, {
-          name: 'Styleguide (Fabricator)',
+          name: 'Styleguide',
           value: 'fabricator',
           checked: true
         }, {
