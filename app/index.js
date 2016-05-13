@@ -179,7 +179,7 @@ module.exports = yeoman.generators.Base.extend({
       this.copy('gitattributes', '.gitattributes');
       this.copy('gitignore', '.gitignore');
       this.copy('eslintrc.yml', '.eslintrc.yml');
-      this.copy('sass-lint.yml', '.sass-lint.yml');
+      this.copy('stylelintrc', '.stylelintrc');
     }
   },
 

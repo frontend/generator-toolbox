@@ -50,9 +50,13 @@ module.exports = function() {
   });
 
   gulp.task('styles:lint', function() {
-    return gulp.src([config.assets + 'sass/**/*.s+(a|c)ss', '!' + config.assets + 'sass/+(bootstrap-variables|main|styleguide).scss'])
-        .pipe($.sassLint())
-        .pipe($.sassLint.format());
+    return gulp.src([config.assets + 'sass/**/*.s+(a|c)ss', '!' + config.assets + 'sass/+(bootstrap-variables|bootstrap|main|styleguide|main-variables|_mixins).scss', '!' + config.assets + 'sass/organisms/_photoswipes.scss'])
+        .pipe($.plumber({errorHandler: errorAlert}))
+        .pipe($.stylelint({
+          reporters: [
+            {formatter: 'string', console: true}
+          ]
+        }));
   });
 
 };
