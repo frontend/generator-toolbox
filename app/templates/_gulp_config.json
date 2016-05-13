@@ -62,6 +62,10 @@
         "organisms": {
           "sortBy": "title",
           "reverse": false
+        },
+        "pages": {
+          "sortBy": "title",
+          "reverse": false
         }
       },
       "layouts": {

@@ -45,7 +45,7 @@ module.exports = function() {
           layouts(config.metalsmith.plugins.layouts)
         ]
       }))
-      .pipe(gulp.dest(config.metalsmith.dist + 'styleguide'));
+      .pipe(gulp.dest(config.metalsmith.dist));
   });
 
   /*

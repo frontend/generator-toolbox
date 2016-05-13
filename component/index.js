@@ -39,6 +39,10 @@ module.exports = yeoman.generators.Base.extend({
             name: 'Organism',
             value: 'organisms',
             checked: false
+          }, {
+            name: 'Page',
+            value: 'pages',
+            checked: false
           }
         ]
       },{
@@ -62,26 +66,22 @@ module.exports = yeoman.generators.Base.extend({
   writing: function () {
     if (typeof this.name !== 'undefined' && typeof this.type !== 'undefined') {
 
-      if (this.type !== 'templates' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.swig'))) {
-        this.template('_component.html.swig', this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.swig');
-      } else if (this.type === 'templates' && !fs.existsSync(this.destinationPath(this.config.assets + 'templates/'+ slug(this.name).toLowerCase() +'.html.swig'))) {
-        this.template('component.html.swig', this.config.assets + 'templates/'+ slug(this.name).toLowerCase() +'.html.swig');
+      if (this.type !== 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
+        this.template('_component.html', this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine);
+      } else if (this.type === 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'pages/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
+        this.template('_page.html', this.config.assets + 'pages/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine);
       } else {
         this.log(chalk.red(slug(this.name).toLowerCase() + " already founded !") + "\nMake sure that your component doens't already exist.");
       }
 
-      var plural = '';
-      if (this.type !== 'templates') {
-        plural = 's';
-      }
-      if (!fs.existsSync(this.destinationPath(this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + plural +'.scss'))) {
-        this.copy('components.scss', this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + plural +'.scss');
+      if (!fs.existsSync(this.destinationPath(this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + '.scss'))) {
+        this.copy('components.scss', this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + '.scss');
       } else {
         this.log(chalk.red(slug(this.name).toLowerCase() + " already founded !") + "\nMake sure that your component doens't already exist.");
       }
 
       var stylesheet = this.destinationPath(this.config.assets + 'sass/main.scss'),
-          importer = "@import '"+ this.type +"/"+ slug(this.name).toLowerCase() + plural +"';";
+          importer = "@import '"+ this.type +"/"+ slug(this.name).toLowerCase() + "';";
       if(fs.existsSync(stylesheet)){
         var body = fs.readFileSync(stylesheet).toString();
         if (body.indexOf(importer) < 0 ) {

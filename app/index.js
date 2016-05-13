@@ -135,6 +135,7 @@ module.exports = yeoman.generators.Base.extend({
         this.mkdir(this.assets + 'components/atoms');
         this.mkdir(this.assets + 'components/molecules');
         this.mkdir(this.assets + 'components/organisms');
+        this.mkdir(this.assets + 'components/pages');
         this.directory('assets/templates', this.assets + 'templates');
         this.directory('assets/data', this.assets + 'data');
         this.directory('assets/docs', this.assets + 'docs');
