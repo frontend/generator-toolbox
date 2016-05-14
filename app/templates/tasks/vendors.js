@@ -12,7 +12,7 @@ module.exports = function() {
   gulp.task('css-vendors', function() {
     return gulp.src(config.vendors.css)
       .pipe($.concat('vendors.min.css'))
-      .pipe($.minifyCss())
+      .pipe($.cleanCss())
       .pipe($.size({title: 'CSS VENDORS', showFiles: true}))
       .pipe(gulp.dest(config.build + 'css'));
   });

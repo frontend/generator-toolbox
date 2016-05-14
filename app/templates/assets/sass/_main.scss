@@ -6,16 +6,12 @@
 @import 'bootstrap';<% } %>
 
 <% if (fabricator) { %>
-// atoms:<% if (componentButton) { %>
-@import 'atoms/buttons';<% } %><% if (componentVideo) { %>
-@import 'atoms/videos';<% } %><% if (componentSpacer) { %>
-@import 'atoms/spacers';<% } %><% if (componentSeparator) { %>
-@import 'atoms/separators';<% } %>
+// atoms:
 
 // molecules:
 
 // organisms:
 
-// templates:
+// pages:
 
 <% } %>

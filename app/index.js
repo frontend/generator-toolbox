@@ -24,7 +24,7 @@ var toolboxSay = function() {
 
 };
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.Base.extend({
   initializing: function () {
     this.pkg = require('../package.json');
   },
@@ -47,11 +47,7 @@ module.exports = yeoman.generators.Base.extend({
       name: 'tools',
       message: 'What would you like to use in your project ? (unselect the ones you don\'t want) ',
       choices: [{
-          name: 'Task runner (GulpJS)',
-          value: 'gulp',
-          checked: true
-        }, {
-          name: 'Styleguide (Fabricator)',
+          name: 'Styleguide',
           value: 'fabricator',
           checked: true
         }, {
@@ -74,24 +70,6 @@ module.exports = yeoman.generators.Base.extend({
       message: 'Do you want to use Bootstrap 4 Alpha?',
       default: false
     },{
-      type: 'checkbox',
-      name: 'components',
-      message: 'What would you like to have to base components ? (select the ones you want) ',
-      choices: [{
-          name: 'Button',
-          value: 'button'
-        }, {
-          name: 'Video embed',
-          value: 'video'
-        }, {
-          name: 'Spacer',
-          value: 'spacer'
-        }, {
-          name: 'Separator',
-          value: 'separator'
-        }
-      ]
-    },{
       type: 'input',
       name: 'assets',
       message: 'Where would you like to put your assets ?',
@@ -110,19 +88,10 @@ module.exports = yeoman.generators.Base.extend({
       var tools = props.tools;
       function hasTool(tool) { return tools.indexOf(tool) !== -1; }
 
-      this.gulp = hasTool('gulp');
       this.fabricator = hasTool('fabricator');
       this.bootstrapSass = hasTool('bootstrapSass');
       this.bootstrap4 = props.bootstrap4;
       this.tests = hasTool('tests');
-
-      // Components
-      var components = props.components;
-      function hasComponent(component) { return components.indexOf(component) !== -1; }
-      this.componentButton = hasComponent('button');
-      this.componentVideo = hasComponent('video');
-      this.componentSpacer = hasComponent('spacer');
-      this.componentSeparator = hasComponent('separator');
 
       if (props.assets.slice(-1) === '/') {
         this.assets = props.assets;
@@ -144,29 +113,29 @@ module.exports = yeoman.generators.Base.extend({
     app: function () {
     this.template('_package.json', 'package.json');
 
-    if (this.gulp) {
-        this.template('_gulp_config.json', 'gulp_config.json');
-        this.template('_gulpfile.js', 'gulpfile.js');
+      this.template('_gulp_config.json', 'gulp_config.json');
+      this.template('_gulpfile.js', 'gulpfile.js');
 
-        this.template('tasks/_clean.js', 'tasks/clean.js');
-        this.template('tasks/_server.js', 'tasks/server.js');
-        this.copy('tasks/gh-pages.js', 'tasks/gh-pages.js');
-        this.copy('tasks/images.js', 'tasks/images.js');
-        this.copy('tasks/scripts.js', 'tasks/scripts.js');
-        this.copy('tasks/icons.js', 'tasks/icons.js');
-        this.copy('tasks/favicons.js', 'tasks/favicons.js');
-        if (this.fabricator) {
-          this.copy('tasks/styleguide.js', 'tasks/styleguide.js');
-        }
-        this.copy('tasks/styles.js', 'tasks/styles.js');
-        this.copy('tasks/vendors.js', 'tasks/vendors.js');
+      this.template('tasks/_clean.js', 'tasks/clean.js');
+      this.template('tasks/_server.js', 'tasks/server.js');
+      this.copy('tasks/gh-pages.js', 'tasks/gh-pages.js');
+      this.copy('tasks/images.js', 'tasks/images.js');
+      this.copy('tasks/scripts.js', 'tasks/scripts.js');
+      this.copy('tasks/icons.js', 'tasks/icons.js');
+      this.copy('tasks/favicons.js', 'tasks/favicons.js');
+      if (this.fabricator) {
+        this.copy('tasks/metalsmith.js', 'tasks/metalsmith.js');
+        this.copy('tasks/filters.js', 'tasks/filters.js');
       }
+      this.copy('tasks/styles.js', 'tasks/styles.js');
+      this.copy('tasks/vendors.js', 'tasks/vendors.js');
 
       if (this.fabricator) {
         this.mkdir(this.assets + 'components');
         this.mkdir(this.assets + 'components/atoms');
         this.mkdir(this.assets + 'components/molecules');
         this.mkdir(this.assets + 'components/organisms');
+        this.mkdir(this.assets + 'components/pages');
         this.directory('assets/templates', this.assets + 'templates');
         this.directory('assets/data', this.assets + 'data');
         this.directory('assets/docs', this.assets + 'docs');
@@ -174,25 +143,8 @@ module.exports = yeoman.generators.Base.extend({
         this.mkdir(this.assets + 'sass/atoms');
         this.mkdir(this.assets + 'sass/molecules');
         this.mkdir(this.assets + 'sass/organisms');
-        this.mkdir(this.assets + 'sass/templates');
+        this.mkdir(this.assets + 'sass/pages');
         this.copy('assets/sass/styleguide.scss', this.assets + 'sass/styleguide.scss');
-
-        if (this.componentButton) {
-          this.copy('assets/components/atoms/button.hbs', this.assets + 'components/atoms/button.hbs');
-          this.copy('assets/sass/atoms/_buttons.scss', this.assets + 'sass/atoms/_buttons.scss');
-        }
-        if (this.componentVideo) {
-          this.copy('assets/components/atoms/video.hbs', this.assets + 'components/atoms/video.hbs');
-          this.copy('assets/sass/atoms/_videos.scss', this.assets + 'sass/atoms/_videos.scss');
-        }
-        if (this.componentSpacer) {
-          this.copy('assets/components/atoms/spacer.hbs', this.assets + 'components/atoms/spacer.hbs');
-          this.copy('assets/sass/atoms/_spacers.scss', this.assets + 'sass/atoms/_spacers.scss');
-        }
-        if (this.componentSeparator) {
-          this.copy('assets/components/atoms/separator.hbs', this.assets + 'components/atoms/separator.hbs');
-          this.copy('assets/sass/atoms/_separators.scss', this.assets + 'sass/atoms/_separators.scss');
-        }
       }
 
       this.directory('assets/js', this.assets + 'js');
@@ -226,8 +178,9 @@ module.exports = yeoman.generators.Base.extend({
       this.copy('editorconfig', '.editorconfig');
       this.copy('gitattributes', '.gitattributes');
       this.copy('gitignore', '.gitignore');
-      this.copy('jshintrc', '.jshintrc');
-      this.copy('sass-lint.yml', '.sass-lint.yml');
+      this.copy('eslintrc.yml', '.eslintrc.yml');
+      this.copy('env', '.env');
+      this.copy('stylelintrc', '.stylelintrc');
     }
   },
 
