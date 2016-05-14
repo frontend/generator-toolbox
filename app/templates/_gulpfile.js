@@ -15,8 +15,8 @@ require(config.tasks + 'scripts')();            // $ gulp scripts
 require(config.tasks + 'icons')();              // $ gulp icons
 require(config.tasks + 'favicons')();           // $ gulp favicons
 require(config.tasks + 'clean')();              // $ gulp clean<% if (fabricator) { %>
+require(config.tasks + 'metalsmith')();         // $ gulp metalsmith<% } %>
 require(config.tasks + 'server')();             // $ gulp serve
-require(config.tasks + 'metalsmith')();         // $ gulp metalsmith
 require(config.tasks + 'gh-pages')();           // $ gulp deploy<% if (tests) { %>
 require(config.tasks + 'tests-regression')();   // $ gulp regression
 require(config.tasks + 'tests-unit')();         // $ gulp test:unit

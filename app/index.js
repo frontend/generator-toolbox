@@ -143,7 +143,7 @@ module.exports = yeoman.Base.extend({
         this.mkdir(this.assets + 'sass/atoms');
         this.mkdir(this.assets + 'sass/molecules');
         this.mkdir(this.assets + 'sass/organisms');
-        this.mkdir(this.assets + 'sass/templates');
+        this.mkdir(this.assets + 'sass/pages');
         this.copy('assets/sass/styleguide.scss', this.assets + 'sass/styleguide.scss');
       }
 
@@ -179,6 +179,7 @@ module.exports = yeoman.Base.extend({
       this.copy('gitattributes', '.gitattributes');
       this.copy('gitignore', '.gitignore');
       this.copy('eslintrc.yml', '.eslintrc.yml');
+      this.copy('env', '.env');
       this.copy('stylelintrc', '.stylelintrc');
     }
   },

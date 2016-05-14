@@ -6,7 +6,7 @@ var yosay = require('yosay');
 var slug = require('slug');
 var fs = require('fs');
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.Base.extend({
 
   initializing: function () {
     if(fs.existsSync(this.destinationPath('gulp_config.json'))){
@@ -43,6 +43,10 @@ module.exports = yeoman.generators.Base.extend({
             name: 'Page',
             value: 'pages',
             checked: false
+          }, {
+            name: 'Doc page',
+            value: 'doc',
+            checked: false
           }
         ]
       },{
@@ -66,10 +70,12 @@ module.exports = yeoman.generators.Base.extend({
   writing: function () {
     if (typeof this.name !== 'undefined' && typeof this.type !== 'undefined') {
 
-      if (this.type !== 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
+      if (this.type !== 'doc' && this.type !== 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
         this.template('_component.html', this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine);
-      } else if (this.type === 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'pages/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
-        this.template('_page.html', this.config.assets + 'pages/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine);
+      } else if (this.type !== 'doc' && this.type === 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/pages/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
+        this.template('_page.html', this.config.assets + 'components/pages/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine);
+      } else if (this.type === 'doc' && this.type !== 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'docs/'+ slug(this.name).toLowerCase() +'.md'))) {
+        this.template('_doc.html', this.config.assets + 'docs/'+ slug(this.name).toLowerCase() +'.md');
       } else {
         this.log(chalk.red(slug(this.name).toLowerCase() + " already founded !") + "\nMake sure that your component doens't already exist.");
       }
