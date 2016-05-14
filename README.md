@@ -23,8 +23,6 @@ $ cd /path-to/your/project
 $ yo toolbox
 ```
 
-Then initialize your project with `$ npm start`.
-
 ## Options available
 
 You can use the flag `--skip-install` if you wish to installl all npm and bower dependencies later.

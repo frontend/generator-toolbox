@@ -6,7 +6,7 @@ var yosay = require('yosay');
 var slug = require('slug');
 var fs = require('fs');
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.Base.extend({
 
   initializing: function () {
     if(fs.existsSync(this.destinationPath('gulp_config.json'))){
@@ -40,8 +40,12 @@ module.exports = yeoman.generators.Base.extend({
             value: 'organisms',
             checked: false
           }, {
-            name: 'Template',
-            value: 'templates',
+            name: 'Page',
+            value: 'pages',
+            checked: false
+          }, {
+            name: 'Doc page',
+            value: 'doc',
             checked: false
           }
         ]
@@ -66,26 +70,24 @@ module.exports = yeoman.generators.Base.extend({
   writing: function () {
     if (typeof this.name !== 'undefined' && typeof this.type !== 'undefined') {
 
-      if (this.type !== 'templates' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.hbs'))) {
-        this.template('_component.hbs', this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.hbs');
-      } else if (this.type === 'templates' && !fs.existsSync(this.destinationPath(this.config.assets + 'templates/'+ slug(this.name).toLowerCase() +'.html'))) {
-        this.template('component.html', this.config.assets + 'templates/'+ slug(this.name).toLowerCase() +'.html');
+      if (this.type !== 'doc' && this.type !== 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
+        this.template('_component.html', this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine);
+      } else if (this.type !== 'doc' && this.type === 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/pages/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
+        this.template('_page.html', this.config.assets + 'components/pages/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine);
+      } else if (this.type === 'doc' && this.type !== 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'docs/'+ slug(this.name).toLowerCase() +'.md'))) {
+        this.template('_doc.html', this.config.assets + 'docs/'+ slug(this.name).toLowerCase() +'.md');
       } else {
         this.log(chalk.red(slug(this.name).toLowerCase() + " already founded !") + "\nMake sure that your component doens't already exist.");
       }
 
-      var plural = '';
-      if (this.type !== 'templates') {
-        plural = 's';
-      }
-      if (!fs.existsSync(this.destinationPath(this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + plural +'.scss'))) {
-        this.copy('components.scss', this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + plural +'.scss');
+      if (!fs.existsSync(this.destinationPath(this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + '.scss'))) {
+        this.copy('components.scss', this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + '.scss');
       } else {
         this.log(chalk.red(slug(this.name).toLowerCase() + " already founded !") + "\nMake sure that your component doens't already exist.");
       }
 
       var stylesheet = this.destinationPath(this.config.assets + 'sass/main.scss'),
-          importer = "@import '"+ this.type +"/"+ slug(this.name).toLowerCase() + plural +"';";
+          importer = "@import '"+ this.type +"/"+ slug(this.name).toLowerCase() + "';";
       if(fs.existsSync(stylesheet)){
         var body = fs.readFileSync(stylesheet).toString();
         if (body.indexOf(importer) < 0 ) {

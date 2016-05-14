@@ -1,7 +1,6 @@
 node_modules
 dist
 build
-styleguide
 .sass-cache
 .publish
 *.DS_Store

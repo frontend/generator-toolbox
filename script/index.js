@@ -6,7 +6,7 @@ var yosay = require('yosay');
 var slug = require('slug');
 var fs = require('fs');
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.Base.extend({
 
   initializing: function () {
     if(fs.existsSync(this.destinationPath('gulp_config.json'))){

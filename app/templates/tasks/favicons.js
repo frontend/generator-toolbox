@@ -11,7 +11,7 @@ module.exports = function() {
   */
   gulp.task('favicons', function() {
     return gulp.src(config.assets + 'favicons/*')
-      .pipe(gulp.dest(config.styleguide.dest));
+      .pipe(gulp.dest(config.metalsmith.dist));
   });
 
 };

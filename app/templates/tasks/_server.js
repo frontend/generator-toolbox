@@ -16,32 +16,32 @@ module.exports = function() {
   gulp.task('serve', ['default'], function () {
     browserSync({
       server: {
-        baseDir: [config.app.basedir],
+        baseDir: [config.app.basedir]
       },
       open: false
     });
     gulp.watch([config.assets + 'sass/**/*.scss'], function() {
-      runSequence('styles'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
+      runSequence('styles'<% if (fabricator) { %>, 'metalsmith'<% } %>, reload);
     });<% if (fabricator) { %>
     gulp.watch([config.assets + 'sass/styleguide.scss'], function() {
-      runSequence('styleguide-styles'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
+      runSequence('styleguide-styles'<% if (fabricator) { %>, 'metalsmith'<% } %>, reload);
     });<% } %>
     gulp.watch([config.assets + 'img/**/*', config.assets + 'svg/**/*'], function() {
-      runSequence('img'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
+      runSequence('img'<% if (fabricator) { %>, 'metalsmith'<% } %>, reload);
     });
     gulp.watch([config.assets + 'icons/**/*'], function() {
-      runSequence('icons'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
+      runSequence('icons'<% if (fabricator) { %>, 'metalsmith'<% } %>, reload);
     });
     gulp.watch([config.assets + 'js/**/*.js'], function() {
-      runSequence('scripts'<% if (fabricator) { %>, 'styleguide'<% } %>, reload);
+      runSequence('scripts'<% if (fabricator) { %>, 'metalsmith'<% } %>, reload);
     });<% if (fabricator) { %>
     gulp.watch([
-      config.assets + 'components/**/*.{html,hbs,md}',
-      config.assets + 'templates/**/*.html',
+      config.assets + 'components/**/*.{html,hbs,md,swig}',
+      config.assets + 'templates/**/*.{html,hbs,md,swig}',
       config.assets + 'docs/**/*.md',
       config.assets + 'data/**/*.{json,yml}'
     ], function() {
-      runSequence('styleguide', reload);
+      runSequence('metalsmith-docs', reload);
     });<% } %>
   });
 
