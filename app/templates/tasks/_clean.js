@@ -12,7 +12,7 @@ module.exports = function() {
   */
   gulp.task('clean', del.bind(null, [
     config.build.substr(0, config.build.length - 1)<% if (fabricator) { %>,
-    config.styleguide.dest<% } %>
+    config.metalsmith.dist<% } %>
   ]));
 
 }

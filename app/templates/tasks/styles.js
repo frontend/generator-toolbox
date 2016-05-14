@@ -43,7 +43,7 @@ module.exports = function() {
         })
       ]))
       .pipe(argv.production ? $.util.noop() : $.sourcemaps.write())
-      .pipe(argv.production ? $.minifyCss() : $.util.noop() )
+      .pipe(argv.production ? $.cleanCss() : $.util.noop() )
       .pipe($.concat('main.css'))
       .pipe($.size({title: 'STYLES', showFiles: true}))
       .pipe(gulp.dest(config.build + '/css'));

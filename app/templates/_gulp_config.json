@@ -48,7 +48,11 @@
     "dist": "styleguide/",
     "plugins": {
       "permalinks": {
-        "pattern": ":collection/:title"
+        "pattern": ":title",
+        "linksets": [{
+          "match": { "collection": "pages" },
+          "pattern": ":title"
+        }]
       },
       "collections": {
         "atoms": {
@@ -64,6 +68,10 @@
           "reverse": false
         },
         "pages": {
+          "sortBy": "title",
+          "reverse": false
+        },
+        "docs": {
           "sortBy": "title",
           "reverse": false
         }

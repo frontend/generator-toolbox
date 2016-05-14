@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width">
 
     {% if styleguide %}
-      <link rel="stylesheet" href="./build/css/styleguide.css">
+      <link rel="stylesheet" href="/build/css/styleguide.css">
     {% endif %}
 
     <link rel="stylesheet" href="/build/css/vendors.min.css">
@@ -37,8 +37,8 @@
       </div>
     {% endif %}
 
-    <script src="./build/js/vendors.min.js"></script>
-    <script src="./build/js/main.js"></script>
+    <script src="/build/js/vendors.min.js"></script>
+    <script src="/build/js/main.js"></script>
 
     {% if styleguide %}
       <script>
@@ -56,7 +56,7 @@
           });
         }(jQuery));
       </script>
-      <script src="./build/js/styleguide.min.js"></script>
+      <script src="/build/js/styleguide.min.js"></script>
     {% endif %}
 
     {% block javascripts %}{% endblock %}

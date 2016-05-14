@@ -6,12 +6,23 @@ var gulp          = require('gulp'),
     argv          = require('yargs').argv,
     swig          = require('swig');
 
-var markdown      = require('metalsmith-markdown'),
+var path          = require('path'),
+    dotenv        = require('dotenv'),
+    markdown      = require('metalsmith-markdown'),
     permalinks    = require('metalsmith-permalinks'),
     layouts       = require('metalsmith-layouts'),
+    define        = require('metalsmith-define'),
+    contentful    = require('contentful-metalsmith'),
     collections   = require('metalsmith-collections');
 
+var metadatas = [];
+dotenv.load();
 require('./filters.js')();
+
+var contentful_key = '';
+if (process.env.CONTENTFUL_KEY) {
+  contentful_key = process.env.CONTENTFUL_KEY;
+}
 
 module.exports = function() {
 
@@ -27,22 +38,37 @@ module.exports = function() {
   * Generate styleguide doc
   */
   gulp.task('metalsmith-docs', function() {
-    return gulp.src([config.assets + 'components/**/*.swig', config.assets + 'docs/**/*.md'])
+    return gulp.src([
+      config.assets + 'components/**/*.swig',
+      config.assets + 'docs/**/*.md',
+      config.assets + 'data/**/*.json'
+    ])
       .pipe($.plumber({errorHandler: errorAlert}))
       .pipe($.metalsmith({
         use: [
           markdown({ langPrefix: 'language-' }),
-          // permalinks(config.metalsmith.plugins.permalinks),
           collections(config.metalsmith.plugins.collections),
           function(files, metalsmith, done){
             for (var file in files) {
               if (files[file].collection == 'atoms' || files[file].collection == 'molecules' || files[file].collection == 'organisms') {
                 delete files[file];
               }
+              if (path.extname(file) === '.json') {
+                var key = path.basename(file, '.json');
+                metadatas[key] = JSON.parse(files[file].contents.toString());
+                delete files[file];
+              }
             }
             done();
           },
-          layouts(config.metalsmith.plugins.layouts)
+          define({
+            data: metadatas
+          }),
+          contentful({
+            accessToken : contentful_key
+          }),
+          layouts(config.metalsmith.plugins.layouts),
+          permalinks(config.metalsmith.plugins.permalinks)
         ]
       }))
       .pipe(gulp.dest(config.metalsmith.dist));
