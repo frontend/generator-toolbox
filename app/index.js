@@ -145,6 +145,7 @@ module.exports = yeoman.Base.extend({
         this.mkdir(this.assets + 'sass/organisms');
         this.mkdir(this.assets + 'sass/pages');
         this.copy('assets/sass/styleguide.scss', this.assets + 'sass/styleguide.scss');
+        this.copy('assets/sass/styleguide-variables.scss', this.assets + 'sass/styleguide-variables.scss');
       }
 
       this.directory('assets/js', this.assets + 'js');
