@@ -60,7 +60,6 @@
     "media-query-list-comma-space-after": "always",
     "media-query-list-comma-space-before": "never",
     "media-query-parentheses-space-inside": "never",
-    "no-browser-hacks": true,
     "no-duplicate-selectors": true,
     "no-eol-whitespace": true,
     "no-indistinguishable-colors": true,

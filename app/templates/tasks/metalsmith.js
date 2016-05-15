@@ -78,10 +78,7 @@ module.exports = function() {
   * Styleguide CSS Vendors
   */
   gulp.task('metalsmith-styles', function () {
-    return gulp.src([
-        config.metalsmith.assets + 'styles/fabricator.scss',
-        config.assets + 'sass/styleguide.scss'
-      ])
+    return gulp.src(config.assets + 'sass/styleguide.scss')
       .pipe($.sass({
         errLogToConsole: true
       }))
@@ -103,7 +100,7 @@ module.exports = function() {
   * Styleguide JS Vendors
   */
   gulp.task('metalsmith-scripts', function() {
-    return gulp.src([config.metalsmith.assets + 'scripts/fabricator.js'])
+    return gulp.src(config.metalsmith.assets + 'scripts/fabricator.js')
       .pipe($.browserify({
         insertGlobals : true
       }))

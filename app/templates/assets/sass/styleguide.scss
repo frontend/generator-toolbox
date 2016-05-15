@@ -1,7 +1,10 @@
-html {
-  font-size: 16px !important;
-}
+@charset 'UTF-8';
 
-.f-item-notes {
-  margin-bottom: 30px;
-}
+@import 'main-variables';
+@import 'styleguide-variables';
+@import '../../node_modules/toolbox-utils/styleguide/styles/mixins';
+@import '../../node_modules/toolbox-utils/styleguide/styles/code';
+@import '../../node_modules/toolbox-utils/styleguide/styles/controls';
+@import '../../node_modules/toolbox-utils/styleguide/styles/item';
+@import '../../node_modules/toolbox-utils/styleguide/styles/layout';
+@import '../../node_modules/toolbox-utils/styleguide/styles/menu';

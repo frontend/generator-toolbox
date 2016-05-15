@@ -5,7 +5,6 @@
   "dependencies": {<% if (bootstrap4) { %>
     "bootstrap": "git@github.com:twbs/bootstrap.git#v4-dev",<% } else if (bootstrapSass) { %>
     "bootstrap-sass": "~3.3.5",<% } %>
-    "fabricator": "fbrctr/fabricator",
     "html5shiv": "^3.7.3",
     "jquery": "^2.1.4",
     "respond.js": "^1.4.2"
@@ -76,7 +75,7 @@
     "slug": "^0.9.1",
     "stylelint": "^6.2.2",
     "swig": "^1.4.2",
-    "toolbox-utils": "0.0.1",
+    "toolbox-utils": "^0.0.2",
     "yargs": "^4.3.2"
   }
 }

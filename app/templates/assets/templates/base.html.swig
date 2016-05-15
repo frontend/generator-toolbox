@@ -5,7 +5,7 @@
 <!--[if IE 9]>         <html class="no-js lt-ie10"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-js"> <!--<![endif]-->
   <head>
-    <meta charset="utf-8">
+    <meta charset="utstyleguide-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title></title>
     <meta name="description" content="">
@@ -25,10 +25,13 @@
   </head>
   <body>
     {% if styleguide %}
-      {% include 'styleguide/f-icons.html.swig' %}
-      {% include 'styleguide/f-menu.html.swig' %}
-      <div class="f-container">
-        {% include 'styleguide/f-control.bar.html.swig' %}
+      {% include 'styleguide/icons.html.swig' %}
+      {% include 'styleguide/menu.html.swig' %}
+      <div class="styleguide-container">
+        <div class="styleguide-header-container"{% if heading_color %} style="background: {{heading_color}};"{% endif %}>
+          {% include 'styleguide/control.bar.html.swig' %}
+          <h1>{{title}}</h1>
+        </div>
     {% endif %}
 
     {% block content %}{% endblock %}
@@ -44,12 +47,12 @@
       <script>
         (function($){
           $(document).ready(function(){
-            $('.f-item-preview').each(function(){
+            $('.styleguide-item-preview').each(function(){
               var formatted = $(this).html().replace(/---[\s\S]*?---/g, '');
               $(this).html(formatted);
             });
 
-            $('.f-item-code code').each(function(){
+            $('.styleguide-item-code code').each(function(){
               var formatted = $(this).html().replace(/---[\s\S]*?---/g, '');
               $(this).html(formatted.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'));
             });
