@@ -4,12 +4,13 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var slug = require('slug');
+var pathExists = require('path-exists');
 var fs = require('fs');
 
 module.exports = yeoman.Base.extend({
 
   initializing: function () {
-    if(fs.existsSync(this.destinationPath('gulp_config.json'))){
+    if(pathExists.sync(this.destinationPath('gulp_config.json'))){
       this.config = require(this.destinationPath('gulp_config.json'));
       this.continue = true;
     } else {
@@ -57,10 +58,10 @@ module.exports = yeoman.Base.extend({
 
   writing: function () {
     if (typeof this.name !== 'undefined' && typeof this.type !== 'undefined') {
-      if (this.type === 'jquery' && !fs.existsSync(this.destinationPath(this.config.assets + 'js/'+ slug(this.name).toLowerCase() +'.js'))) {
+      if (this.type === 'jquery' && !pathExists.sync(this.destinationPath(this.config.assets + 'js/'+ slug(this.name).toLowerCase() +'.js'))) {
         this.copy('jquery.js', this.config.assets + 'js/'+ slug(this.name).toLowerCase() +'.js');
         this.template('_jquery.test.js', 'tests/unit/'+ slug(this.name).toLowerCase() +'.test.js');
-      } else if (this.type === 'vanilla' && !fs.existsSync(this.destinationPath(this.config.assets + 'js/'+ slug(this.name).toLowerCase() +'.js'))) {
+      } else if (this.type === 'vanilla' && !pathExists.sync(this.destinationPath(this.config.assets + 'js/'+ slug(this.name).toLowerCase() +'.js'))) {
         this.copy('vanilla.js', this.config.assets + 'js/'+ slug(this.name).toLowerCase() +'.js');
         this.template('_vanilla.test.js', 'tests/unit/'+ slug(this.name).toLowerCase() +'.test.js');
       } else {

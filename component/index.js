@@ -4,12 +4,13 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var slug = require('slug');
+var pathExists = require('path-exists');
 var fs = require('fs');
 
 module.exports = yeoman.Base.extend({
 
   initializing: function () {
-    if(fs.existsSync(this.destinationPath('gulp_config.json'))){
+    if(pathExists.sync(this.destinationPath('gulp_config.json'))){
       this.config = require(this.destinationPath('gulp_config.json'));
       this.continue = true;
     } else {
@@ -70,17 +71,17 @@ module.exports = yeoman.Base.extend({
   writing: function () {
     if (typeof this.name !== 'undefined' && typeof this.type !== 'undefined') {
 
-      if (this.type !== 'doc' && this.type !== 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
+      if (this.type !== 'doc' && this.type !== 'pages' && !pathExists.sync(this.destinationPath(this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
         this.template('_component.html', this.config.assets + 'components/'+ this.type +'/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine);
-      } else if (this.type !== 'doc' && this.type === 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'components/pages/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
+      } else if (this.type !== 'doc' && this.type === 'pages' && !pathExists.sync(this.destinationPath(this.config.assets + 'components/pages/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine))) {
         this.template('_page.html', this.config.assets + 'components/pages/'+ slug(this.name).toLowerCase() +'.html.' + this.config.metalsmith.plugins.layouts.engine);
-      } else if (this.type === 'doc' && this.type !== 'pages' && !fs.existsSync(this.destinationPath(this.config.assets + 'docs/'+ slug(this.name).toLowerCase() +'.md'))) {
+      } else if (this.type === 'doc' && this.type !== 'pages' && !pathExists.sync(this.destinationPath(this.config.assets + 'docs/'+ slug(this.name).toLowerCase() +'.md'))) {
         this.template('_doc.html', this.config.assets + 'docs/'+ slug(this.name).toLowerCase() +'.md');
       } else {
         this.log(chalk.red(slug(this.name).toLowerCase() + " already founded !") + "\nMake sure that your component doens't already exist.");
       }
 
-      if (!fs.existsSync(this.destinationPath(this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + '.scss'))) {
+      if (!pathExists.sync(this.destinationPath(this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + '.scss'))) {
         this.copy('components.scss', this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + '.scss');
       } else {
         this.log(chalk.red(slug(this.name).toLowerCase() + " already founded !") + "\nMake sure that your component doens't already exist.");
@@ -88,7 +89,7 @@ module.exports = yeoman.Base.extend({
 
       var stylesheet = this.destinationPath(this.config.assets + 'sass/main.scss'),
           importer = "@import '"+ this.type +"/"+ slug(this.name).toLowerCase() + "';";
-      if(fs.existsSync(stylesheet)){
+      if(pathExists.sync(stylesheet)){
         var body = fs.readFileSync(stylesheet).toString();
         if (body.indexOf(importer) < 0 ) {
           body = body.replace("// "+ this.type +":", "// "+ this.type +":\n"+importer);
