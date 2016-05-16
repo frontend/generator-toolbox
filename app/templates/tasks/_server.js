@@ -24,7 +24,7 @@ module.exports = function() {
       runSequence('styles'<% if (fabricator) { %>, 'metalsmith'<% } %>, reload);
     });<% if (fabricator) { %>
     gulp.watch([config.assets + 'sass/styleguide.scss', config.assets + 'sass/styleguide-variables.scss'], function() {
-      runSequence('styleguide-styles'<% if (fabricator) { %>, 'metalsmith'<% } %>, reload);
+      runSequence('metalsmith-styles'<% if (fabricator) { %>, 'metalsmith'<% } %>, reload);
     });<% } %>
     gulp.watch([config.assets + 'img/**/*', config.assets + 'svg/**/*'], function() {
       runSequence('img'<% if (fabricator) { %>, 'metalsmith'<% } %>, reload);
