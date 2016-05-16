@@ -1,6 +1,11 @@
 {% extends "base.html.swig" %}
 
 {% block content %}
-  <h1>{{title}}</h1>
+  {% if collection == 'docs' %}
+    <div class="styleguide-page-container">
+  {% endif %}
   {{contents|raw}}
+  {% if collection == 'docs' %}
+    </div>
+  {% endif %}
 {% endblock %}

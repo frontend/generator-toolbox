@@ -1,16 +1,16 @@
 <!-- fabricator menu -->
-<div class="f-menu">
+<div class="styleguide-menu">
 
-  {% include 'f-controls.html.swig' %}
+  {% include 'controls.html.swig' %}
 
   <ul>
 
     <li>
-      <a href="/index.html" class="f-menu__heading">Styleguide</a>
+      <a href="/index.html" class="styleguide-menu-heading">Styleguide</a>
     </li>
 
     <li>
-      <span class="f-menu__heading">Documentation</span>
+      <span class="styleguide-menu-heading">Documentation</span>
       <ul>
         {% for doc in collections.docs %}
           <li>
@@ -21,7 +21,7 @@
     </li>
 
     <li>
-      <a href="/atoms/" class="f-menu__heading">Atoms</a>
+      <a href="/atoms/" class="styleguide-menu-heading">Atoms</a>
       <ul>
         {% for atom in collections.atoms %}
           <li>
@@ -32,7 +32,7 @@
     </li>
 
     <li>
-      <a href="/molecules/" class="f-menu__heading">Molecules</a>
+      <a href="/molecules/" class="styleguide-menu-heading">Molecules</a>
       <ul>
         {% for molecule in collections.molecules %}
           <li>
@@ -43,7 +43,7 @@
     </li>
 
     <li>
-      <a href="/organisms/" class="f-menu__heading">Organisms</a>
+      <a href="/organisms/" class="styleguide-menu-heading">Organisms</a>
       <ul>
         {% for organism in collections.organisms %}
           <li>
@@ -54,7 +54,7 @@
     </li>
 
     <li>
-      <span class="f-menu__heading">Pages</span>
+      <span class="styleguide-menu-heading">Pages</span>
       <ul>
         {% for page in collections.pages %}
           <li>

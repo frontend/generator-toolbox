@@ -50,7 +50,7 @@ module.exports = function() {
   });
 
   gulp.task('styles:lint', function() {
-    return gulp.src([config.assets + 'sass/**/*.s+(a|c)ss', '!' + config.assets + 'sass/+(bootstrap-variables|bootstrap|main|styleguide|main-variables|_mixins).scss', '!' + config.assets + 'sass/organisms/_photoswipes.scss'])
+    return gulp.src([config.assets + 'sass/**/*.s+(a|c)ss', '!' + config.assets + 'sass/+(bootstrap-variables|bootstrap|main|styleguide|styleguide-variables|main-variables|_mixins).scss', '!' + config.assets + 'sass/organisms/_photoswipes.scss'])
         .pipe($.plumber({errorHandler: errorAlert}))
         .pipe($.stylelint({
           reporters: [
