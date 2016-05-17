@@ -8,14 +8,4 @@
 {% endblock %}
 
 {% block javascripts %}
-<script>
-  (function($){
-    $(document).ready(function(){
-      $('#page-wrapper').each(function(){
-        var formatted = $(this).html().replace(/---[\s\S]*?---/g, '');
-        $(this).html(formatted);
-      });
-    });
-  }(jQuery));
-</script>
 {% endblock %}

@@ -73,6 +73,13 @@ module.exports = function() {
             accessToken : contentful_key
           }),
           layouts(config.metalsmith.plugins.layouts),
+          function(files, metalsmith, done){
+            // Clean dirty front-matter comment
+            for (var file in files) {
+              files[file].contents = new Buffer(files[file].contents.toString().replace(/---[\s\S]*?---/g, ''));
+            }
+            done();
+          },
           permalinks(config.metalsmith.plugins.permalinks)
         ]
       }))

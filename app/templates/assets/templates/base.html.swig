@@ -47,14 +47,8 @@
       <script>
         (function($){
           $(document).ready(function(){
-            $('.styleguide-item-preview').each(function(){
-              var formatted = $(this).html().replace(/---[\s\S]*?---/g, '');
-              $(this).html(formatted);
-            });
-
             $('.styleguide-item-code code').each(function(){
-              var formatted = $(this).html().replace(/---[\s\S]*?---/g, '');
-              $(this).html(formatted.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'));
+              $(this).html($(this).html().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'));
             });
           });
         }(jQuery));
