@@ -87,18 +87,20 @@ module.exports = yeoman.Base.extend({
         this.log(chalk.red(slug(this.name).toLowerCase() + " already founded !") + "\nMake sure that your component doens't already exist.");
       }
 
-      var stylesheet = this.destinationPath(this.config.assets + 'sass/main.scss'),
-          importer = "@import '"+ this.type +"/"+ slug(this.name).toLowerCase() + "';";
-      if(pathExists.sync(stylesheet)){
-        var body = fs.readFileSync(stylesheet).toString();
-        if (body.indexOf(importer) < 0 ) {
-          body = body.replace("// "+ this.type +":", "// "+ this.type +":\n"+importer);
-          fs.writeFileSync(stylesheet, body);
+      if (this.type !== 'doc') {
+        var stylesheet = this.destinationPath(this.config.assets + 'sass/main.scss'),
+            importer = "@import '"+ this.type +"/"+ slug(this.name).toLowerCase() + "';";
+        if(pathExists.sync(stylesheet)){
+          var body = fs.readFileSync(stylesheet).toString();
+          if (body.indexOf(importer) < 0 ) {
+            body = body.replace("// "+ this.type +":", "// "+ this.type +":\n"+importer);
+            fs.writeFileSync(stylesheet, body);
+          } else {
+            this.log(chalk.red(importer + " already founded !") + "\nMake sure that your component doens't already exist.");
+          }
         } else {
-          this.log(chalk.red(importer + " already founded !") + "\nMake sure that your component doens't already exist.");
+          this.log(chalk.red("No main.sccs founded !") + "\nMake sure that your main.scss file is at the root of your sass folder.");
         }
-      } else {
-        this.log(chalk.red("No main.sccs founded !") + "\nMake sure that your main.scss file is at the root of your sass folder.");
       }
     }
   }
