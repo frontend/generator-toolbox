@@ -7,16 +7,14 @@
 
   {% if collections.organisms.length > 0 %}
     <div class="styleguide-item-heading-group">
-      <h2 class="styleguide-item-heading" data-styleguide-toggle="labels">Organisms</h2>
-      {{contents|raw}}
+      <div class="lead">{{contents|raw}}</div>
     </div>
     {% for organism in collections.organisms %}
       {{item.default('organism', organism, loop)}}
     {% endfor %}
   {% else %}
     <div class="styleguide-item-heading-group" data-styleguide-toggle="labels">
-      <h2 class="styleguide-item-heading">organisms</h2>
-      {{contents|raw}}
+      <div class="lead">{{contents|raw}}</div>
     </div>
   {% endif %}
 
