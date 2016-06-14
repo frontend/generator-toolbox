@@ -17,7 +17,7 @@ module.exports = function() {
     var obj = {};
     if (array) {
       for (var i = 0; i < array.length; i++) {
-        if (array[i].data.sys.id == value) {
+        if (array[i].id == value) {
           obj = array[i];
         }
       }
