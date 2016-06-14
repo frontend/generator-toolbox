@@ -14,7 +14,7 @@
       <ul>
         {% for doc in collections.docs %}
           <li>
-            <a href="/{{doc.title}}">{{doc.title}}</a>
+            <a href="/{{doc.title|lower}}">{{doc.title}}</a>
           </li>
         {% endfor %}
       </ul>

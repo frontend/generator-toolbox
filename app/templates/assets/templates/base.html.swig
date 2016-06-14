@@ -5,7 +5,7 @@
 <!--[if IE 9]>         <html class="no-js lt-ie10"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-js"> <!--<![endif]-->
   <head>
-    <meta charset="utstyleguide-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title></title>
     <meta name="description" content="">
@@ -47,14 +47,8 @@
       <script>
         (function($){
           $(document).ready(function(){
-            $('.styleguide-item-preview').each(function(){
-              var formatted = $(this).html().replace(/---[\s\S]*?---/g, '');
-              $(this).html(formatted);
-            });
-
             $('.styleguide-item-code code').each(function(){
-              var formatted = $(this).html().replace(/---[\s\S]*?---/g, '');
-              $(this).html(formatted.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'));
+              $(this).html($(this).html().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'));
             });
           });
         }(jQuery));
