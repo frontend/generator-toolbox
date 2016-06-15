@@ -15,19 +15,17 @@ var gulp            = require('gulp'),
 module.exports = function() {
 
   function errorAlert(error){
+    var args = Array.prototype.slice.call(arguments);
+
     if (!argv.production) {
       $.notify.onError({title: 'JS Error', message: 'Check your terminal', sound: 'Sosumi'})(error);
-      $.util.log(error.messageFormatted);
-    }
-    this.emit('end');
-  };
 
-  function handleErrors() {
-    var args = Array.prototype.slice.call(arguments);
-    $.notify.onError({
-      title: 'Compile Error',
-      message: '<%= error.message %>'
-    }).apply(this, args);
+      if (args) {
+        $.util.log(args);
+      } else {
+        $.util.log(error.messageFormatted);
+      }
+    }
     this.emit('end');
   }
 
@@ -48,14 +46,14 @@ module.exports = function() {
           sourceMaps: true
         }))
         .bundle()
-        .on('error', handleErrors)
+        .on('error', errorAlert)
         .pipe(source('bundle.js'))
         .pipe(buffer())
         .pipe($.sourcemaps.init({loadMaps: true}))
             .pipe($.if(argv.production, $.uglify()))
-            .on('error', handleErrors)
+            .on('error', errorAlert)
         .pipe(argv.production ? $.util.noop() : $.sourcemaps.write('./'))
-        .pipe(gulp.dest(config.build));
+        .pipe(gulp.dest(config.build + '/js'));
     } else {
       return browserify(
         {
@@ -68,15 +66,15 @@ module.exports = function() {
         }))
         .transform(browserifyshim)
         .bundle()
-        .on('error', handleErrors)
+        .on('error', errorAlert)
         .pipe(source('bundle.js'))
         .pipe(buffer())
         .pipe($.sourcemaps.init({loadMaps: true}))
             .pipe($.if(argv.production, $.uglify()))
-            .on('error', handleErrors)
+            .on('error', errorAlert)
         .pipe(argv.production ? $.util.noop() : $.sourcemaps.write('./'))
         .pipe($.size({title: 'BUNDLE SIZE', showFiles: true}))
-        .pipe(gulp.dest(config.build));
+        .pipe(gulp.dest(config.build + '/js'));
     }
   });
 

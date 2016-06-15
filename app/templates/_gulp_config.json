@@ -8,8 +8,7 @@
     "css": [
       ""
     ],
-    "js": [
-      "node_modules/jquery/dist/jquery.js"<% if (bootstrapSass) { %>,
+    "js": [<% if (bootstrapSass) { %>,
       "node_modules/bootstrap-sass/assets/javascripts/bootstrap/affix.js",
       "node_modules/bootstrap-sass/assets/javascripts/bootstrap/alert.js",
       "node_modules/bootstrap-sass/assets/javascripts/bootstrap/button.js",
