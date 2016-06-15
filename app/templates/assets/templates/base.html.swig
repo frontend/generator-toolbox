@@ -40,8 +40,9 @@
       </div>
     {% endif %}
 
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
     <script src="/build/js/vendors.min.js"></script>
-    <script src="/build/js/main.js"></script>
+    <script src="/build/js/bundle.js"></script>
 
     {% if styleguide %}
       <script>

@@ -2,12 +2,14 @@
   "name": "<%= slug(name).toLowerCase() %>",
   "version": "0.0.0",
   "main": "index.html",
-  "browserify-shim": {},
+  "browserify-shim": {
+    "jquery": "global:jQuery"
+  },
   "dependencies": {<% if (bootstrap4) { %>
     "bootstrap": "git@github.com:twbs/bootstrap.git#v4-dev",<% } else if (bootstrapSass) { %>
     "bootstrap-sass": "~3.3.5",<% } %>
     "html5shiv": "^3.7.3",
-    "jquery": "^2.1.4",
+    "jquery": "^2.2.4",
     "respond.js": "^1.4.2"
   },
   "devDependencies": {
