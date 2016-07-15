@@ -78,7 +78,7 @@
       "layouts": {
         "engine": "swig",
         "default": "default.html.swig",
-        "directory": "assets/templates",
+        "directory": "<%= assets %>templates",
         "rename": true
       },
       "metalsmithinplace": {
