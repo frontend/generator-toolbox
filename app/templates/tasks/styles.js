@@ -1,4 +1,5 @@
 import gulp from 'gulp';
+import browserSync from 'browser-sync';
 import config from '../gulp_config.json';
 import yargs from 'yargs';
 import slug from 'slug';

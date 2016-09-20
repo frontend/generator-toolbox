@@ -43,7 +43,7 @@ function errorAlert(error){
 /*
 * Styleguide CSS Vendors
 */
-export const metalsmithStyles = gulp.task('metalsmith-styles', () => {
+export const metalsmithStyles = () => {
   return gulp.src(`${config.assets}sass/styleguide.scss`)
   .pipe($.sass({
     errLogToConsole: true
@@ -60,12 +60,12 @@ export const metalsmithStyles = gulp.task('metalsmith-styles', () => {
   .pipe($.size({title: 'STYLEGUIDE CSS VENDORS', showFiles: true}))
   .pipe(gulp.dest(`${config.build}css`))
   .pipe(gulp.dest(`${config.metalsmith.dist}/build/css`));
-});
+};
 
 /*
 * Styleguide JS Vendors
 */
-export const metalsmithScripts = gulp.task('metalsmith-scripts', () => {
+export const metalsmithScripts = () => {
   return gulp.src(`${config.metalsmith.assets}scripts/fabricator.js`)
   .pipe($.browserify({
     insertGlobals : true
@@ -75,7 +75,7 @@ export const metalsmithScripts = gulp.task('metalsmith-scripts', () => {
   .pipe($.size({title: 'STYLEGUIDE JS VENDORS', showFiles: true}))
   .pipe(gulp.dest(`${config.build}js`))
   .pipe(gulp.dest(`${config.metalsmith.dist}/build/js`));
-});
+};
 
 /*
  * Generate styleguide doc
@@ -132,5 +132,5 @@ export const metalsmithAssets = () => {
 /*
  * Build metalsmith
  */
-export const metalsmith = gulp.series(metalsmithAssets, metalsmithDocs);
+export const metalsmith = gulp.series(metalsmithStyles, metalsmithScripts, metalsmithAssets, metalsmithDocs);
 export const metalsmithTask = gulp.task('metalsmith', metalsmith);

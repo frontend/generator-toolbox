@@ -42,7 +42,8 @@
 
     <script src="//code.jquery.com/jquery-2.2.4.min.js" crossorigin="anonymous"></script>
     <script src="/build/js/vendors.min.js"></script>
-    <script src="/build/js/bundle.js"></script>
+    <script src="/vendors.bundle.js"></script>
+    <script src="/app.bundle.js"></script>
 
     {% if styleguide %}
       <script>

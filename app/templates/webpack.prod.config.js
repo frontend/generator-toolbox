@@ -2,10 +2,7 @@
 
 const webpack = require('webpack');
 const path    = require('path');
-const yargs   = require('yargs');
 const config  = require('./gulp_config.json');
-
-const isProd = yargs.argv.production ? true : false;
 
 module.exports = {
   entry: {
