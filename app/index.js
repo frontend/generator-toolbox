@@ -116,17 +116,14 @@ module.exports = yeoman.Base.extend({
       this.template('_gulp_config.json', 'gulp_config.json');
       this.template('_gulpfile.js', 'gulpfile.js');
 
-      this.template('tasks/_clean.js', 'tasks/clean.js');
-      this.template('tasks/_server.js', 'tasks/server.js');
+      this.copy('tasks/clean.js', 'tasks/clean.js');
+      this.copy('tasks/server.js', 'tasks/server.js');
       this.copy('tasks/gh-pages.js', 'tasks/gh-pages.js');
       this.copy('tasks/images.js', 'tasks/images.js');
-      this.copy('tasks/scripts.js', 'tasks/scripts.js');
       this.copy('tasks/icons.js', 'tasks/icons.js');
       this.copy('tasks/favicons.js', 'tasks/favicons.js');
-      if (this.fabricator) {
-        this.copy('tasks/metalsmith.js', 'tasks/metalsmith.js');
-        this.copy('tasks/filters.js', 'tasks/filters.js');
-      }
+      this.copy('tasks/metalsmith.js', 'tasks/metalsmith.js');
+      this.copy('tasks/filters.js', 'tasks/filters.js');
       this.copy('tasks/styles.js', 'tasks/styles.js');
       this.copy('tasks/vendors.js', 'tasks/vendors.js');
 

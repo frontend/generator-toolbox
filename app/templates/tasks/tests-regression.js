@@ -1,13 +1,12 @@
-'use strict';
+/* globals require, module */
 
-var gulp          = require('gulp'),
-    $             = require('gulp-load-plugins')(),
-    config        = require('../gulp_config.json'),
-    imgur         = require('imgur'),
-    del           = require('del'),
-    fs            = require('fs'),
-    runSequence   = require('run-sequence'),
-    testConfig    = require('../tests/regression/regression.json');
+const gulp          = require('gulp'),
+      $             = require('gulp-load-plugins')(),
+      imgur         = require('imgur'),
+      del           = require('del'),
+      fs            = require('fs'),
+      runSequence   = require('run-sequence'),
+      testConfig    = require('../tests/regression/regression.json');
 
 module.exports = function() {
 
@@ -42,15 +41,15 @@ module.exports = function() {
   gulp.task('test:regression:upload', function (){
     fs.readdir(testConfig.comparisonPath, function(err,files){
       if (typeof files !== 'undefined' && files.length > 0) {
-        $.util.log($.util.colors.bgRed($.util.colors.white("\n CHECK FAILED : ")));
+        $.util.log($.util.colors.bgRed($.util.colors.white('\n CHECK FAILED : ')));
         files.forEach(function(file){
           imgur.uploadFile(testConfig.comparisonPath + file)
             .then(function (json) {
-                $.util.log($.util.colors.red(file) + $.util.colors.cyan(' -> ') + json.data.link);
+              $.util.log($.util.colors.red(file) + $.util.colors.cyan(' -> ') + json.data.link);
 
             })
             .catch(function (err) {
-                console.error(err.message);
+              console.error(err.message);
             });
         });
       }

@@ -1,7 +1,7 @@
-'use strict';
+/* globals require, module */
 
-var swig          = require('swig'),
-    marked        = require('marked');
+const swig          = require('swig'),
+      marked        = require('marked');
 
 module.exports = function() {
 
@@ -14,9 +14,9 @@ module.exports = function() {
   });
 
   swig.setFilter('get', function (array, value) {
-    var obj = {};
+    let obj = {};
     if (array) {
-      for (var i = 0; i < array.length; i++) {
+      for (let i = 0; i < array.length; i++) {
         if (array[i].id == value) {
           obj = array[i];
         }

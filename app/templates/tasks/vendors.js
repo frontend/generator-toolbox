@@ -1,8 +1,8 @@
-'use strict';
+/* globals require, module */
 
-var gulp          = require('gulp'),
-    $             = require('gulp-load-plugins')(),
-    config        = require('../gulp_config.json');
+const gulp          = require('gulp'),
+      $             = require('gulp-load-plugins')(),
+      config        = require('../gulp_config.json');
 
 module.exports = function() {
 
@@ -14,7 +14,7 @@ module.exports = function() {
       .pipe($.concat('vendors.min.css'))
       .pipe($.cleanCss())
       .pipe($.size({title: 'CSS VENDORS', showFiles: true}))
-      .pipe(gulp.dest(config.build + 'css'));
+      .pipe(gulp.dest(`${config.build}css`));
   });
 
  /*
@@ -25,7 +25,7 @@ module.exports = function() {
       .pipe($.concat('vendors.min.js'))
       .pipe($.uglify())
       .pipe($.size({title: 'JS VENDORS', showFiles: true}))
-      .pipe(gulp.dest(config.build + 'js'));
+      .pipe(gulp.dest(`${config.build}js`));
   });
 
  /*
@@ -34,7 +34,7 @@ module.exports = function() {
   gulp.task('fonts-vendors', function() {
     return gulp.src(config.vendors.fonts)
       .pipe($.size({title: 'FONTS'}))
-      .pipe(gulp.dest(config.build + 'fonts'));
+      .pipe(gulp.dest(`${config.build}fonts`));
   });
 
  /*
@@ -45,7 +45,7 @@ module.exports = function() {
       .pipe($.concat('polyfills.min.js'))
       .pipe($.uglify())
       .pipe($.size({title: 'POLYFILLS', showFiles: true}))
-      .pipe(gulp.dest(config.build + 'js'));
+      .pipe(gulp.dest(`${config.build}js`));
   });
 
   /*

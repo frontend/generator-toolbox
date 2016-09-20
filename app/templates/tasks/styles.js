@@ -1,22 +1,22 @@
-'use strict';
+/* globals require, module */
 
-var gulp          = require('gulp'),
-    $             = require('gulp-load-plugins')(),
-    config        = require('../gulp_config.json'),
-    argv          = require('yargs').argv,
-    slug          = require('slug');
+const gulp          = require('gulp'),
+      $             = require('gulp-load-plugins')(),
+      config        = require('../gulp_config.json'),
+      argv          = require('yargs').argv,
+      slug          = require('slug');
 
 module.exports = function() {
 
-  var iconFontName = slug(config.iconsFontName).toLowerCase();
+  const iconFontName = slug(config.iconsFontName).toLowerCase();
 
   function errorAlert(error){
     if (!argv.production) {
-      $.notify.onError({title: "SCSS Error", message: "Check your terminal", sound: "Sosumi"})(error);
+      $.notify.onError({title: 'SCSS Error', message: 'Check your terminal', sound: 'Sosumi'})(error);
       $.util.log(error.messageFormatted);
     }
-    this.emit("end");
-  };
+    this.emit('end');
+  }
 
   /**
    * Build styles from SCSS files
@@ -26,7 +26,7 @@ module.exports = function() {
     if (argv.production) { $.util.log('[styles] Production mode' ); }
     else { $.util.log('[styles] Dev mode'); }
 
-    return gulp.src([config.assets + 'sass/' + iconFontName + '.scss', config.assets + 'sass/main.scss'])
+    return gulp.src([`${config.assets}sass/${iconFontName}.scss`, `${config.assets}sass/main.scss`])
       .pipe($.plumber({errorHandler: errorAlert}))
       .pipe(argv.production ? $.util.noop() : $.sourcemaps.init())
       .pipe($.sass({
@@ -46,11 +46,11 @@ module.exports = function() {
       .pipe(argv.production ? $.cleanCss() : $.util.noop() )
       .pipe($.concat('main.css'))
       .pipe($.size({title: 'STYLES', showFiles: true}))
-      .pipe(gulp.dest(config.build + '/css'));
+      .pipe(gulp.dest(`${config.build}/css`));
   });
 
   gulp.task('styles:lint', function() {
-    return gulp.src([config.assets + 'sass/**/*.s+(a|c)ss', '!' + config.assets + 'sass/+(bootstrap-variables|bootstrap|main|styleguide|styleguide-variables|main-variables|_mixins).scss', '!' + config.assets + 'sass/organisms/_photoswipes.scss'])
+    return gulp.src([`${config.assets}sass/**/*.s+(a|c)ss`, `!${config.assets}sass/+(bootstrap-variables|bootstrap|main|styleguide|styleguide-variables|main-variables|_mixins).scss`, `!${config.assets}sass/organisms/_photoswipes.scss`])
         .pipe($.plumber({errorHandler: errorAlert}))
         .pipe($.stylelint({
           reporters: [

@@ -1,8 +1,8 @@
-'use strict';
+/* globals require, module */
 
-var gulp          = require('gulp'),
-    $             = require('gulp-load-plugins')(),
-    config        = require('../gulp_config.json');
+const gulp          = require('gulp'),
+      $             = require('gulp-load-plugins')(),
+      config        = require('../gulp_config.json');
 
 module.exports = function() {
 
@@ -10,7 +10,7 @@ module.exports = function() {
   * Deploy to GH pages
   */
   gulp.task('deploy', function () {
-    return gulp.src(config.app.ghpages + '/**/*')
+    return gulp.src(`${config.app.ghpages}/**/*`)
       .pipe($.ghPages());
   });
 

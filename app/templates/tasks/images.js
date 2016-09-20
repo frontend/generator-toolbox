@@ -1,12 +1,12 @@
-'use strict';
+/* globals require, module */
 
-var gulp          = require('gulp'),
-    $             = require('gulp-load-plugins')(),
-    config        = require('../gulp_config.json');
+const gulp          = require('gulp'),
+      $             = require('gulp-load-plugins')(),
+      config        = require('../gulp_config.json');
 
 module.exports = function() {
 
-  var pngquant = require('imagemin-pngquant');
+  const pngquant = require('imagemin-pngquant');
 
  /**
   * Copy images
@@ -18,23 +18,23 @@ module.exports = function() {
         use: [pngquant()]
       }))
       .pipe($.size({title: 'IMAGES'}))
-      .pipe(gulp.dest(config.build + 'img'));
+      .pipe(gulp.dest(`${config.build}img`));
   });
 
   /**
-   * Copy svg
-   */
-   gulp.task('svg-optim', function() {
-     return gulp.src(config.svg)
-       .pipe($.imagemin({
+  * Copy svg
+  */
+  gulp.task('svg-optim', function() {
+    return gulp.src(config.svg)
+      .pipe($.imagemin({
         svgoPlugins: [{
           cleanupIDs: false // we usually need them
         }]
-       }))
-       .pipe($.size({title: 'SVG'}))
-       .pipe(gulp.dest(config.build + 'svg'));
-   });
+      }))
+      .pipe($.size({title: 'SVG'}))
+      .pipe(gulp.dest(`${config.build}svg`));
+  });
 
-   gulp.task('img', ['img-optim', 'svg-optim']);
+  gulp.task('img', ['img-optim', 'svg-optim']);
 
 };

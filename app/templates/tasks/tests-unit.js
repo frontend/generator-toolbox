@@ -1,18 +1,17 @@
-'use strict';
+/* globals require, module */
 
-var gulp          = require('gulp'),
-    $             = require('gulp-load-plugins')(),
-    config        = require('../gulp_config.json');
+const gulp          = require('gulp'),
+      $             = require('gulp-load-plugins')();
 
 module.exports = function() {
-  function handleError(err) {this.emit('end');}
+  function handleError() {this.emit('end');}
 
   gulp.task('test:unit', function () {
     return gulp.src(['tests/unit/**/*.js'], {read: false})
       .pipe($.mocha({
         reporter: 'spec'
       }))
-      .on("error", handleError);
+      .on('error', handleError);
   });
 
 };
