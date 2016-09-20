@@ -4,6 +4,9 @@ import config from '../gulp_config.json';
 import yargs from 'yargs';
 import slug from 'slug';
 import autoprefixer from 'autoprefixer';
+import stylelint from 'stylelint';
+import reporter from 'postcss-reporter';
+import scss from 'postcss-scss';
 
 import loadPlugins from 'gulp-load-plugins';
 const $ = loadPlugins();
@@ -13,7 +16,7 @@ const iconFontName = slug(config.iconsFontName).toLowerCase();
 function errorAlert(error){
   if (!yargs.argv.production) {
     $.notify.onError({title: 'SCSS Error', message: 'Check your terminal', sound: 'Sosumi'})(error);
-    $.util.log(error.messageFormatted);
+    $.util.log(error.messageFormatted ?: error.message);
   }
   this.emit('end');
 }
@@ -52,11 +55,14 @@ export const stylesBuild = () => {
 export const stylesLint = () => {
   return gulp.src([`${config.assets}sass/**/*.s+(a|c)ss`])
       .pipe($.plumber({errorHandler: errorAlert}))
-      .pipe($.stylelint({
-        reporters: [
-          {formatter: 'string', console: true}
-        ]
-      }));
+      .pipe($.postcss(
+        [
+          stylelint(),
+          reporter({ clearMessages: true })
+        ],
+        {
+          syntax: scss
+        }));
 };
 
 export const styles = gulp.series(stylesLint, stylesBuild);

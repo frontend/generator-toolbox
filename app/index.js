@@ -114,11 +114,11 @@ module.exports = yeoman.Base.extend({
     app: function () {
       this.template('_package.json', 'package.json');
       this.template('_gulp_config.json', 'gulp_config.json');
-      this.template('_gulpfile.babel.js', 'gulpfile.babel.js');
+      this.copy('gulpfile.babel.js', 'gulpfile.babel.js');
 
       this.copy('tasks/clean.js', 'tasks/clean.js');
       this.copy('tasks/server.js', 'tasks/server.js');
-      this.copy('tasks/gh-pages.js', 'tasks/gh-pages.js');
+      this.copy('tasks/deploy.js', 'tasks/deploy.js');
       this.copy('tasks/images.js', 'tasks/images.js');
       this.copy('tasks/icons.js', 'tasks/icons.js');
       this.copy('tasks/favicons.js', 'tasks/favicons.js');
@@ -187,7 +187,7 @@ module.exports = yeoman.Base.extend({
 
   install: function () {
     if (!this.options['skip-install']) {
-      this.installDependencies();
+      this.npmInstall();
     }
   }
 });
