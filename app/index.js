@@ -114,7 +114,7 @@ module.exports = yeoman.Base.extend({
     this.template('_package.json', 'package.json');
 
       this.template('_gulp_config.json', 'gulp_config.json');
-      this.template('_gulpfile.js', 'gulpfile.js');
+      this.template('_gulpfile.babel.js', 'gulpfile.babel.js');
 
       this.copy('tasks/clean.js', 'tasks/clean.js');
       this.copy('tasks/server.js', 'tasks/server.js');
@@ -173,7 +173,10 @@ module.exports = yeoman.Base.extend({
     },
 
     projectfiles: function () {
+      this.template('babelrc', '.babelrc');
       this.copy('editorconfig', '.editorconfig');
+      this.copy('webpack.dev.config.js', 'webpack.dev.config.js');
+      this.copy('webpack.prod.config.js', 'webpack.prod.config.js');
       this.copy('gitattributes', '.gitattributes');
       this.template('gitignore', '.gitignore');
       this.copy('eslintrc.yml', '.eslintrc.yml');

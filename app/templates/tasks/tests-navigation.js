@@ -1,16 +1,11 @@
-/* globals require, module */
+import gulp from 'gulp';
+import loadPlugins from 'gulp-load-plugins';
+const $ = loadPlugins();
 
-const gulp          = require('gulp'),
-      $             = require('gulp-load-plugins')();
-
-module.exports = function() {
-
-  gulp.task('test:navigation', function () {
-    return gulp.src('tests/navigation/**/*.js')
-      .pipe($.casperjs({command:'test'}))
-      .on('error', function(data) {
-        $.util.log('Error', data.message);
-      });
-  });
-
-};
+export const testNavigation = gulp.task('test:navigation', () => {
+  return gulp.src('tests/navigation/**/*.js')
+    .pipe($.casperjs({command:'test'}))
+    .on('error', function(data) {
+      $.util.log('Error', data.message);
+    });
+});

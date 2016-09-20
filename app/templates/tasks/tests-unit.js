@@ -1,17 +1,15 @@
-/* globals require, module */
+import gulp from 'gulp';
+import loadPlugins from 'gulp-load-plugins';
+const $ = loadPlugins();
 
-const gulp          = require('gulp'),
-      $             = require('gulp-load-plugins')();
+function handleError() {this.emit('end');}
 
-module.exports = function() {
-  function handleError() {this.emit('end');}
-
-  gulp.task('test:unit', function () {
-    return gulp.src(['tests/unit/**/*.js'], {read: false})
-      .pipe($.mocha({
-        reporter: 'spec'
-      }))
-      .on('error', handleError);
-  });
-
+export const testUnit = () => {
+  return gulp.src(['tests/unit/**/*.js'], {read: false})
+    .pipe($.mocha({
+      reporter: 'spec'
+    }))
+    .on('error', handleError);
 };
+
+export const testUnitTask = gulp.task('testUnit', testUnit);

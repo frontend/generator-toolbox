@@ -1,28 +1,22 @@
-/* globals require, module */
+import swig from 'swig';
+import marked from 'marked';
 
-const swig          = require('swig'),
-      marked        = require('marked');
+export const markdown = swig.setFilter('markdown', string => {
+  return marked(string);
+});
 
-module.exports = function() {
+export const dump = swig.setFilter('dump', input => {
+  return JSON.stringify(input, null, 2);
+});
 
-  swig.setFilter('markdown', function (string) {
-    return marked(string);
-  });
-
-  swig.setFilter('dump', function (input) {
-    return JSON.stringify(input, null, 2);
-  });
-
-  swig.setFilter('get', function (array, value) {
-    let obj = {};
-    if (array) {
-      for (let i = 0; i < array.length; i++) {
-        if (array[i].id == value) {
-          obj = array[i];
-        }
+export const get = swig.setFilter('get', (array, value) => {
+  let obj = {};
+  if (array) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].id == value) {
+        obj = array[i];
       }
     }
-    return obj;
-  });
-
-};
+  }
+  return obj;
+});
