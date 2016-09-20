@@ -4,6 +4,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var slug = require('slug');
+var mkdirp = require('mkdirp');
 
 var toolboxSay = function() {
   return  '                                             '+'\n'+
@@ -111,8 +112,7 @@ module.exports = yeoman.Base.extend({
 
   writing: {
     app: function () {
-    this.template('_package.json', 'package.json');
-
+      this.template('_package.json', 'package.json');
       this.template('_gulp_config.json', 'gulp_config.json');
       this.template('_gulpfile.babel.js', 'gulpfile.babel.js');
 
@@ -128,30 +128,30 @@ module.exports = yeoman.Base.extend({
       this.copy('tasks/vendors.js', 'tasks/vendors.js');
 
       if (this.fabricator) {
-        this.mkdir(this.assets + 'components');
-        this.mkdir(this.assets + 'components/atoms');
-        this.mkdir(this.assets + 'components/molecules');
-        this.mkdir(this.assets + 'components/organisms');
-        this.mkdir(this.assets + 'components/pages');
+        mkdirp.sync(this.assets + 'components');
+        mkdirp.sync(this.assets + 'components/atoms');
+        mkdirp.sync(this.assets + 'components/molecules');
+        mkdirp.sync(this.assets + 'components/organisms');
+        mkdirp.sync(this.assets + 'components/pages');
         this.directory('assets/templates', this.assets + 'templates');
         this.directory('assets/data', this.assets + 'data');
         this.directory('assets/docs', this.assets + 'docs');
-        this.mkdir(this.assets + 'sass');
-        this.mkdir(this.assets + 'sass/atoms');
-        this.mkdir(this.assets + 'sass/molecules');
-        this.mkdir(this.assets + 'sass/organisms');
-        this.mkdir(this.assets + 'sass/pages');
+        mkdirp.sync(this.assets + 'sass');
+        mkdirp.sync(this.assets + 'sass/atoms');
+        mkdirp.sync(this.assets + 'sass/molecules');
+        mkdirp.sync(this.assets + 'sass/organisms');
+        mkdirp.sync(this.assets + 'sass/pages');
         this.copy('assets/sass/styleguide.scss', this.assets + 'sass/styleguide.scss');
         this.copy('assets/sass/styleguide-variables.scss', this.assets + 'sass/styleguide-variables.scss');
       }
 
       this.directory('assets/js', this.assets + 'js');
 
-      this.mkdir(this.assets + 'img');
-      this.mkdir(this.assets + 'svg');
-      this.mkdir(this.assets + 'fonts');
-      this.mkdir(this.assets + 'icons');
-      this.mkdir(this.assets + 'favicons');
+      mkdirp.sync(this.assets + 'img');
+      mkdirp.sync(this.assets + 'svg');
+      mkdirp.sync(this.assets + 'fonts');
+      mkdirp.sync(this.assets + 'icons');
+      mkdirp.sync(this.assets + 'favicons');
 
       if (this.bootstrap4) {
         this.copy('assets/sass/bootstrap4.scss', this.assets + 'sass/bootstrap4.scss');
@@ -164,8 +164,8 @@ module.exports = yeoman.Base.extend({
 
       if (this.tests) {
         this.directory('tests', 'tests');
-        this.mkdir('tests/unit');
-        this.mkdir('tests/navigation');
+        mkdirp.sync('tests/unit');
+        mkdirp.sync('tests/navigation');
         this.copy('tasks/tests-regression.js', 'tasks/tests-regression.js');
         this.copy('tasks/tests-unit.js', 'tasks/tests-unit.js');
         this.copy('tasks/tests-navigation.js', 'tasks/tests-navigation.js');
