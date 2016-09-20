@@ -5,9 +5,7 @@
     "ghpages": "<% if (fabricator) { %>styleguide<% } else { %>.<% } %>"
   },
   "vendors": {
-    "css": [
-      ""
-    ],
+    "css": [],
     "js": [<% if (bootstrapSass) { %>
       "node_modules/bootstrap-sass/assets/javascripts/bootstrap/affix.js",
       "node_modules/bootstrap-sass/assets/javascripts/bootstrap/alert.js",

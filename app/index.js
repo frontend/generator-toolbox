@@ -114,19 +114,16 @@ module.exports = yeoman.Base.extend({
     this.template('_package.json', 'package.json');
 
       this.template('_gulp_config.json', 'gulp_config.json');
-      this.template('_gulpfile.js', 'gulpfile.js');
+      this.template('_gulpfile.babel.js', 'gulpfile.babel.js');
 
-      this.template('tasks/_clean.js', 'tasks/clean.js');
-      this.template('tasks/_server.js', 'tasks/server.js');
+      this.copy('tasks/clean.js', 'tasks/clean.js');
+      this.copy('tasks/server.js', 'tasks/server.js');
       this.copy('tasks/gh-pages.js', 'tasks/gh-pages.js');
       this.copy('tasks/images.js', 'tasks/images.js');
-      this.copy('tasks/scripts.js', 'tasks/scripts.js');
       this.copy('tasks/icons.js', 'tasks/icons.js');
       this.copy('tasks/favicons.js', 'tasks/favicons.js');
-      if (this.fabricator) {
-        this.copy('tasks/metalsmith.js', 'tasks/metalsmith.js');
-        this.copy('tasks/filters.js', 'tasks/filters.js');
-      }
+      this.copy('tasks/metalsmith.js', 'tasks/metalsmith.js');
+      this.copy('tasks/filters.js', 'tasks/filters.js');
       this.copy('tasks/styles.js', 'tasks/styles.js');
       this.copy('tasks/vendors.js', 'tasks/vendors.js');
 
@@ -176,7 +173,10 @@ module.exports = yeoman.Base.extend({
     },
 
     projectfiles: function () {
+      this.template('babelrc', '.babelrc');
       this.copy('editorconfig', '.editorconfig');
+      this.copy('webpack.dev.config.js', 'webpack.dev.config.js');
+      this.copy('webpack.prod.config.js', 'webpack.prod.config.js');
       this.copy('gitattributes', '.gitattributes');
       this.template('gitignore', '.gitignore');
       this.copy('eslintrc.yml', '.eslintrc.yml');
