@@ -125,6 +125,7 @@ module.exports = yeoman.Base.extend({
       this.copy('tasks/metalsmith.js', 'tasks/metalsmith.js');
       this.copy('tasks/filters.js', 'tasks/filters.js');
       this.copy('tasks/styles.js', 'tasks/styles.js');
+      this.copy('tasks/scripts.js', 'tasks/scripts.js');
       this.copy('tasks/vendors.js', 'tasks/vendors.js');
 
       if (this.fabricator) {
