@@ -80,7 +80,6 @@
     "metalsmith-slug": "^0.2.0",
     "mocha": "^2.2.5",
     "phantomcss": "^1.0.0",
-    "run-sequence": "~1.1.0",
     "sinon": "^1.14.1",
     "sinon-chai": "^2.7.0",
     "mocha": "^3.0.2",

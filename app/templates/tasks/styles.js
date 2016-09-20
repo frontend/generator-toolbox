@@ -16,7 +16,7 @@ const iconFontName = slug(config.iconsFontName).toLowerCase();
 function errorAlert(error){
   if (!yargs.argv.production) {
     $.notify.onError({title: 'SCSS Error', message: 'Check your terminal', sound: 'Sosumi'})(error);
-    $.util.log(error.messageFormatted ?: error.message);
+    $.util.log(error.messageFormatted ? error.messageFormatted : error.message);
   }
   this.emit('end');
 }
@@ -29,7 +29,7 @@ export const stylesBuild = () => {
   if (yargs.argv.production) { $.util.log('[styles] Production mode' ); }
   else { $.util.log('[styles] Dev mode'); }
 
-  return gulp.src([`${config.assets}sass/${iconFontName}.scss`, `${config.assets}sass/main.scss`])
+  return gulp.src([`${config.assets}sass/main.scss`])
     .pipe($.plumber({errorHandler: errorAlert}))
     .pipe(yargs.argv.production ? $.util.noop() : $.sourcemaps.init())
     .pipe($.sass({
@@ -58,7 +58,10 @@ export const stylesLint = () => {
       .pipe($.postcss(
         [
           stylelint(),
-          reporter({ clearMessages: true })
+          reporter({
+            clearMessages: true,
+            throwError: yargs.argv.production
+          })
         ],
         {
           syntax: scss
