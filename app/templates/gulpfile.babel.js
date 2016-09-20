@@ -45,4 +45,4 @@ gulp.task('default', defaultFunc);
 /**
  * Serve task
  */
-export const serveTask = gulp.task('serve', gulp.series(serve));
+export const serveTask = gulp.task('serve', gulp.series(defaultFunc, serve));
