@@ -14,6 +14,7 @@ import { scripts, scriptsTask } from './tasks/scripts';
 import { icons, iconsTask } from './tasks/icons';
 import { favicons, faviconsTask } from './tasks/favicons';
 import { clean, cleanTask } from './tasks/clean';
+import { single, singleTask } from './tasks/single';
 import { metalsmith, metalsmithTask } from './tasks/metalsmith';
 import { deploy, deployTask } from './tasks/deploy';
 import { testRegression, testRegressionTask } from './tasks/tests-regression';
@@ -24,17 +25,8 @@ import { serve } from './tasks/server';
 /**
 * Task to build assets on production server
 */
-const build = gulp.series(clean, vendors, styles, scripts, img, icons);
+const build = gulp.series(clean, vendors, single, styles, scripts, img, icons);
 gulp.task('build', build);
-
-/**
- * Init project
- */
-gulp.task('init', function() {
-  return gulp.src('node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss')
-    .pipe($.rename('bootstrap-variables.scss'))
-    .pipe(gulp.dest(`${config.assets}sass/`));
-});
 
 /**
  * Default task
