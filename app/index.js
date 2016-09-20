@@ -178,7 +178,7 @@ module.exports = yeoman.Base.extend({
     projectfiles: function () {
       this.copy('editorconfig', '.editorconfig');
       this.copy('gitattributes', '.gitattributes');
-      this.copy('gitignore', '.gitignore');
+      this.template('gitignore', '.gitignore');
       this.copy('eslintrc.yml', '.eslintrc.yml');
       this.copy('env', '.env');
       this.copy('stylelintrc', '.stylelintrc');
