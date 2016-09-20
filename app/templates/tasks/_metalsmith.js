@@ -103,6 +103,7 @@ export const metalsmithDocs = () => {
               delete files[file];
             }
           }
+          metadatas['path'] = yargs.argv.ghpages ? config.metalsmith.url : '/';
           done();
         },
         define({
