@@ -9,7 +9,7 @@ const $ = loadPlugins();
 
 import { vendors, vendorsTask } from './tasks/vendors';
 import { img, imgTask } from './tasks/images';
-import { styles, stylesTask } from './tasks/styles';
+import { styles, stylesTask, stylesLintTask } from './tasks/styles';
 import { scripts, scriptsTask } from './tasks/scripts';
 import { icons, iconsTask } from './tasks/icons';
 import { favicons, faviconsTask } from './tasks/favicons';
