@@ -23,6 +23,15 @@ import { testNavigation, testNavigationTask } from './tasks/tests-navigation';
 import { serve } from './tasks/server';
 
 /**
+ * Init project
+ */
+gulp.task('init', function() {
+  return gulp.src('node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss')
+    .pipe($.rename('bootstrap-variables.scss'))
+    .pipe(gulp.dest(`${config.assets}sass/`));
+});
+
+/**
 * Task to build assets on production server
 */
 const build = gulp.series(clean, vendors, single, styles, scripts, img, icons);

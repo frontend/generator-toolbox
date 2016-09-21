@@ -40,13 +40,7 @@
   "iconsFontName": "icons",
   "build": "<%= build %>",
   "browsers": ["last 2 versions", "safari 5", "ie 8", "ie 9", "ff 27", "opera 12.1"]<% if (fabricator) { %>,
-  "singles": [
-    {
-      "source": "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss",
-      "name": "bootstrap-variables.scss",
-      "destination": "assets/sass/"
-    }
-  ],
+  "singles": [],
   "metalsmith": {
     "assets": "node_modules/toolbox-utils/styleguide/",
     "dist": "styleguide/",
