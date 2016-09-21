@@ -116,6 +116,8 @@ module.exports = yeoman.Base.extend({
         this.build = props.build + '/';
       }
 
+      this.fromSassToTop = '../'.repeat(this.assets.replace(/^\/|\/$/, '').split('/').length + 2);
+
       done();
     }.bind(this));
   },
