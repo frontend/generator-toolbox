@@ -1,5 +1,6 @@
 import gulp from 'gulp';
 import webpack from 'webpack';
+import yargs from 'yargs';
 import config from '../gulp_config.json';
 import webpackSettings from '../webpack.dev.config';
 import browserSync from 'browser-sync';
@@ -11,7 +12,6 @@ import { img } from './images';
 import { styles } from './styles';
 import { scripts } from './scripts';
 import { icons } from './icons';
-import { metalsmith, metalsmithStyles, metalsmithDocs, metalsmithAssets } from './metalsmith';
 
 const bundler = webpack(webpackSettings);
 
@@ -22,6 +22,11 @@ const inject = () => {
   return gulp.src([`${config.metalsmith.dist}/build/**/*.css`])
     .pipe(browserSync.stream({match: '**/*.css'}));
 };
+
+/**
+ * useless task
+ */
+const inprod = done => done();
 
 /**
  * Serve
@@ -47,21 +52,35 @@ export const serve = () => {
 
   gulp.watch([
     `${config.assets}sass/**/*.scss`
-  ], gulp.series(styles, metalsmithAssets, inject));
+  ], gulp.series(
+    styles,
+    yargs.argv.production ? inprod : require('./metalsmith').metalsmithAssets,
+    inject));
 
   gulp.watch([
     `${config.assets}sass/styleguide.scss`,
     `${config.assets}sass/styleguide-variables.scss`
-  ], gulp.series(metalsmithStyles, inject));
+  ], gulp.series(
+    yargs.argv.production ? inprod : require('./metalsmith').metalsmithStyles,
+    inject
+  ));
 
   gulp.watch([
     `${config.assets}img/**/*`,
     `${config.assets}svg/**/*`
-  ], gulp.series(img, metalsmith, browserSync.reload));
+  ], gulp.series(
+    img,
+    yargs.argv.production ? inprod : require('./metalsmith').metalsmith,
+    browserSync.reload
+  ));
 
   gulp.watch([
     `${config.assets}icons/**/*`
-  ], gulp.series(icons, metalsmith, browserSync.reload));
+  ], gulp.series(
+    icons,
+    yargs.argv.production ? inprod : require('./metalsmith').metalsmith,
+    browserSync.reload
+  ));
 
   gulp.watch([
     `${config.assets}js/**/*.js`
@@ -72,5 +91,8 @@ export const serve = () => {
     `${config.assets}templates/**/*.{html,hbs,md,swig}`,
     `${config.assets}docs/**/*.md`,
     `${config.assets}data/**/*.{json,yml}`
-  ], gulp.series(metalsmithDocs, browserSync.reload));
+  ], gulp.series(
+    yargs.argv.production ? inprod : require('./metalsmith').metalsmithDocs,
+    browserSync.reload
+  ));
 };
