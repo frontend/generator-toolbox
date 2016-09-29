@@ -30,6 +30,7 @@
     "html5shiv": "^3.7.3",
     "imagemin-pngquant": "^5.0.0",
     "jquery": "^2.2.4",
+    "merge-stream": "^1.0.0",
     "node-es-module-loader": "^0.1.9",
     "postcss-reporter": "^1.4.1",
     "respond.js": "^1.4.2",
