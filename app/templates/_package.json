@@ -20,7 +20,6 @@
     "babel-preset-react": "^6.16.0",
     "babel-register": "^6.14.0",<% if (bootstrapSass) { %>
     "bootstrap": "git@github.com:twbs/bootstrap.git#v4-dev",<% } %>
-    "bootstrap-sass": "~3.3.7",
     "browser-sync": "^2.16.0",
     "del": "~2.2.2",
     "gulp": "github:gulpjs/gulp#4.0",
