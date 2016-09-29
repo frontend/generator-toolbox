@@ -8,6 +8,10 @@
   "scripts": {
     "install": "npm shrinkwrap --dev"
   },
+  "engines": {
+    "node": "6.7.0",
+    "npm": "3.10.3"
+  },
   "dependencies": {
     "autoprefixer": "^6.4.1",
     "babel-loader": "^6.2.5",
