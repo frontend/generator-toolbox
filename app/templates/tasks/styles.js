@@ -3,7 +3,6 @@ import yargs from 'yargs';
 import autoprefixer from 'autoprefixer';
 // required -> import stylelint from 'stylelint';
 import reporter from 'postcss-reporter';
-import scss from 'postcss-scss';
 import config from '../gulp_config.json';
 
 import loadPlugins from 'gulp-load-plugins';
@@ -59,7 +58,7 @@ export const stylesLint = () => {
           })
         ],
         {
-          syntax: scss
+          syntax: require('postcss-scss')
         }));
 };
 export const stylesLintTask = gulp.task('styles:lint', stylesLint);
