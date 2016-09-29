@@ -126,7 +126,7 @@ module.exports = yeoman.Base.extend({
     app: function () {
       this.template('_package.json', 'package.json');
       this.template('_gulp_config.json', 'gulp_config.json');
-      this.template('gulpfile.babel.js', 'gulpfile.babel.js');
+      this.template('_gulpfile.babel.js', 'gulpfile.babel.js');
 
       this.copy('tasks/clean.js', 'tasks/clean.js');
       this.copy('tasks/server.js', 'tasks/server.js');
