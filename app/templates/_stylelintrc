@@ -1,0 +1,42 @@
+{
+  "ignoreFiles": [
+    "<%= assets %>sass/main.scss",
+    "<%= assets %>sass/main-variables.scss",
+    "<%= assets %>sass/bootstrap-variables.scss",
+    "<%= assets %>sass/bootstrap.scss",
+    "<%= assets %>sass/bootstrap4.scss"
+  ],
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "at-rule-no-vendor-prefix": true,
+    "media-feature-name-no-vendor-prefix" : true,
+    "property-no-vendor-prefix": true,
+    "selector-no-vendor-prefix": true,
+    "value-no-vendor-prefix": true,
+    "declaration-block-properties-order": [
+      "content",
+      "display",
+      "flex",
+      "position",
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "float",
+      "width",
+      "height",
+      "margin",
+      "padding",
+      "background",
+      "border",
+      "font-familly",
+      "font-size",
+      "line-height",
+      "font-weight",
+      "font-style",
+      "color",
+      "transform",
+      "transition"
+    ],
+  }
+}
