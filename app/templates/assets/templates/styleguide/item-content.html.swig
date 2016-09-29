@@ -4,7 +4,7 @@
   {% if content.notes %}<div class="styleguide-item-notes" data-styleguide-toggle="notes">
     {{content.notes|markdown|raw}}
   </div>{% endif %}
-  <div class="styleguide-item-preview">
+  <div class="styleguide-item-preview"{% if content.background %} style="background: {{ content.background }};"{% endif %}>
     {% include path %}
   </div>
   <div class="styleguide-item-code styleguide-item-hidden" data-styleguide-toggle="code">
