@@ -132,7 +132,7 @@ module.exports = yeoman.Base.extend({
       this.copy('tasks/images.js', 'tasks/images.js');
       this.copy('tasks/icons.js', 'tasks/icons.js');
       this.copy('tasks/favicons.js', 'tasks/favicons.js');
-      this.template('tasks/metalsmith.js', 'tasks/metalsmith.js');
+      this.template('tasks/_metalsmith.js', 'tasks/metalsmith.js');
       this.copy('tasks/filters.js', 'tasks/filters.js');
       this.copy('tasks/styles.js', 'tasks/styles.js');
       this.copy('tasks/scripts.js', 'tasks/scripts.js');
