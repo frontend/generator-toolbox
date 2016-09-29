@@ -44,6 +44,7 @@
   "metalsmith": {
     "assets": "node_modules/toolbox-utils/styleguide/",
     "dist": "styleguide/",
+    "url": "https://user.github.io/repo/",
     "plugins": {
       "permalinks": {
         "pattern": ":title",

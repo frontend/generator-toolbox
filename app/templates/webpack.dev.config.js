@@ -2,7 +2,6 @@
 
 const webpack = require('webpack');
 const path    = require('path');
-const yargs   = require('yargs');
 const config  = require('./gulp_config.json');
 
 module.exports = {

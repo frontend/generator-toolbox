@@ -3,24 +3,34 @@
  */
 import gulp from 'gulp';
 import config from './gulp_config.json';
+import yargs from 'yargs';
+
+import NodeESModuleLoader from 'node-es-module-loader';
+const loader = new NodeESModuleLoader();
 
 import loadPlugins from 'gulp-load-plugins';
 const $ = loadPlugins();
 
 import { vendors, vendorsTask } from './tasks/vendors';
 import { img, imgTask } from './tasks/images';
-import { styles, stylesTask } from './tasks/styles';
+import { styles, stylesTask, stylesLintTask } from './tasks/styles';
 import { scripts, scriptsTask } from './tasks/scripts';
 import { icons, iconsTask } from './tasks/icons';
 import { favicons, faviconsTask } from './tasks/favicons';
 import { clean, cleanTask } from './tasks/clean';
 import { single, singleTask } from './tasks/single';
-import { metalsmith, metalsmithTask } from './tasks/metalsmith';
 import { deploy, deployTask } from './tasks/deploy';
+import { serve } from './tasks/server';
+
+<% if (tests) { %>
 import { testRegression, testRegressionTask } from './tasks/tests-regression';
 import { testUnit, testUnitTask } from './tasks/tests-unit';
 import { testNavigation, testNavigationTask } from './tasks/tests-navigation';
-import { serve } from './tasks/server';
+<% } %>
+
+
+const conditionalStyleguide = yargs.argv.production ? '' : './tasks/metalsmith';
+const inprod = done => done();
 
 /**
  * Init project
@@ -40,10 +50,32 @@ gulp.task('build', build);
 /**
  * Default task
  */
-export const defaultFunc = gulp.series(build, favicons, metalsmith);
-gulp.task('default', defaultFunc);
+const defaultFunc = (done, isServe) => loader.import(conditionalStyleguide)
+ .then(m => {
+   $.util.log('DEVELOPMENT MODE');
+   if (isServe) {
+     done(gulp.series(build, favicons, m.default.metalsmith, serve));
+   } else {
+     done(gulp.series(build, favicons, m.default.metalsmith));
+   }
+ })
+ .catch(err => {
+   $.util.log('PRODUCTION MODE');
+   if (isServe) {
+     done(gulp.series(build, favicons, serve));
+   } else {
+     done(gulp.series(build, favicons));
+   }
+ });
+
+gulp.task('default', () => defaultFunc(res => res(), false));
 
 /**
- * Serve task
+* Serve task
+*/
+const serveTask = gulp.task('serve', () => defaultFunc(res => res(), true));
+
+/**
+ * Metalsmith task
  */
-export const serveTask = gulp.task('serve', gulp.series(defaultFunc, serve));
+const metalsmithTask = gulp.task('metalsmith', yargs.argv.production ? inprod : require('./tasks/metalsmith').metalsmith);

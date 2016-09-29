@@ -9,19 +9,20 @@ import loadPlugins from 'gulp-load-plugins';
 const $ = loadPlugins();
 
 import path from 'path';
-import dotenv from 'dotenv';
 import markdown from 'metalsmith-markdown';
 import permalinks from 'metalsmith-permalinks';
 import layouts from 'metalsmith-layouts';
-import define from 'metalsmith-define';
+import define from 'metalsmith-define';<% if (contentful) { %>
+import dotenv from 'dotenv';
 import contentful from 'contentful-metalsmith';
+<% } %>
 import collections from 'metalsmith-collections';
 
 import * as filters from './filters';
 
 let metadatas = [];
 
-let contentful_key = '';
+<% if (contentful) { %>let contentful_key = '';
 
 if (process.env.CONTENTFUL_KEY) {
   contentful_key = process.env.CONTENTFUL_KEY;
@@ -30,7 +31,7 @@ if (process.env.CONTENTFUL_KEY) {
   if (process.env.CONTENTFUL_KEY) {
     contentful_key = process.env.CONTENTFUL_KEY;
   }
-}
+}<% } %>
 
 function errorAlert(error){
   if (!yargs.argv.production) {
@@ -43,7 +44,7 @@ function errorAlert(error){
 /*
 * Styleguide CSS Vendors
 */
-export const metalsmithStyles = gulp.task('metalsmith-styles', () => {
+export const metalsmithStyles = () => {
   return gulp.src(`${config.assets}sass/styleguide.scss`)
   .pipe($.sass({
     errLogToConsole: true
@@ -60,12 +61,12 @@ export const metalsmithStyles = gulp.task('metalsmith-styles', () => {
   .pipe($.size({title: 'STYLEGUIDE CSS VENDORS', showFiles: true}))
   .pipe(gulp.dest(`${config.build}css`))
   .pipe(gulp.dest(`${config.metalsmith.dist}/build/css`));
-});
+};
 
 /*
 * Styleguide JS Vendors
 */
-export const metalsmithScripts = gulp.task('metalsmith-scripts', () => {
+export const metalsmithScripts = () => {
   return gulp.src(`${config.metalsmith.assets}scripts/fabricator.js`)
   .pipe($.browserify({
     insertGlobals : true
@@ -75,7 +76,7 @@ export const metalsmithScripts = gulp.task('metalsmith-scripts', () => {
   .pipe($.size({title: 'STYLEGUIDE JS VENDORS', showFiles: true}))
   .pipe(gulp.dest(`${config.build}js`))
   .pipe(gulp.dest(`${config.metalsmith.dist}/build/js`));
-});
+};
 
 /*
  * Generate styleguide doc
@@ -102,15 +103,17 @@ export const metalsmithDocs = () => {
               delete files[file];
             }
           }
+          metadatas['path'] = yargs.argv.ghpages ? config.metalsmith.url : '/';
+          metadatas['scriptsPath'] = yargs.argv.production  ? `${metadatas['path']}build/js/` : metadatas['path'];
           done();
         },
         define({
           data: metadatas
-        }),
+        }),<% if (contentful) { %>
         contentful({
           accessToken : contentful_key
         }),
-        layouts(config.metalsmith.plugins.layouts),
+        <% } %>layouts(config.metalsmith.plugins.layouts),
         function(files, metalsmith, done){
           // Clean dirty front-matter comment
           for (let file in files) {
@@ -132,5 +135,4 @@ export const metalsmithAssets = () => {
 /*
  * Build metalsmith
  */
-export const metalsmith = gulp.series(metalsmithAssets, metalsmithDocs);
-export const metalsmithTask = gulp.task('metalsmith', metalsmith);
+export const metalsmith = gulp.series(metalsmithStyles, metalsmithScripts, metalsmithAssets, metalsmithDocs);
