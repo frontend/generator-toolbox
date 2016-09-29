@@ -3,8 +3,7 @@
     "<%= assets %>sass/main.scss",
     "<%= assets %>sass/main-variables.scss",
     "<%= assets %>sass/bootstrap-variables.scss",
-    "<%= assets %>sass/bootstrap.scss",
-    "<%= assets %>sass/bootstrap4.scss"
+    "<%= assets %>sass/bootstrap.scss"
   ],
   "extends": "stylelint-config-standard",
   "rules": {

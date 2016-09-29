@@ -52,7 +52,7 @@ module.exports = yeoman.Base.extend({
           value: 'fabricator',
           checked: true
         }, {
-          name: 'Framework (Bootstrap)',
+          name: 'Framework (Bootstrap 4)',
           value: 'bootstrapSass',
           checked: true
         }, {
@@ -61,15 +61,6 @@ module.exports = yeoman.Base.extend({
           checked: false
         }
       ]
-    },{
-      when: function (response) {
-        // this.log(response);
-        return response.tools.indexOf('bootstrapSass') !== -1;
-      },
-      name: 'bootstrap4',
-      type: 'confirm',
-      message: 'Do you want to use Bootstrap 4 Alpha?',
-      default: false
     },{
       when: function (response) {
         // this.log(response);
@@ -101,7 +92,6 @@ module.exports = yeoman.Base.extend({
 
       this.fabricator = hasTool('fabricator');
       this.bootstrapSass = hasTool('bootstrapSass');
-      this.bootstrap4 = props.bootstrap4;
       this.tests = hasTool('tests');
 
       if (props.assets.slice(-1) === '/') {
@@ -166,10 +156,8 @@ module.exports = yeoman.Base.extend({
       mkdirp.sync(this.assets + 'icons');
       mkdirp.sync(this.assets + 'favicons');
 
-      if (this.bootstrap4) {
-        this.copy('assets/sass/bootstrap4.scss', this.assets + 'sass/bootstrap4.scss');
-      } else if (this.bootstrapSass) {
-        this.copy('assets/sass/bootstrap.scss', this.assets + 'sass/bootstrap.scss');
+      if (this.bootstrapSass) {
+        this.template('assets/sass/bootstrap.scss', this.assets + 'sass/bootstrap.scss');
       }
 
       this.template('assets/sass/_main.scss', this.assets + 'sass/main.scss');
