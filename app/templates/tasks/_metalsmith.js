@@ -103,6 +103,8 @@ export const metalsmithDocs = () => {
               delete files[file];
             }
           }
+          metadatas['path'] = yargs.argv.ghpages ? config.metalsmith.url : '/';
+          metadatas['scriptsPath'] = yargs.argv.production  ? `${metadatas['path']}build/js/` : metadatas['path'];
           done();
         },
         define({
