@@ -58,7 +58,7 @@ module.exports = yeoman.Base.extend({
         }, {
           name: 'Tests (Mocha, Casperjs and Chai)',
           value: 'tests',
-          checked: true
+          checked: false
         }
       ]
     },{
@@ -114,7 +114,7 @@ module.exports = yeoman.Base.extend({
     app: function () {
       this.template('_package.json', 'package.json');
       this.template('_gulp_config.json', 'gulp_config.json');
-      this.copy('gulpfile.babel.js', 'gulpfile.babel.js');
+      this.template('gulpfile.babel.js', 'gulpfile.babel.js');
 
       this.copy('tasks/clean.js', 'tasks/clean.js');
       this.copy('tasks/server.js', 'tasks/server.js');

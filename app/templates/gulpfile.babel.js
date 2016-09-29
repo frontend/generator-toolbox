@@ -3,6 +3,7 @@
  */
 import gulp from 'gulp';
 import config from './gulp_config.json';
+import yargs from 'yargs';
 
 import NodeESModuleLoader from 'node-es-module-loader';
 const loader = new NodeESModuleLoader();
@@ -18,10 +19,14 @@ import { icons, iconsTask } from './tasks/icons';
 import { favicons, faviconsTask } from './tasks/favicons';
 import { clean, cleanTask } from './tasks/clean';
 import { deploy, deployTask } from './tasks/deploy';
+import { serve } from './tasks/server';
+
+<% if (tests) { %>
 import { testRegression, testRegressionTask } from './tasks/tests-regression';
 import { testUnit, testUnitTask } from './tasks/tests-unit';
 import { testNavigation, testNavigationTask } from './tasks/tests-navigation';
-import { serve } from './tasks/server';
+<% } %>
+
 
 const conditionalStyleguide = yargs.argv.production ? '' : './tasks/metalsmith';
 const inprod = done => done();
