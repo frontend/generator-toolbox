@@ -4,7 +4,6 @@ import yargs from 'yargs';
 import config from '../gulp_config.json';
 import webpackSettings from '../webpack.dev.config';
 import browserSync from 'browser-sync';
-import historyApiFallback from 'connect-history-api-fallback';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
@@ -43,8 +42,7 @@ export const serve = () => {
             colors: true,
           }
         }),
-        webpackHotMiddleware(bundler),
-        historyApiFallback()
+        webpackHotMiddleware(bundler)
       ]
     },
     open: false
