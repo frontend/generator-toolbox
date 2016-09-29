@@ -1,5 +1,4 @@
 import gulp from 'gulp';
-import pngquant from 'imagemin-pngquant';
 import config from '../gulp_config.json';
 
 import loadPlugins from 'gulp-load-plugins';
