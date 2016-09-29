@@ -5,6 +5,9 @@
   "browserify-shim": {
     "jquery": "global:jQuery"
   },
+  "scripts": {
+    "install": "npm shrinkwrap --dev"
+  },
   "dependencies": {
     "autoprefixer": "^6.4.1",
     "babel-loader": "^6.2.5",
@@ -90,7 +93,6 @@
     "postcss-scss": "^0.3.0",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",<% } %>
-    "react-hot-loader": "^3.0.0-beta.4",
     "stylelint": "^7.3.0",
     "stylelint-config-standard": "^13.0.2",
     "toolbox-utils": "^0.0.2",

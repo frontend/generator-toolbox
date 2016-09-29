@@ -23,7 +23,6 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         loaders: [
-          'react-hot-loader/webpack',
           'babel?presets[]=es2015,presets[]=react,plugins[]=transform-object-rest-spread,plugins[]=transform-es2015-spread',
           'webpack-module-hot-accept'
         ]
