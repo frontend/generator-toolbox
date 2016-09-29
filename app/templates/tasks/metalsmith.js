@@ -133,4 +133,3 @@ export const metalsmithAssets = () => {
  * Build metalsmith
  */
 export const metalsmith = gulp.series(metalsmithStyles, metalsmithScripts, metalsmithAssets, metalsmithDocs);
-export const metalsmithTask = gulp.task('metalsmith', metalsmith);
