@@ -9,19 +9,20 @@ import loadPlugins from 'gulp-load-plugins';
 const $ = loadPlugins();
 
 import path from 'path';
-import dotenv from 'dotenv';
 import markdown from 'metalsmith-markdown';
 import permalinks from 'metalsmith-permalinks';
 import layouts from 'metalsmith-layouts';
-import define from 'metalsmith-define';
+import define from 'metalsmith-define';<% if (contentful) { %>
+import dotenv from 'dotenv';
 import contentful from 'contentful-metalsmith';
+<% } %>
 import collections from 'metalsmith-collections';
 
 import * as filters from './filters';
 
 let metadatas = [];
 
-let contentful_key = '';
+<% if (contentful) { %>let contentful_key = '';
 
 if (process.env.CONTENTFUL_KEY) {
   contentful_key = process.env.CONTENTFUL_KEY;
@@ -30,7 +31,7 @@ if (process.env.CONTENTFUL_KEY) {
   if (process.env.CONTENTFUL_KEY) {
     contentful_key = process.env.CONTENTFUL_KEY;
   }
-}
+}<% } %>
 
 function errorAlert(error){
   if (!yargs.argv.production) {
@@ -106,11 +107,11 @@ export const metalsmithDocs = () => {
         },
         define({
           data: metadatas
-        }),
+        }),<% if (contentful) { %>
         contentful({
           accessToken : contentful_key
         }),
-        layouts(config.metalsmith.plugins.layouts),
+        <% } %>layouts(config.metalsmith.plugins.layouts),
         function(files, metalsmith, done){
           // Clean dirty front-matter comment
           for (let file in files) {

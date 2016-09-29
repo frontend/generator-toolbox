@@ -71,6 +71,15 @@ module.exports = yeoman.Base.extend({
       message: 'Do you want to use Bootstrap 4 Alpha?',
       default: false
     },{
+      when: function (response) {
+        // this.log(response);
+        return response.tools.indexOf('fabricator') !== -1;
+      },
+      type: 'input',
+      name: 'contentful',
+      message: 'If you want to setup ' + chalk.blue('Contentful') + ', print your key here: (leave blank to disable)',
+      default: false
+    },{
       type: 'input',
       name: 'assets',
       message: 'Where would you like to put your assets ?',
@@ -84,6 +93,7 @@ module.exports = yeoman.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.name = props.name;
+      this.contentful = props.contentful;
 
       // Tools
       var tools = props.tools;
@@ -122,7 +132,7 @@ module.exports = yeoman.Base.extend({
       this.copy('tasks/images.js', 'tasks/images.js');
       this.copy('tasks/icons.js', 'tasks/icons.js');
       this.copy('tasks/favicons.js', 'tasks/favicons.js');
-      this.copy('tasks/metalsmith.js', 'tasks/metalsmith.js');
+      this.template('tasks/metalsmith.js', 'tasks/metalsmith.js');
       this.copy('tasks/filters.js', 'tasks/filters.js');
       this.copy('tasks/styles.js', 'tasks/styles.js');
       this.copy('tasks/scripts.js', 'tasks/scripts.js');
@@ -181,8 +191,11 @@ module.exports = yeoman.Base.extend({
       this.copy('gitattributes', '.gitattributes');
       this.template('gitignore', '.gitignore');
       this.copy('eslintrc.yml', '.eslintrc.yml');
-      this.copy('env', '.env');
       this.template('stylelintrc.json', '.stylelintrc');
+
+      if (this.contentful) {
+        this.template('env', '.env');
+      }
     }
   },
 

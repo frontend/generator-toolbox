@@ -15,9 +15,7 @@
     "bootstrap": "git@github.com:twbs/bootstrap.git#v4-dev",<% } else if (bootstrapSass) { %>
     "bootstrap-sass": "~3.3.7",<% } %>
     "browser-sync": "^2.16.0",
-    "contentful-metalsmith": "^0.4.0",
     "del": "~2.2.2",
-    "dotenv": "^2.0.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-clean-css": "^2.0.13",
     "gulp-concat": "^2.6.0",
@@ -50,6 +48,9 @@
     "browserify-shim": "^3.8.12",<% if (tests) { %>
     "casperjs": "^1.1.3",
     "chai": "^3.5.0",
+    <% } %><% if (contentful) { %>
+    "contentful-metalsmith": "^0.4.0",
+    "dotenv": "^2.0.0",
     <% } %>"eslint": "^3.5.0",
     "eslint-config-airbnb": "^11.1.0",
     "eslint-plugin-import": "^1.15.0",
