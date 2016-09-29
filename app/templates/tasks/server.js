@@ -24,6 +24,14 @@ const inject = () => {
 };
 
 /**
+ * Reload
+ */
+const reload = (done) => {
+  browserSync.reload();
+  done();
+};
+
+/**
  * useless task
  */
 const inprod = done => done();
@@ -71,7 +79,7 @@ export const serve = () => {
   ], gulp.series(
     img,
     yargs.argv.production ? inprod : require('./metalsmith').metalsmith,
-    browserSync.reload
+    reload
   ));
 
   gulp.watch([
@@ -79,7 +87,7 @@ export const serve = () => {
   ], gulp.series(
     icons,
     yargs.argv.production ? inprod : require('./metalsmith').metalsmith,
-    browserSync.reload
+    reload
   ));
 
   gulp.watch([
@@ -93,6 +101,6 @@ export const serve = () => {
     `${config.assets}data/**/*.{json,yml}`
   ], gulp.series(
     yargs.argv.production ? inprod : require('./metalsmith').metalsmithDocs,
-    browserSync.reload
+    reload
   ));
 };
