@@ -3,7 +3,7 @@
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/variables";
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/mixins";
 
-// // Reset and dependencies
+// Reset and dependencies
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/normalize";
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/print";
 
@@ -17,7 +17,7 @@
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/forms";
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/buttons";
 
-// // Components
+// Components
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/animation";
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/dropdown";
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/button-group";
@@ -28,8 +28,7 @@
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/card";
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/breadcrumb";
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/pagination";
-@import "<%= fromSassToTop %>node_modules/bootstrap/scss/pager";
-@import "<%= fromSassToTop %>node_modules/bootstrap/scss/labels";
+@import "<%= fromSassToTop %>node_modules/bootstrap/scss/tags";
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/jumbotron";
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/alert";
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/progress";
@@ -46,5 +45,3 @@
 
 // Utility classes
 @import "<%= fromSassToTop %>node_modules/bootstrap/scss/utilities";
-@import "<%= fromSassToTop %>node_modules/bootstrap/scss/utilities-spacing";
-@import "<%= fromSassToTop %>node_modules/bootstrap/scss/utilities-responsive";
