@@ -5,7 +5,7 @@ node_modules
 .env
 
 /dist
-/build
+<%= build %>
 /styleguide
 
 tests/regression/compare

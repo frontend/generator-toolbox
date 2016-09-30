@@ -4,6 +4,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var slug = require('slug');
+var mkdirp = require('mkdirp');
 
 var toolboxSay = function() {
   return  '                                             '+'\n'+
@@ -51,23 +52,23 @@ module.exports = yeoman.Base.extend({
           value: 'fabricator',
           checked: true
         }, {
-          name: 'Framework (Bootstrap)',
+          name: 'Framework (Bootstrap 4)',
           value: 'bootstrapSass',
           checked: true
         }, {
           name: 'Tests (Mocha, Casperjs and Chai)',
           value: 'tests',
-          checked: true
+          checked: false
         }
       ]
     },{
       when: function (response) {
         // this.log(response);
-        return response.tools.indexOf('bootstrapSass') !== -1;
+        return response.tools.indexOf('fabricator') !== -1;
       },
-      name: 'bootstrap4',
-      type: 'confirm',
-      message: 'Do you want to use Bootstrap 4 Alpha?',
+      type: 'input',
+      name: 'contentful',
+      message: 'If you want to setup ' + chalk.blue('Contentful') + ', print your key here: (leave blank to disable)',
       default: false
     },{
       type: 'input',
@@ -83,6 +84,7 @@ module.exports = yeoman.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.name = props.name;
+      this.contentful = props.contentful;
 
       // Tools
       var tools = props.tools;
@@ -90,7 +92,6 @@ module.exports = yeoman.Base.extend({
 
       this.fabricator = hasTool('fabricator');
       this.bootstrapSass = hasTool('bootstrapSass');
-      this.bootstrap4 = props.bootstrap4;
       this.tests = hasTool('tests');
 
       if (props.assets.slice(-1) === '/') {
@@ -105,61 +106,59 @@ module.exports = yeoman.Base.extend({
         this.build = props.build + '/';
       }
 
+      this.fromSassToTop = '../'.repeat(this.assets.replace(/^\/|\/$/, '').split('/').length + 1);
+
       done();
     }.bind(this));
   },
 
   writing: {
     app: function () {
-    this.template('_package.json', 'package.json');
-
+      this.template('_package.json', 'package.json');
       this.template('_gulp_config.json', 'gulp_config.json');
-      this.template('_gulpfile.js', 'gulpfile.js');
+      this.template('_gulpfile.babel.js', 'gulpfile.babel.js');
 
-      this.template('tasks/_clean.js', 'tasks/clean.js');
-      this.template('tasks/_server.js', 'tasks/server.js');
-      this.copy('tasks/gh-pages.js', 'tasks/gh-pages.js');
+      this.copy('tasks/clean.js', 'tasks/clean.js');
+      this.copy('tasks/server.js', 'tasks/server.js');
+      this.copy('tasks/deploy.js', 'tasks/deploy.js');
       this.copy('tasks/images.js', 'tasks/images.js');
-      this.copy('tasks/scripts.js', 'tasks/scripts.js');
       this.copy('tasks/icons.js', 'tasks/icons.js');
       this.copy('tasks/favicons.js', 'tasks/favicons.js');
-      if (this.fabricator) {
-        this.copy('tasks/metalsmith.js', 'tasks/metalsmith.js');
-        this.copy('tasks/filters.js', 'tasks/filters.js');
-      }
+      this.template('tasks/_metalsmith.js', 'tasks/metalsmith.js');
+      this.copy('tasks/filters.js', 'tasks/filters.js');
+      this.copy('tasks/single.js', 'tasks/single.js');
       this.copy('tasks/styles.js', 'tasks/styles.js');
+      this.copy('tasks/scripts.js', 'tasks/scripts.js');
       this.copy('tasks/vendors.js', 'tasks/vendors.js');
 
       if (this.fabricator) {
-        this.mkdir(this.assets + 'components');
-        this.mkdir(this.assets + 'components/atoms');
-        this.mkdir(this.assets + 'components/molecules');
-        this.mkdir(this.assets + 'components/organisms');
-        this.mkdir(this.assets + 'components/pages');
+        mkdirp.sync(this.assets + 'components');
+        mkdirp.sync(this.assets + 'components/atoms');
+        mkdirp.sync(this.assets + 'components/molecules');
+        mkdirp.sync(this.assets + 'components/organisms');
+        mkdirp.sync(this.assets + 'components/pages');
         this.directory('assets/templates', this.assets + 'templates');
         this.directory('assets/data', this.assets + 'data');
         this.directory('assets/docs', this.assets + 'docs');
-        this.mkdir(this.assets + 'sass');
-        this.mkdir(this.assets + 'sass/atoms');
-        this.mkdir(this.assets + 'sass/molecules');
-        this.mkdir(this.assets + 'sass/organisms');
-        this.mkdir(this.assets + 'sass/pages');
+        mkdirp.sync(this.assets + 'sass');
+        mkdirp.sync(this.assets + 'sass/atoms');
+        mkdirp.sync(this.assets + 'sass/molecules');
+        mkdirp.sync(this.assets + 'sass/organisms');
+        mkdirp.sync(this.assets + 'sass/pages');
         this.copy('assets/sass/styleguide.scss', this.assets + 'sass/styleguide.scss');
         this.copy('assets/sass/styleguide-variables.scss', this.assets + 'sass/styleguide-variables.scss');
       }
 
       this.directory('assets/js', this.assets + 'js');
 
-      this.mkdir(this.assets + 'img');
-      this.mkdir(this.assets + 'svg');
-      this.mkdir(this.assets + 'fonts');
-      this.mkdir(this.assets + 'icons');
-      this.mkdir(this.assets + 'favicons');
+      mkdirp.sync(this.assets + 'img');
+      mkdirp.sync(this.assets + 'svg');
+      mkdirp.sync(this.assets + 'fonts');
+      mkdirp.sync(this.assets + 'icons');
+      mkdirp.sync(this.assets + 'favicons');
 
-      if (this.bootstrap4) {
-        this.copy('assets/sass/bootstrap4.scss', this.assets + 'sass/bootstrap4.scss');
-      } else if (this.bootstrapSass) {
-        this.copy('assets/sass/bootstrap.scss', this.assets + 'sass/bootstrap.scss');
+      if (this.bootstrapSass) {
+        this.template('assets/sass/bootstrap.scss', this.assets + 'sass/bootstrap.scss');
       }
 
       this.template('assets/sass/_main.scss', this.assets + 'sass/main.scss');
@@ -167,8 +166,8 @@ module.exports = yeoman.Base.extend({
 
       if (this.tests) {
         this.directory('tests', 'tests');
-        this.mkdir('tests/unit');
-        this.mkdir('tests/navigation');
+        mkdirp.sync('tests/unit');
+        mkdirp.sync('tests/navigation');
         this.copy('tasks/tests-regression.js', 'tasks/tests-regression.js');
         this.copy('tasks/tests-unit.js', 'tasks/tests-unit.js');
         this.copy('tasks/tests-navigation.js', 'tasks/tests-navigation.js');
@@ -176,18 +175,24 @@ module.exports = yeoman.Base.extend({
     },
 
     projectfiles: function () {
+      this.template('babelrc', '.babelrc');
       this.copy('editorconfig', '.editorconfig');
+      this.copy('webpack.dev.config.js', 'webpack.dev.config.js');
+      this.copy('webpack.prod.config.js', 'webpack.prod.config.js');
       this.copy('gitattributes', '.gitattributes');
-      this.copy('gitignore', '.gitignore');
+      this.template('gitignore', '.gitignore');
       this.copy('eslintrc.yml', '.eslintrc.yml');
-      this.copy('env', '.env');
-      this.copy('stylelintrc', '.stylelintrc');
+      this.template('_stylelintrc', '.stylelintrc');
+
+      if (this.contentful) {
+        this.template('env', '.env');
+      }
     }
   },
 
   install: function () {
     if (!this.options['skip-install']) {
-      this.installDependencies();
+      this.npmInstall();
     }
   }
 });

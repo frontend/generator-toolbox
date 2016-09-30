@@ -5,63 +5,80 @@
   "browserify-shim": {
     "jquery": "global:jQuery"
   },
-  "dependencies": {<% if (bootstrap4) { %>
-    "bootstrap": "git@github.com:twbs/bootstrap.git#v4-dev",<% } else if (bootstrapSass) { %>
-    "bootstrap-sass": "~3.3.5",<% } %>
+  "scripts": {
+    "install": "npm shrinkwrap --dev"
+  },
+  "engines": {
+    "node": "6.7.0",
+    "npm": "3.10.3"
+  },
+  "dependencies": {
+    "autoprefixer": "^6.4.1",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-register": "^6.14.0",<% if (bootstrapSass) { %>
+    "bootstrap": "git@github.com:twbs/bootstrap.git#v4-dev",<% } %>
+    "browser-sync": "^2.16.0",
+    "del": "~2.2.2",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-clean-css": "^2.0.13",
+    "gulp-concat": "^2.6.0",
+    "gulp-iconfont": "^8.0.1",
+    "gulp-load-plugins": "^1.3.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^6.2.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-size": "^2.1.0",
+    "gulp-uglify": "^2.0.0",
     "html5shiv": "^3.7.3",
     "jquery": "^2.2.4",
-    "respond.js": "^1.4.2"
+    "merge-stream": "^1.0.0",
+    "node-es-module-loader": "^0.1.9",
+    "postcss-reporter": "^1.4.1",
+    "respond.js": "^1.4.2",
+    "slug": "^0.9.1",
+    "swig": "^1.4.2",
+    "webpack": "2.1.0-beta.22",
+    "webpack-dev-middleware": "^1.8.3",
+    "webpack-hot-middleware": "^2.12.2",
+    "yargs": "^5.0.0"
   },
   "devDependencies": {
-    "async": "^2.0.0-rc.2",
-    "autoprefixer": "^6.2.3",
-    "babel-core": "6.8.0",
-    "babel-loader": "6.2.4",
-    "babel-preset-es2015": "^6.6.0",
+    "async": "^2.0.1",
+    "babel-core": "6.14.0",
     "babelify": "^7.3.0",
-    "browser-sync": "^2.7.1",
-    "browserify-shim": "^3.8.12",
-    "casperjs": "^1.1.0-beta3",
-    "chai": "^3.4.1",
-    "contentful-metalsmith": "^0.1.0",
-    "del": "~2.2.0",
-    "dotenv": "^2.0.0",
-    "eslint": "^2.5.3",
-    "gulp": "^3.9.0",
+    "browserify-shim": "^3.8.12",<% if (tests) { %>
+    "casperjs": "^1.1.3",
+    "chai": "^3.5.0",<% } %>
+    <% if (contentful) { %>
+    "contentful-metalsmith": "^0.4.0",
+    "dotenv": "^2.0.0",<% } %>
+    "eslint": "^3.5.0",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-plugin-import": "^1.15.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0",
     "gulp-babel": "^6.1.2",
-    "gulp-browserify": "^0.5.1",
-    "gulp-casperjs": "0.0.5",
-    "gulp-changed": "^1.3.0",
-    "gulp-clean-css": "^2.0.7",
-    "gulp-concat": "^2.5.2",
+    "gulp-browserify": "^0.5.1",<% if (tests) { %>
+    "gulp-casperjs": "^0.0.6",<% } %>
     "gulp-consolidate": "^0.2.0",
-    "gulp-eslint": "^2.0.0",
+    "gulp-eslint": "^3.0.1",
     "gulp-front-matter": "^1.3.0",
-    "gulp-gh-pages": "^0.5.1",
-    "gulp-iconfont": "^8.0.0",
-    "gulp-if": "^2.0.0",
-    "gulp-imagemin": "^3.0.1",
-    "gulp-inline-fonts": "^1.0.1",
-    "gulp-load-plugins": "^1.2.0",
-    "gulp-metalsmith": "^1.0.0",
-    "gulp-mocha": "^2.1.1",
-    "gulp-notify": "^2.2.0",
-    "gulp-phantomcss": "0.1.1",
-    "gulp-plumber": "^1.1.0",
-    "gulp-postcss": "^6.0.1",
+    "gulp-gh-pages": "^0.5.4",
+    "gulp-if": "^2.0.1",
+    "gulp-metalsmith": "^1.0.0",<% if (tests) { %>
+    "gulp-mocha": "^3.0.1",<% } %>
+    "gulp-notify": "^2.2.0",<% if (tests) { %>
+    "gulp-phantomcss": "0.2.0",<% } %>
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.0.0",
-    "gulp-size": "^2.0.0",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-stylelint": "^2.0.2",
-    "gulp-uglify": "~1.5.1",
-    "gulp-util": "^3.0.4",
-    "imagemin-pngquant": "^5.0.0",
-    "imgur": "^0.1.5",
-    "jsdom": "^9.0.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-util": "^3.0.7",<% if (tests) { %>
+    "imgur": "^0.1.7",<% } %>
     "lodash": "^4.1.6",
-    "marked": "^0.3.5",
-    "metalsmith": "^2.1.0",
+    "marked": "^0.3.6",
+    "metalsmith": "^2.2.0",
     "metalsmith-collections": "^0.7.0",
     "metalsmith-define": "^2.0.1",
     "metalsmith-if": "^0.1.1",
@@ -70,19 +87,19 @@
     "metalsmith-pagination": "^1.4.0",
     "metalsmith-paths": "^2.1.2",
     "metalsmith-permalinks": "^0.5.0",
-    "metalsmith-rootpath": "^0.1.7",
-    "metalsmith-slug": "^0.2.0",
-    "mocha": "^2.2.5",
-    "phantomcss": "^1.0.0",
-    "run-sequence": "~1.1.0",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0",
-    "slug": "^0.9.1",
-    "stylelint": "^6.2.2",
-    "swig": "^1.4.2",
+    "metalsmith-rootpath": "^1.0.4",
+    "metalsmith-slug": "^0.2.0",<% if (tests) { %>
+    "mocha": "^3.0.2",
+    "phantomcss": "^1.1.3",
+    "postcss-scss": "^0.3.0",
+    "sinon": "^1.17.5",
+    "sinon-chai": "^2.8.0",<% } %>
+    "stylelint": "^7.3.0",
+    "stylelint-config-standard": "^13.0.2",
     "toolbox-utils": "^0.0.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "yargs": "^4.3.2"
+    "webpack-module-hot-accept": "^1.0.4",
+    "webpack-stream": "^3.2.0"
   }
 }
