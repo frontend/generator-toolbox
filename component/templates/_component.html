@@ -1,6 +1,6 @@
 ---
 title: <%= name %>
-name: <%= slug(name).toLowerCase() %>
+name: <%= name.charAt(0).toUpperCase() + name.slice(1) %>
 collection: <%= type %>
 notes: |
   ##### Usage : `<%= slug(name).toLowerCase() %>`
