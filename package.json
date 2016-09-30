@@ -4,9 +4,6 @@
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
-  "engines": {
-    "node": ">= 6.7.0"
-  },
   "scripts": {
     "start": "npm install && bower install && gulp init"
   },
