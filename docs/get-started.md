@@ -6,7 +6,7 @@
 
 ### Requirements
 
-First, you will need [![node](https://raw.githubusercontent.com/frontend/generator-toolbox/feature/base-doc/docs/node-badge.svg)](https://nodejs.org/en/) and [![npm](npm-badge.svg)](https://www.npmjs.com/) installed in your system.
+First, you will need [![node](https://img.shields.io/badge/node-%3E=%206.7.0-green.svg?style=flat-square)](https://nodejs.org/en/) and [![npm](https://img.shields.io/badge/npm-%3E=%203.10.3-green.svg?style=flat-square)](https://www.npmjs.com/) installed in your system.
 
 Then, if you want to use the **testing environment**, you will need [PhantomJS](http://phantomjs.org/) and [CasperJS](http://casperjs.org/) :
 
