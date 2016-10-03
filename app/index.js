@@ -53,7 +53,7 @@ module.exports = yeoman.Base.extend({
           checked: true
         }, {
           name: 'Framework (Bootstrap 4)',
-          value: 'bootstrapSass',
+          value: 'bootstrap',
           checked: true
         }, {
           name: 'Tests (Mocha, Casperjs and Chai)',
@@ -91,7 +91,7 @@ module.exports = yeoman.Base.extend({
       function hasTool(tool) { return tools.indexOf(tool) !== -1; }
 
       this.fabricator = hasTool('fabricator');
-      this.bootstrapSass = hasTool('bootstrapSass');
+      this.bootstrap = hasTool('bootstrap');
       this.tests = hasTool('tests');
 
       if (props.assets.slice(-1) === '/') {
@@ -157,7 +157,7 @@ module.exports = yeoman.Base.extend({
       mkdirp.sync(this.assets + 'icons');
       mkdirp.sync(this.assets + 'favicons');
 
-      if (this.bootstrapSass) {
+      if (this.bootstrap) {
         this.template('assets/sass/bootstrap.scss', this.assets + 'sass/bootstrap.scss');
       }
 

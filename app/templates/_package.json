@@ -18,7 +18,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
-    "babel-register": "^6.14.0",<% if (bootstrapSass) { %>
+    "babel-register": "^6.14.0",<% if (bootstrap) { %>
     "bootstrap": "git@github.com:twbs/bootstrap.git#v4-dev",<% } %>
     "browser-sync": "^2.16.0",
     "del": "~2.2.2",

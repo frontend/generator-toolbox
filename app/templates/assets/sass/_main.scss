@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 // init:
-@import 'main-variables';<% if (bootstrapSass) { %>
+@import 'main-variables';<% if (bootstrap) { %>
 @import 'bootstrap';<% } %>
 
 <% if (fabricator) { %>
