@@ -192,7 +192,9 @@ module.exports = yeoman.Base.extend({
 
   install: function () {
     if (!this.options['skip-install']) {
-      this.npmInstall();
+      this.spawnCommand('yarna').on('error', function () {
+        console.error(chalk.red('Can\'t run ') + chalk.blue('yarn') + chalk.red(' command because it wasn\'t found. Please run ') + chalk.cyan('npm install -g yarn') + chalk.red(' and try again.'));
+      });
     }
   }
 });
