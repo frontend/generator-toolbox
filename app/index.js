@@ -150,7 +150,7 @@ module.exports = yeoman.Base.extend({
         mkdirp.sync(this.assets + 'sass/molecules');
         mkdirp.sync(this.assets + 'sass/organisms');
         mkdirp.sync(this.assets + 'sass/pages');
-        this.copy('assets/sass/styleguide.scss', this.assets + 'sass/styleguide.scss');
+        this.template('assets/sass/styleguide.scss', this.assets + 'sass/styleguide.scss');
         this.copy('assets/sass/styleguide-variables.scss', this.assets + 'sass/styleguide-variables.scss');
       }
 
