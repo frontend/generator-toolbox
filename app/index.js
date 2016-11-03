@@ -62,10 +62,6 @@ module.exports = yeoman.Base.extend({
         }
       ]
     },{
-      when: function (response) {
-        // this.log(response);
-        return response.tools.indexOf('fabricator') !== -1;
-      },
       type: 'input',
       name: 'contentful',
       message: 'If you want to setup ' + chalk.blue('Contentful') + ', print your key here: (leave blank to disable)',
@@ -79,7 +75,9 @@ module.exports = yeoman.Base.extend({
       type: 'input',
       name: 'build',
       message: 'Where would you like to put your build ?',
-      default: 'build/'
+      default: function(answers) {
+        return answers.assets.indexOf('assets') !== -1 ? answers.assets.replace(/assets\/?$/, 'build/') : 'build/';
+      }
     }];
 
     this.prompt(prompts, function (props) {
@@ -192,7 +190,7 @@ module.exports = yeoman.Base.extend({
 
   install: function () {
     if (!this.options['skip-install']) {
-      this.spawnCommand('yarna').on('error', function () {
+      this.spawnCommand('yarn').on('error', function () {
         console.error(chalk.red('Can\'t run ') + chalk.blue('yarn') + chalk.red(' command because it wasn\'t found. Please run ') + chalk.cyan('npm install -g yarn') + chalk.red(' and try again.'));
       });
     }
