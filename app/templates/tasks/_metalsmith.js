@@ -117,7 +117,7 @@ export const metalsmithDocs = () => {
         function(files, metalsmith, done){
           // Clean dirty front-matter comment
           for (let file in files) {
-            files[file].contents = new Buffer(files[file].contents.toString().replace(/---[\s\S]*?---/g, ''));
+            files[file].contents = new Buffer(files[file].contents.toString().replace(/---[\s\S]*?---\n/g, ''));
           }
           done();
         },
