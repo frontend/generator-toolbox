@@ -5,9 +5,6 @@
   "browserify-shim": {
     "jquery": "global:jQuery"
   },
-  "scripts": {
-    "install": "npm shrinkwrap --dev"
-  },
   "engines": {
     "node": "6.7.0",
     "npm": "3.10.3"
