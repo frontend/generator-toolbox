@@ -26,6 +26,13 @@ var toolboxSay = function() {
 };
 
 module.exports = yeoman.Base.extend({
+  constructor: function () {
+    yeoman.Base.apply(this, arguments);
+
+    // add support for a --contentful parameter
+    this.option('contentful');
+  },
+
   initializing: function () {
     this.pkg = require('../package.json');
   },
@@ -53,7 +60,7 @@ module.exports = yeoman.Base.extend({
           checked: true
         }, {
           name: 'Framework (Bootstrap 4)',
-          value: 'bootstrapSass',
+          value: 'bootstrap',
           checked: true
         }, {
           name: 'Tests (Mocha, Casperjs and Chai)',
@@ -61,15 +68,6 @@ module.exports = yeoman.Base.extend({
           checked: false
         }
       ]
-    },{
-      when: function (response) {
-        // this.log(response);
-        return response.tools.indexOf('fabricator') !== -1;
-      },
-      type: 'input',
-      name: 'contentful',
-      message: 'If you want to setup ' + chalk.blue('Contentful') + ', print your key here: (leave blank to disable)',
-      default: false
     },{
       type: 'input',
       name: 'assets',
@@ -79,19 +77,22 @@ module.exports = yeoman.Base.extend({
       type: 'input',
       name: 'build',
       message: 'Where would you like to put your build ?',
-      default: 'build/'
+      default: function(answers) {
+        return answers.assets.indexOf('assets') !== -1 ? answers.assets.replace(/assets\/?$/, 'build/') : 'build/';
+      }
     }];
 
     this.prompt(prompts, function (props) {
       this.name = props.name;
-      this.contentful = props.contentful;
+
+      this.contentful = this.options.contentful || false;
 
       // Tools
       var tools = props.tools;
       function hasTool(tool) { return tools.indexOf(tool) !== -1; }
 
       this.fabricator = hasTool('fabricator');
-      this.bootstrapSass = hasTool('bootstrapSass');
+      this.bootstrap = hasTool('bootstrap');
       this.tests = hasTool('tests');
 
       if (props.assets.slice(-1) === '/') {
@@ -145,7 +146,7 @@ module.exports = yeoman.Base.extend({
         mkdirp.sync(this.assets + 'sass/molecules');
         mkdirp.sync(this.assets + 'sass/organisms');
         mkdirp.sync(this.assets + 'sass/pages');
-        this.copy('assets/sass/styleguide.scss', this.assets + 'sass/styleguide.scss');
+        this.template('assets/sass/styleguide.scss', this.assets + 'sass/styleguide.scss');
         this.copy('assets/sass/styleguide-variables.scss', this.assets + 'sass/styleguide-variables.scss');
       }
 
@@ -157,7 +158,7 @@ module.exports = yeoman.Base.extend({
       mkdirp.sync(this.assets + 'icons');
       mkdirp.sync(this.assets + 'favicons');
 
-      if (this.bootstrapSass) {
+      if (this.bootstrap) {
         this.template('assets/sass/bootstrap.scss', this.assets + 'sass/bootstrap.scss');
       }
 
@@ -181,7 +182,7 @@ module.exports = yeoman.Base.extend({
       this.copy('webpack.prod.config.js', 'webpack.prod.config.js');
       this.copy('gitattributes', '.gitattributes');
       this.template('gitignore', '.gitignore');
-      this.copy('eslintrc.yml', '.eslintrc.yml');
+      this.copy('eslintrc', '.eslintrc');
       this.template('_stylelintrc', '.stylelintrc');
 
       if (this.contentful) {
@@ -192,7 +193,9 @@ module.exports = yeoman.Base.extend({
 
   install: function () {
     if (!this.options['skip-install']) {
-      this.npmInstall();
+      this.spawnCommand('yarn').on('error', function () {
+        console.error(chalk.red('Can\'t run ') + chalk.blue('yarn') + chalk.red(' command because it wasn\'t found. Please run ') + chalk.cyan('npm install -g yarn') + chalk.red(' and try again.'));
+      });
     }
   }
 });

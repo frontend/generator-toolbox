@@ -28,7 +28,7 @@ module.exports = yeoman.Base.extend({
       var prompts = [{
       type: 'checkbox',
       name: 'updates',
-      message: 'What would you like to update in your project ? (unselect the updates you don\'t want).\n⚠️  The updates may broken your project if you are still using the Handlebars/Fabricator components.',
+      message: 'What would you like to update in your project ? (unselect the updates you don\'t want).\n⚠️  The updates may break your project if you are still using the Handlebars/Fabricator components.',
       choices: [{
           name: 'Dev dependencies (in you package.json)',
           value: 'dependencies',
@@ -75,15 +75,12 @@ module.exports = yeoman.Base.extend({
       this.tests = true;
     }
 
-    this.bootstrap4 = false;
-    this.bootstrapSass = false;
+    this.bootstrap = false;
     var stylesheet = this.destinationPath(this.config.assets + 'sass/main.scss');
     if(pathExists.sync(stylesheet)){
       var body = fs.readFileSync(stylesheet).toString();
-      if (body.indexOf('bootstrap4') !== -1 ) {
-        this.bootstrap4 = true;
-      } else if (body.indexOf('bootstrap') !== -1 ) {
-        this.bootstrapSass = true;
+      if (body.indexOf('bootstrap') !== -1 ) {
+        this.bootstrap = true;
       }
     } else {
       this.log(chalk.red("No main.sccs founded !") + "\nMake sure that your main.scss file is at the root of your sass folder.");
