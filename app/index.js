@@ -186,7 +186,7 @@ module.exports = yeoman.Base.extend({
       this.copy('webpack.prod.config.js', 'webpack.prod.config.js');
       this.copy('gitattributes', '.gitattributes');
       this.template('gitignore', '.gitignore');
-      this.copy('eslintrc.yml', '.eslintrc.yml');
+      this.copy('eslintrc', '.eslintrc');
       this.template('_stylelintrc', '.stylelintrc');
 
       if (this.contentful) {
