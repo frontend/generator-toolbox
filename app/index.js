@@ -26,6 +26,13 @@ var toolboxSay = function() {
 };
 
 module.exports = yeoman.Base.extend({
+  constructor: function () {
+    yeoman.Base.apply(this, arguments);
+
+    // add support for a --contentful parameter
+    this.option('contentful');
+  },
+
   initializing: function () {
     this.pkg = require('../package.json');
   },
@@ -59,20 +66,8 @@ module.exports = yeoman.Base.extend({
           name: 'Tests (Mocha, Casperjs and Chai)',
           value: 'tests',
           checked: false
-        }, {
-          name: 'Contentful',
-          value: 'contentful',
-          checked: false
         }
       ]
-    },{
-      when: function(props) {
-        return props.tools.indexOf('contentful') !== -1;
-      },
-      type: 'input',
-      name: 'contentful_key',
-      message: 'What is your ' + chalk.blue('Contentful') + ' key?',
-      default: 'fakekeyhere'
     },{
       type: 'input',
       name: 'assets',
@@ -89,7 +84,8 @@ module.exports = yeoman.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.name = props.name;
-      this.contentful = props.contentful_key;
+
+      this.contentful = this.options.contentful || false;
 
       // Tools
       var tools = props.tools;
