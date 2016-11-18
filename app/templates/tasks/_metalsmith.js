@@ -104,7 +104,7 @@ export const metalsmithDocs = () => {
             }
           }
           metadatas['path'] = yargs.argv.ghpages ? config.metalsmith.url : '/';
-          metadatas['scriptsPath'] = yargs.argv.production  ? `${metadatas['path']}build/js/` : metadatas['path'];
+          metadatas['scriptsPath'] = yargs.argv.production || yargs.argv.ghpages  ? `${metadatas['path']}build/js/` : metadatas['path'];
           done();
         },
         define({
@@ -117,7 +117,7 @@ export const metalsmithDocs = () => {
         function(files, metalsmith, done){
           // Clean dirty front-matter comment
           for (let file in files) {
-            files[file].contents = new Buffer(files[file].contents.toString().replace(/---[\s\S]*?---/g, ''));
+            files[file].contents = new Buffer(files[file].contents.toString().replace(/---[\s\S]*?---\n/g, ''));
           }
           done();
         },
