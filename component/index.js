@@ -54,7 +54,27 @@ module.exports = yeoman.Base.extend({
         type: 'input',
         name: 'name',
         message: 'What\'s the name of your component ?',
-        default: 'component'
+        default: function(answers) {
+          switch (answers.type) {
+            case 'atoms':
+              return 'My Atom'
+              break;
+            case 'molecules':
+              return 'My Molecule'
+              break;
+            case 'organisms':
+              return 'My Organism'
+              break;
+            case 'pages':
+              return 'My Page'
+              break;
+            case 'doc':
+              return 'My Doc Page'
+              break;
+            default:
+              return 'My Component'
+          }
+        }
       }];
 
       this.prompt(prompts, function (props) {
