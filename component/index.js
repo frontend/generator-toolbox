@@ -30,23 +30,38 @@ module.exports = yeoman.Base.extend({
         message: 'What kind of component is it ? ',
         choices: [{
             name: 'Atom',
-            value: 'atoms',
+            value: {
+              name: 'atoms',
+              title: 'My Atom'
+            },
             checked: true
           }, {
             name: 'Molecule',
-            value: 'molecules',
+            value: {
+              name: 'molecules',
+              title: 'My Molecule'
+            },
             checked: false
           }, {
             name: 'Organism',
-            value: 'organisms',
+            value: {
+              name: 'organisms',
+              title: 'My Organism'
+            },
             checked: false
           }, {
             name: 'Page',
-            value: 'pages',
+            value: {
+              name: 'pages',
+              title: 'My Page'
+            },
             checked: false
           }, {
             name: 'Doc page',
-            value: 'doc',
+            value: {
+              name: 'doc',
+              title: 'My Doc Page'
+            },
             checked: false
           }
         ]
@@ -55,30 +70,12 @@ module.exports = yeoman.Base.extend({
         name: 'name',
         message: 'What\'s the name of your component ?',
         default: function(answers) {
-          switch (answers.type) {
-            case 'atoms':
-              return 'My Atom'
-              break;
-            case 'molecules':
-              return 'My Molecule'
-              break;
-            case 'organisms':
-              return 'My Organism'
-              break;
-            case 'pages':
-              return 'My Page'
-              break;
-            case 'doc':
-              return 'My Doc Page'
-              break;
-            default:
-              return 'My Component'
-          }
+          return answers.type.title;
         }
       }];
 
       this.prompt(prompts, function (props) {
-        this.type = props.type;
+        this.type = props.type.name;
         this.name = props.name;
 
         done();
