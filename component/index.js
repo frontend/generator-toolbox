@@ -14,7 +14,7 @@ module.exports = yeoman.Base.extend({
       this.config = require(this.destinationPath('gulp_config.json'));
       this.continue = true;
     } else {
-      this.log(chalk.red("No gulp_config.json founded !") + "\nMake sure that the gulp_config.json is at your project's root.")
+      this.log(chalk.red("No gulp_config.json was found!") + "\nMake sure your gulp_config.json is at the project root.")
       this.continue = false;
     }
   },
@@ -30,23 +30,38 @@ module.exports = yeoman.Base.extend({
         message: 'What kind of component is it ? ',
         choices: [{
             name: 'Atom',
-            value: 'atoms',
+            value: {
+              name: 'atoms',
+              title: 'My Atom'
+            },
             checked: true
           }, {
             name: 'Molecule',
-            value: 'molecules',
+            value: {
+              name: 'molecules',
+              title: 'My Molecule'
+            },
             checked: false
           }, {
             name: 'Organism',
-            value: 'organisms',
+            value: {
+              name: 'organisms',
+              title: 'My Organism'
+            },
             checked: false
           }, {
             name: 'Page',
-            value: 'pages',
+            value: {
+              name: 'pages',
+              title: 'My Page'
+            },
             checked: false
           }, {
             name: 'Doc page',
-            value: 'doc',
+            value: {
+              name: 'doc',
+              title: 'My Doc Page'
+            },
             checked: false
           }
         ]
@@ -54,11 +69,13 @@ module.exports = yeoman.Base.extend({
         type: 'input',
         name: 'name',
         message: 'What\'s the name of your component ?',
-        default: 'component'
+        default: function(answers) {
+          return answers.type.title;
+        }
       }];
 
       this.prompt(prompts, function (props) {
-        this.type = props.type;
+        this.type = props.type.name;
         this.name = props.name;
 
         done();
@@ -78,28 +95,30 @@ module.exports = yeoman.Base.extend({
       } else if (this.type === 'doc' && this.type !== 'pages' && !pathExists.sync(this.destinationPath(this.config.assets + 'docs/'+ slug(this.name).toLowerCase() +'.md'))) {
         this.template('_doc.html', this.config.assets + 'docs/'+ slug(this.name).toLowerCase() +'.md');
       } else {
-        this.log(chalk.red(slug(this.name).toLowerCase() + " already founded !") + "\nMake sure that your component doens't already exist.");
+        this.log(chalk.red(slug(this.name).toLowerCase() + " was already found!") + "\nMake sure your component doesn't already exist.");
       }
 
       if (!pathExists.sync(this.destinationPath(this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + '.scss'))) {
         this.copy('components.scss', this.config.assets + 'sass/'+ this.type +'/_'+ slug(this.name).toLowerCase() + '.scss');
       } else {
-        this.log(chalk.red(slug(this.name).toLowerCase() + " already founded !") + "\nMake sure that your component doens't already exist.");
+        this.log(chalk.red(slug(this.name).toLowerCase() + " was already found!") + "\nMake sure your component doesn't already exist.");
       }
 
       if (this.type !== 'doc') {
         var stylesheet = this.destinationPath(this.config.assets + 'sass/main.scss'),
-            importer = "@import '"+ this.type +"/"+ slug(this.name).toLowerCase() + "';";
+            importer = "@import '"+ this.type +"/"+ slug(this.name).toLowerCase() + "';\n";
         if(pathExists.sync(stylesheet)){
           var body = fs.readFileSync(stylesheet).toString();
           if (body.indexOf(importer) < 0 ) {
-            body = body.replace("// "+ this.type +":", "// "+ this.type +":\n"+importer);
+            // regex to append the new line at the end of the whole block of code
+            var regex = new RegExp("(// " + this.type + ":\n(?:.+\n)+)");
+            body = body.replace(regex, "$1" + importer);
             fs.writeFileSync(stylesheet, body);
           } else {
-            this.log(chalk.red(importer + " already founded !") + "\nMake sure that your component doens't already exist.");
+            this.log(chalk.red(importer + " was already found!") + "\nMake sure your component doesn't already exist.");
           }
         } else {
-          this.log(chalk.red("No main.sccs founded !") + "\nMake sure that your main.scss file is at the root of your sass folder.");
+          this.log(chalk.red("No main.sccs was found!") + "\nMake sure your main.scss file is at the root of your sass directory.");
         }
       }
     }
