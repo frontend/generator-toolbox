@@ -25,7 +25,7 @@
       <ul>
         {% for atom in collections.atoms %}
           <li>
-            <a href="{{data.path}}atoms/#atom{{loop.index}}">{{atom.title}}</a>
+            <a href="{{data.path}}atoms/#{{atom.name|lower}}">{{atom.title}}</a>
           </li>
         {% endfor %}
       </ul>
@@ -36,7 +36,7 @@
       <ul>
         {% for molecule in collections.molecules %}
           <li>
-            <a href="{{data.path}}molecules/#molecule{{loop.index}}">{{molecule.title}}</a>
+            <a href="{{data.path}}molecules/#{{molecule.name|lower}}">{{molecule.title}}</a>
           </li>
         {% endfor %}
       </ul>
@@ -47,7 +47,7 @@
       <ul>
         {% for organism in collections.organisms %}
           <li>
-            <a href="{{data.path}}organisms/#organism{{loop.index}}">{{organism.title}}</a>
+            <a href="{{data.path}}organisms/#{{organism.name|lower}}">{{organism.title}}</a>
           </li>
         {% endfor %}
       </ul>
