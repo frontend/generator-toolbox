@@ -1,14 +1,4 @@
 {
-  "name": "<%= slug(name).toLowerCase() %>",
-  "version": "0.0.0",
-  "main": "index.html",
-  "browserify-shim": {
-    "jquery": "global:jQuery"
-  },
-  "engines": {
-    "node": "6.7.0",
-    "npm": "3.10.3"
-  },
   "dependencies": {
     "autoprefixer": "^6.4.1",
     "babel-eslint": "^7.1.1",
@@ -17,7 +7,7 @@
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
     "babel-register": "^6.14.0",<% if (bootstrap) { %>
-    "bootstrap": "4.0.0-alpha.5",<% } %>
+    "bootstrap": "4.0.0-alpha.6",<% } %>
     "browser-sync": "^2.16.0",
     "del": "~2.2.2",
     "gulp": "github:gulpjs/gulp#4.0",

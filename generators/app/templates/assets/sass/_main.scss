@@ -2,15 +2,12 @@
 
 // init:
 @import 'main-variables';<% if (bootstrap) { %>
-@import 'bootstrap';<% } %>
+@import 'bootstrap';<% } %><% if (styleguide) { %>
 
-<% if (fabricator) { %>
 // atoms:
 
 // molecules:
 
 // organisms:
 
-// pages:
-
-<% } %>
+// pages:<% } %>

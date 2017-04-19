@@ -21,7 +21,11 @@
     </li>
 
     <li>
-      <a href="{{data.path}}atoms/" class="styleguide-menu-heading">Atoms</a>
+      <div class="styleguide-menu-heading">
+        <a href="{{data.path}}atoms/">Atoms</a>
+        <a href="#" data-toggle="styleguide-collapse"></a>
+      </div>
+      <a href="#" data-toggle="styleguide-collapse"></a>
       <ul>
         {% for atom in collections.atoms %}
           <li>

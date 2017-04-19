@@ -1,0 +1,10 @@
+@charset 'UTF-8';
+
+@import 'main-variables';
+@import 'styleguide-variables';
+@import '<%= fromSrcToTop %>node_modules/toolbox-utils/styleguide/styles/mixins';
+@import '<%= fromSrcToTop %>node_modules/toolbox-utils/styleguide/styles/code';
+@import '<%= fromSrcToTop %>node_modules/toolbox-utils/styleguide/styles/controls';
+@import '<%= fromSrcToTop %>node_modules/toolbox-utils/styleguide/styles/item';
+@import '<%= fromSrcToTop %>node_modules/toolbox-utils/styleguide/styles/layout';
+@import '<%= fromSrcToTop %>node_modules/toolbox-utils/styleguide/styles/menu';

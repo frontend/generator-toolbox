@@ -1,9 +1,11 @@
 {
   "app": {
-    "env": "dev",
-    "basedir": "<% if (fabricator) { %>styleguide<% } else { %>.<% } %>",
-    "ghpages": "<% if (fabricator) { %>styleguide<% } else { %>.<% } %>"
+    "env": "dev"<% if (styleguide) { %>,
+    "basedir": "styleguide",
+    "ghpages": "styleguide"<% } %>
   },
+  "src": "<%= src %>",
+  "dest": "<%= dest %>",
   "vendors": {
     "css": [],
     "js": [<% if (bootstrap) { %>
@@ -17,10 +19,10 @@
       "node_modules/bootstrap/js/dist/scrollspy.js",
       "node_modules/bootstrap/js/dist/tab.js",
       "node_modules/bootstrap/js/dist/tooltip.js",
-      "node_modules/bootstrap/js/dist/util.js"<% } %>
-    ],
+      "node_modules/bootstrap/js/dist/util.js"
+    <% } %>],
     "fonts": [
-      "<%= assets %>fonts/*"
+      "fonts/*"
     ],
     "polyfills": [
       "node_modules/html5shiv/dist/html5shiv.js",
@@ -28,16 +30,13 @@
     ]
   },
   "images": [
-    "<%= assets %>img/**/*"
+    "img/**/*"
   ],
   "svg": [
-    "<%= assets %>svg/**/*"
+    "svg/**/*"
   ],
   "tasks":  "./tasks/",
-  "assets": "<%= assets %>",
-  "iconsFontName": "icons",
-  "build": "<%= build %>",
-  "browsers": ["last 2 versions", "safari 5", "ie 8", "ie 9", "ff 27", "opera 12.1"]<% if (fabricator) { %>,
+  "iconsFontName": "icon"<% if (styleguide) { %>,
   "singles": [],
   "metalsmith": {
     "assets": "node_modules/toolbox-utils/styleguide/",
