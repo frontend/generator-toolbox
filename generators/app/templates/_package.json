@@ -1,9 +1,10 @@
 {
-  "name": "Toolbox",
+  "name": "<%= name %>",
   "version": "0.0.0",
   "main": "index.html",
   "scripts": {
-    "build": "yarn && gulp build"
+    "build": "yarn && gulp build",
+    "watch": "yarn && gulp watch"
   },
   "browserslist": [
     "> 1% in CH",
@@ -17,6 +18,8 @@
     "cssnano": "^3.10.0",
     "del": "^2.2.2",
     "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.1",
     "gulp-load-plugins": "^1.5.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^6.4.0",
@@ -42,9 +45,7 @@
   "stylelint": {
     "ignoreFiles": [
       "<%= assets %>sass/main.scss",
-      "<%= assets %>sass/main-variables.scss"<% if (bootstrap) { %>,
-      "<%= assets %>sass/bootstrap-variables.scss",
-      "<%= assets %>sass/bootstrap.scss"<% } %>
+      "<%= assets %>sass/main-variables.scss"
     ],
     "extends": "stylelint-config-standard",
     "rules": {

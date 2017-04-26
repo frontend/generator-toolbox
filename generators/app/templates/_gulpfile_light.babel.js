@@ -18,13 +18,17 @@ function errorAlert(error) {
  */
 const src = {
   img: `${config.src}img/**/*`,
+  svg: `${config.src}svg/**/*.svg`,
   mainScss: `${config.src}/sass/main.s+(a|c)ss`,
   scss: `${config.src}sass/**/*.s+(a|c)ss`,
+  scripts: `${config.src}js/**/*.js`,
 };
 
 const dest = {
   img: `${config.dest}/img`,
+  svg: `${config.dest}/svg`,
   styles: `${config.dest}/css`,
+  scripts: `${config.dest}/js`,
 };
 
 /**
@@ -42,7 +46,18 @@ const clean = () => del([config.dest]);
  */
 const images = () => {
   return gulp.src(src.img)
-    .pipe(gulp.dest());
+    .pipe(gulp.dest(dest.img));
+};
+
+/**
+ * Copy SVG
+ *
+ * SVG are simply copied over to the build directory. Ensure they are already
+ * optimized for the web.
+ */
+const svg = () => {
+  return gulp.src(src.svg)
+    .pipe(gulp.dest(dest.svg));
 };
 
 /**
@@ -53,7 +68,7 @@ const images = () => {
  *   in package.json.
  * - CSSNano minifies the output.
  */
-export const styles = () => {
+const styles = () => {
   return gulp.src(src.mainScss)
     .pipe($.plumber({ errorHandler: errorAlert }))
     .pipe($.sourcemaps.init())
@@ -66,7 +81,7 @@ export const styles = () => {
     .pipe(gulp.dest(dest.styles));
 };
 
-export const stylesLint = () => {
+const stylesLint = () => {
   return gulp.src(`${config.src}**/*.s+(a|c)ss`)
     .pipe($.plumber({ errorHandler: errorAlert }))
     .pipe($.postcss(
@@ -78,6 +93,18 @@ export const stylesLint = () => {
       ],
       { syntax: require('postcss-scss') }
     ));
+};
+
+/**
+ * Scripts
+ */
+const scripts = () => {
+  return gulp.src(src.scripts)
+  .pipe($.sourcemaps.init())
+    .pipe($.babel())
+    .pipe($.concat('bundle.js'))
+    .pipe($.sourcemaps.write('./'))
+    .pipe(gulp.dest(dest.scripts));
 };
 
 /**
@@ -95,7 +122,7 @@ const watchTask = () => {
 /**
  * Gulp Tasks
  */
-const build = gulp.series(clean, gulp.parallel(stylesLint, styles, images));
+const build = gulp.series(clean, gulp.parallel(stylesLint, styles, scripts, images, svg));
 gulp.task('build', build);
 const watch = gulp.series('build', watchTask);
 gulp.task('watch', watch);

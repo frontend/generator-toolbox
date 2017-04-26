@@ -125,7 +125,7 @@ module.exports = class extends Generator {
 
     this.fs.copy(
       this.templatePath('_gulpfile_light.babel.js'),
-      this.destinationPath('gulpfile_light.babel.js')
+      this.destinationPath('gulpfile.babel.js')
     );
 
     this.fs.copy(
@@ -142,8 +142,23 @@ module.exports = class extends Generator {
         bootstrap: this.props.bootstrap
       }
     );
+    this.fs.write(this.destinationPath(`${this.props.src}sass/atoms/.gitkeep`), '');
+    this.fs.write(this.destinationPath(`${this.props.src}sass/molecules/.gitkeep`), '');
+    this.fs.write(this.destinationPath(`${this.props.src}sass/organisms/.gitkeep`), '');
+    this.fs.write(this.destinationPath(`${this.props.src}sass/pages/.gitkeep`), '');
 
-    this.fs.write(this.destinationPath(`${this.props.src}sass/main-variables.scss`), '@charset \'utf-8\';');
+    // Images
+    this.fs.write(this.destinationPath(`${this.props.src}img/.gitkeep`), '');
+    // SVG
+    this.fs.write(this.destinationPath(`${this.props.src}svg/.gitkeep`), '');
+
+    // Scripts
+    this.fs.copy(
+      this.templatePath('assets/js/index.js'),
+      this.destinationPath(`${this.props.src}js/index.js`)
+    );
+
+    this.fs.write(this.destinationPath(`${this.props.src}sass/main-variables.scss`), '@charset \'utf-8\';\n');
 
     if (this.props.styleguide) {
       this.fs.copyTpl(

@@ -2,7 +2,7 @@
 
 // init:
 @import 'main-variables';<% if (bootstrap) { %>
-@import 'bootstrap';<% } %><% if (styleguide) { %>
+@import 'bootstrap';<% } %>
 
 // atoms:
 
@@ -10,4 +10,4 @@
 
 // organisms:
 
-// pages:<% } %>
+// pages:
