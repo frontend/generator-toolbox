@@ -51,7 +51,7 @@ module.exports = class extends Generator {
       }, {
         name: 'Framework (Bootstrap 4)',
         value: 'bootstrap',
-        checked: false
+        checked: true
       }]
     }, {
       type: 'input',
@@ -156,6 +156,18 @@ module.exports = class extends Generator {
 
     this.fs.write(this.destinationPath(`${this.props.src}sass/main-variables.scss`), '@charset \'utf-8\';\n');
 
+    // WE WANT BOOTSTRAP
+    if (this.props.bootstrap) {
+      this.fs.copyTpl(
+        this.templatePath('assets/sass/_bootstrap.scss'),
+        this.destinationPath(`${this.props.src}sass/bootstrap.scss`),
+        {
+          fromSrcToTop: this.props.fromSrcToTop
+        }
+      );
+    }
+
+    // WE WANT THE STYLEGUIDE
     if (this.props.styleguide) {
       this.fs.copyTpl(
         this.templatePath('assets/sass/_styleguide.scss'),
@@ -169,14 +181,17 @@ module.exports = class extends Generator {
 
   install() {
     let packages = [];
-    let packages_dev = [];
+    const extraPackages = this.fs.readJSON(this.templatePath('_package_extra.json'));
 
     if (this.props.styleguide) {
-      packages = this.fs.readJSON(this.templatePath('_package_styleguide.json'));
-      this.log(packages);
+      packages.push(extraPackages.styleguide);
     }
 
-    this.yarnInstall();
+    if (this.props.bootstrap) {
+      packages.push(extraPackages.bootstrap);
+    }
+
+    this.yarnInstall(packages);
   }
 };
 
