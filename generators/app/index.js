@@ -52,10 +52,6 @@ module.exports = class extends Generator {
         name: 'Framework (Bootstrap 4)',
         value: 'bootstrap',
         checked: false
-      }, {
-        name: 'Tests (Mocha, Casperjs and Chai)',
-        value: 'tests',
-        checked: false
       }]
     }, {
       type: 'input',
@@ -74,6 +70,7 @@ module.exports = class extends Generator {
       answers.slug = slug(answers.name);
 
       answers.contentful = this.options.contentful || false;
+      answers.tests = this.options.tests || false;
 
       // Tools
       var tools = answers.tools;
@@ -83,7 +80,6 @@ module.exports = class extends Generator {
 
       answers.styleguide = hasTool('styleguide');
       answers.bootstrap = hasTool('bootstrap');
-      answers.tests = hasTool('tests');
 
       if (answers.src.slice(-1) !== '/') {
         answers.src += '/';
