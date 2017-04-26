@@ -101,10 +101,18 @@ const stylesLint = () => {
 const scripts = () => {
   return gulp.src(src.scripts)
   .pipe($.sourcemaps.init())
+    .pipe($.plumber({ errorHandler: errorAlert }))
     .pipe($.babel())
     .pipe($.concat('bundle.js'))
     .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest(dest.scripts));
+};
+
+const scriptsLint = () => {
+  return gulp.src(src.scripts)
+    .pipe($.plumber({ errorHandler: errorAlert }))
+    .pipe($.eslint())
+    .pipe($.eslint.format());
 };
 
 /**
@@ -122,7 +130,7 @@ const watchTask = () => {
 /**
  * Gulp Tasks
  */
-const build = gulp.series(clean, gulp.parallel(stylesLint, styles, scripts, images, svg));
+const build = gulp.series(clean, gulp.parallel(stylesLint, styles, scriptsLint, scripts, images, svg));
 gulp.task('build', build);
 const watch = gulp.series('build', watchTask);
 gulp.task('watch', watch);
