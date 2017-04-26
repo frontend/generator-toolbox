@@ -1,10 +1,9 @@
-'use strict';
-
-const gulp = require('gulp');
-const $ = require('gulp-load-plugins')();
-const del = require('del');
-const config = require('./gulp_config.json');
-const yargs = require('yargs');
+import gulp from 'gulp';
+import gulpLoadPlugins from 'gulp-load-plugins';
+const $ = gulpLoadPlugins();
+import del from 'del';
+import config from './gulp_config.json';
+import yargs from 'yargs';
 
 function errorAlert(error) {
   if (!yargs.argv.production) {
@@ -33,9 +32,7 @@ const dest = {
  *
  * Removes the build directory. Avoids issues with deleted files.
  */
-const clean = () => {
-  return del([config.dest]);
-};
+const clean = () => del([config.dest]);
 
 /**
  * Copy images
@@ -43,7 +40,7 @@ const clean = () => {
  * Images are simply copied over to the build directory. Ensure they are already
  * optimized for the web.
  */
-const images = function() {
+const images = () => {
   return gulp.src(src.img)
     .pipe(gulp.dest());
 };
@@ -56,20 +53,11 @@ const images = function() {
  *   in package.json.
  * - CSSNano minifies the output.
  */
-const styles = () => {
+export const styles = () => {
   return gulp.src(src.mainScss)
-    .pipe($.plumber({errorHandler: errorAlert}))
-    .pipe($.postcss(
-      [
-        require('stylelint')(),
-        require('postcss-reporter')({
-          clearReportedMessages: true,
-        })
-      ],
-      {syntax: require('postcss-scss')}
-    ))
+    .pipe($.plumber({ errorHandler: errorAlert }))
     .pipe($.sourcemaps.init())
-    .pipe($.sass().on('error', $.sass.logError))
+    .pipe($.sass.sync().on('error', $.sass.logError))
     .pipe($.postcss([
       require('autoprefixer'),
       require('cssnano'),
@@ -78,22 +66,37 @@ const styles = () => {
     .pipe(gulp.dest(dest.styles));
 };
 
+export const stylesLint = () => {
+  return gulp.src(`${config.src}**/*.s+(a|c)ss`)
+    .pipe($.plumber({ errorHandler: errorAlert }))
+    .pipe($.postcss(
+      [
+        require('stylelint')(),
+        require('postcss-reporter')({
+          clearReportedMessages: true,
+        })
+      ],
+      { syntax: require('postcss-scss') }
+    ));
+};
+
 /**
  * Watch changes
  *
  * Will watch your files and rebuild everything on the fly.
  */
-const watch = () => {
+const watchTask = () => {
   // Watch CSS changes
-  gulp.watch(src.scss, gulp.series(styles));
-
+  gulp.watch(src.scss, gulp.parallel(stylesLint, styles));
   // Watch images changes
-  gulp.watch(src.img, gulp.series(images));
+  gulp.watch(src.img, gulp.parallel(images));
 };
 
 /**
  * Gulp Tasks
  */
-gulp.task('build', gulp.series(clean, gulp.parallel(styles, images)));
-gulp.task('watch', gulp.series('build', watch));
-gulp.task('default', gulp.series('build'));
+const build = gulp.series(clean, gulp.parallel(stylesLint, styles, images));
+gulp.task('build', build);
+const watch = gulp.series('build', watchTask);
+gulp.task('watch', watch);
+gulp.task('default', build);

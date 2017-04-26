@@ -124,8 +124,13 @@ module.exports = class extends Generator {
     );
 
     this.fs.copy(
-      this.templatePath('_gulpfile_light.js'),
-      this.destinationPath('gulpfile.js')
+      this.templatePath('_gulpfile_light.babel.js'),
+      this.destinationPath('gulpfile_light.babel.js')
+    );
+
+    this.fs.copy(
+      this.templatePath('editorconfig'),
+      this.destinationPath('.editorconfig')
     );
 
     // Styles
