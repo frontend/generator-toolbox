@@ -2,6 +2,7 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const slug = require('slug');
+const curl = require('curlrequest');
 
 /* eslint-disable */
 const toolboxSay = function() {
@@ -108,6 +109,15 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
+      this.templatePath('gitignore'),
+      this.destinationPath('.gitignore'),
+      {
+        dest: this.props.dest,
+        styleguide: this.props.styleguide,
+      }
+    );
+
+    this.fs.copyTpl(
       this.templatePath('_gulp_config.json'),
       this.destinationPath('gulp_config.json'),
       {
@@ -196,6 +206,11 @@ module.exports = class extends Generator {
     this.fs.write(this.destinationPath('README.md'), `# ${this.props.name}\n\nPlease document your project here!`);
     this.fs.write(this.destinationPath('CHANGELOG.md'), `# CHANGELOG\n\n**0.0.0 (${new Date().toLocaleDateString()})**\n  - init project\n`);
     this.fs.write(this.destinationPath('VERSION'), '0.0.0');
+
+    const that = this;
+    curl.request({ url: 'https://raw.githubusercontent.com/antistatique/humans.txt/master/humans.txt' }, function (err, data) {
+      that.fs.write(that.destinationPath('humans.txt'), data);
+    });
   }
 
   install() {
