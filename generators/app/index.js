@@ -47,7 +47,7 @@ module.exports = class extends Generator {
       choices: [{
         name: 'Styleguide',
         value: 'styleguide',
-        checked: false
+        checked: true
       }, {
         name: 'Framework (Bootstrap 4)',
         value: 'bootstrap',
@@ -96,14 +96,13 @@ module.exports = class extends Generator {
   }
 
   writing() {
+    const emptyDirs = [];
+
     this.fs.copyTpl(
       this.templatePath('_package.json'),
       this.destinationPath('package.json'),
       {
         name: this.props.name,
-        bootstrap: this.props.bootstrap,
-        tests: this.props.tests,
-        contentful: this.props.contentful,
         assets: this.props.assets,
       }
     );
@@ -115,7 +114,8 @@ module.exports = class extends Generator {
         styleguide: this.props.styleguide,
         bootstrap: this.props.bootstrap,
         src: this.props.src,
-        dest: this.props.dest
+        dest: this.props.dest,
+        assets: this.props.assets,
       }
     );
 
@@ -138,15 +138,17 @@ module.exports = class extends Generator {
         bootstrap: this.props.bootstrap
       }
     );
-    this.fs.write(this.destinationPath(`${this.props.src}sass/atoms/.gitkeep`), '');
-    this.fs.write(this.destinationPath(`${this.props.src}sass/molecules/.gitkeep`), '');
-    this.fs.write(this.destinationPath(`${this.props.src}sass/organisms/.gitkeep`), '');
-    this.fs.write(this.destinationPath(`${this.props.src}sass/pages/.gitkeep`), '');
+    emptyDirs.push(
+      'sass/atoms/',
+      'sass/molecules/',
+      'sass/organisms/',
+      'sass/pages/'
+    );
 
     // Images
-    this.fs.write(this.destinationPath(`${this.props.src}img/.gitkeep`), '');
+    emptyDirs.push('img');
     // SVG
-    this.fs.write(this.destinationPath(`${this.props.src}svg/.gitkeep`), '');
+    emptyDirs.push('svg');
 
     // Scripts
     this.fs.copy(
@@ -176,7 +178,24 @@ module.exports = class extends Generator {
           fromSrcToTop: this.props.fromSrcToTop
         }
       );
+
+      emptyDirs.push(
+        'components/atoms/',
+        'components/molecules/',
+        'components/organisms/',
+        'components/pages/'
+      );
     }
+
+    // Create empty dirs
+    for (let dir of emptyDirs) {
+      this.fs.write(this.destinationPath(`${this.props.src}${dir}/.gitkeep`), '');
+    }
+
+    // Others
+    this.fs.write(this.destinationPath('README.md'), `# ${this.props.name}\n\nPlease document your project here!`);
+    this.fs.write(this.destinationPath('CHANGELOG.md'), `# CHANGELOG\n\n**0.0.0 (${new Date().toLocaleDateString()})**\n  - init project\n`);
+    this.fs.write(this.destinationPath('VERSION'), '0.0.0');
   }
 
   install() {
