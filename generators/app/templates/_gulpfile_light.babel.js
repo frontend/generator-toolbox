@@ -1,18 +1,9 @@
 import gulp from 'gulp';
-import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
-import yargs from 'yargs';
+
 import config from './gulp_config.json';
-
-const $ = gulpLoadPlugins();
-
-function errorAlert(error) {
-  if (!yargs.argv.production) {
-    $.notify.onError({ title: 'SCSS Error', message: 'Check your terminal', sound: 'Sosumi' })(error);
-    $.util.log(error.messageFormatted ? error.messageFormatted : error.message);
-  }
-  this.emit('end');
-}
+import { styles, stylesLint } from './tasks/styles';
+import { scripts, scriptsLint } from './tasks/scripts';
 
 /**
  * Config
@@ -62,66 +53,11 @@ const svg = () => {
 };
 
 /**
- * Styles
- *
- * Styles are built by pre-processing with Sass and generating sourcemaps.
- * - Autoprefixer is automatically run with PostCSS.See browserslist config
- *   in package.json.
- * - CSSNano minifies the output.
- */
-const styles = () => {
-  return gulp.src(src.mainScss)
-    .pipe($.plumber({ errorHandler: errorAlert }))
-    .pipe($.sourcemaps.init())
-    .pipe($.sass.sync().on('error', $.sass.logError))
-    .pipe($.postcss([
-      require('autoprefixer'),
-      require('cssnano'),
-    ]))
-    .pipe($.sourcemaps.write('./'))
-    .pipe(gulp.dest(dest.styles));
-};
-
-const stylesLint = () => {
-  return gulp.src(`${config.src}**/*.s+(a|c)ss`)
-    .pipe($.plumber({ errorHandler: errorAlert }))
-    .pipe($.postcss(
-      [
-        require('stylelint')(),
-        require('postcss-reporter')({
-          clearReportedMessages: true,
-        }),
-      ],
-      { syntax: require('postcss-scss') },
-    ));
-};
-
-/**
- * Scripts
- */
-const scripts = () => {
-  return gulp.src(src.scripts)
-  .pipe($.sourcemaps.init())
-    .pipe($.plumber({ errorHandler: errorAlert }))
-    .pipe($.babel())
-    .pipe($.concat('bundle.js'))
-    .pipe($.sourcemaps.write('./'))
-    .pipe(gulp.dest(dest.scripts));
-};
-
-const scriptsLint = () => {
-  return gulp.src(src.scripts)
-    .pipe($.plumber({ errorHandler: errorAlert }))
-    .pipe($.eslint())
-    .pipe($.eslint.format());
-};
-
-/**
  * Watch changes
  *
  * Will watch your files and rebuild everything on the fly.
  */
-const watchTask = () => {
+const watch = () => {
   // Watch CSS changes
   gulp.watch(src.scss, gulp.parallel(stylesLint, styles));
   // Watch images changes
@@ -143,6 +79,8 @@ const build = gulp.series(
   ),
 );
 gulp.task('build', build);
-const watch = gulp.series('build', watchTask);
-gulp.task('watch', watch);
+
+const watchTask = gulp.series('build', watch);
+gulp.task('watch', watchTask);
+
 gulp.task('default', build);

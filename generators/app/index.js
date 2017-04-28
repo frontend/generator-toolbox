@@ -148,6 +148,10 @@ module.exports = class extends Generator {
         bootstrap: this.props.bootstrap
       }
     );
+    this.fs.copy(
+      this.templatePath('tasks/styles.js'),
+      this.destinationPath('tasks/styles.js')
+    );
     emptyDirs.push(
       'sass/atoms/',
       'sass/molecules/',
@@ -195,6 +199,14 @@ module.exports = class extends Generator {
         'components/organisms/',
         'components/pages/'
       );
+    } else {
+      // WE DON'T WANT THE STYLEGUIDE
+
+      // Scripts
+      this.fs.copy(
+        this.templatePath('tasks/scripts_light.js'),
+        this.destinationPath('tasks/scripts.js')
+      );
     }
 
     // Create empty dirs
@@ -206,6 +218,10 @@ module.exports = class extends Generator {
     this.fs.write(this.destinationPath('README.md'), `# ${this.props.name}\n\nPlease document your project here!`);
     this.fs.write(this.destinationPath('CHANGELOG.md'), `# CHANGELOG\n\n**0.0.0 (${new Date().toLocaleDateString()})**\n  - init project\n`);
     this.fs.write(this.destinationPath('VERSION'), '0.0.0');
+    this.fs.copy(
+      this.templatePath('tasks/helpers.js'),
+      this.destinationPath('tasks/helpers.js')
+    );
 
     const that = this;
     curl.request({ url: 'https://raw.githubusercontent.com/antistatique/humans.txt/master/humans.txt' }, function (err, data) {

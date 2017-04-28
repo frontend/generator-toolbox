@@ -1,67 +1,56 @@
 import gulp from 'gulp';
-import yargs from 'yargs';
-import autoprefixer from 'autoprefixer';
-// required -> import stylelint from 'stylelint';
-import reporter from 'postcss-reporter';
+import gulpLoadPlugins from 'gulp-load-plugins';
+
 import config from '../gulp_config.json';
+import errorAlert from './helpers';
 
-import loadPlugins from 'gulp-load-plugins';
-const $ = loadPlugins();
-
-function errorAlert(error) {
-  if (!yargs.argv.production) {
-    $.notify.onError({ title: 'SCSS Error', message: 'Check your terminal', sound: 'Sosumi', })(error);
-    $.util.log(error.messageFormatted ? error.messageFormatted : error.message);
-  }
-  this.emit('end');
-}
+const $ = gulpLoadPlugins();
 
 /**
- * Build styles from SCSS files
- * With error reporting on compiling (so that there's no crash)
+ * Config
  */
-export const stylesBuild = () => {
-  if (yargs.argv.production) { $.util.log('[styles] Production mode'); } else { $.util.log('[styles] Dev mode'); }
+const src = {
+  mainScss: `${config.src}/sass/main.s+(a|c)ss`,
+  scss: `${config.src}sass/**/*.s+(a|c)ss`,
+};
 
-  return gulp.src([`${config.assets}sass/main.scss`])
+const dest = {
+  styles: `${config.dest}/css`,
+};
+
+/**
+ * Styles
+ *
+ * Styles are built by pre-processing with Sass and generating sourcemaps.
+ * - Autoprefixer is automatically run with PostCSS.See browserslist config
+ *   in package.json.
+ * - CSSNano minifies the output.
+ */
+export const styles = () => {
+  return gulp.src(src.mainScss)
     .pipe($.plumber({ errorHandler: errorAlert }))
-    .pipe(yargs.argv.production ? $.util.noop() : $.sourcemaps.init())
-    .pipe($.sass({
-      outputStyle: 'compressed',
-      precision: 5,
-      includePaths: ['.'],
-    }))
+    .pipe($.sourcemaps.init())
+    .pipe($.sass.sync().on('error', $.sass.logError))
     .pipe($.postcss([
-      autoprefixer({
-        browsers: config.browsers,
-        options: {
-          map: true,
-        }
-      })
+      require('autoprefixer'),
+      require('cssnano'),
     ]))
-    .pipe(yargs.argv.production ? $.util.noop() : $.sourcemaps.write())
-    .pipe(yargs.argv.production ? $.cleanCss() : $.util.noop())
-    .pipe($.concat('main.css'))
-    .pipe($.size({ title: 'STYLES', showFiles: true }))
-    .pipe(gulp.dest(`${config.build}/css`));
+    .pipe($.sourcemaps.write('./'))
+    .pipe(gulp.dest(dest.styles));
 };
 
 export const stylesLint = () => {
-  return gulp.src([`${config.assets}sass/**/*.s+(a|c)ss`])
-      .pipe($.plumber({ errorHandler: errorAlert }))
-      .pipe($.postcss(
-        [
-          require('stylelint')(),
-          reporter({
-            clearMessages: true,
-            throwError: yargs.argv.production
-          })
-        ],
-        {
-          syntax: require('postcss-scss')
-        }));
+  return gulp.src(`${config.src}**/*.s+(a|c)ss`)
+    .pipe($.plumber({ errorHandler: errorAlert }))
+    .pipe($.postcss(
+      [
+        require('stylelint')(),
+        require('postcss-reporter')({
+          clearReportedMessages: true,
+        }),
+      ],
+      { syntax: require('postcss-scss') },
+    ));
 };
-export const stylesLintTask = gulp.task('styles:lint', stylesLint);
 
-export const styles = gulp.series(stylesLint, stylesBuild);
-export const stylesTask = gulp.task('styles', styles);
+export default styles;
