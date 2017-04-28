@@ -55,6 +55,15 @@ module.exports = class extends Generator {
         checked: true
       }]
     }, {
+      type: 'checkbox',
+      name: 'others',
+      message: 'Other optional stuff',
+      choices: [{
+        name: 'Create Antistatique humans.txt',
+        value: 'humans',
+        checked: true
+      }]
+    }, {
       type: 'input',
       name: 'src',
       message: 'Where would you like to put your assets ?',
@@ -81,6 +90,14 @@ module.exports = class extends Generator {
 
       answers.styleguide = hasTool('styleguide');
       answers.bootstrap = hasTool('bootstrap');
+
+      // Others
+      var others = answers.others;
+      function hasOther(tool) {
+        return others.indexOf(tool) !== -1;
+      }
+
+      answers.humans = hasOther('humans');
 
       if (answers.src.slice(-1) !== '/') {
         answers.src += '/';
@@ -223,10 +240,12 @@ module.exports = class extends Generator {
       this.destinationPath('tasks/helpers.js')
     );
 
-    const that = this;
-    curl.request({ url: 'https://raw.githubusercontent.com/antistatique/humans.txt/master/humans.txt' }, function (err, data) {
-      that.fs.write(that.destinationPath('humans.txt'), data);
-    });
+    if (this.props.humans) {
+      const that = this;
+      curl.request({ url: 'https://raw.githubusercontent.com/antistatique/humans.txt/master/humans.txt' }, function (err, data) {
+        that.fs.write(that.destinationPath('humans.txt'), data);
+      });
+    }
   }
 
   install() {
