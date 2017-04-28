@@ -1,9 +1,10 @@
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
-const $ = gulpLoadPlugins();
 import del from 'del';
-import config from './gulp_config.json';
 import yargs from 'yargs';
+import config from './gulp_config.json';
+
+const $ = gulpLoadPlugins();
 
 function errorAlert(error) {
   if (!yargs.argv.production) {
@@ -89,9 +90,9 @@ const stylesLint = () => {
         require('stylelint')(),
         require('postcss-reporter')({
           clearReportedMessages: true,
-        })
+        }),
       ],
-      { syntax: require('postcss-scss') }
+      { syntax: require('postcss-scss') },
     ));
 };
 
@@ -130,7 +131,17 @@ const watchTask = () => {
 /**
  * Gulp Tasks
  */
-const build = gulp.series(clean, gulp.parallel(stylesLint, styles, scriptsLint, scripts, images, svg));
+const build = gulp.series(
+  clean,
+  gulp.parallel(
+    stylesLint,
+    styles,
+    scriptsLint,
+    scripts,
+    images,
+    svg,
+  ),
+);
 gulp.task('build', build);
 const watch = gulp.series('build', watchTask);
 gulp.task('watch', watch);
