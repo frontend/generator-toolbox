@@ -20,6 +20,7 @@
     "gulp-plumber",
     "gulp-postcss",
     "gulp-sass",
+    "gulp-size",
     "gulp-sourcemaps",
     "gulp-stylelint",
     "gulp-util",

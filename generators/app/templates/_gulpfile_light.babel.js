@@ -4,6 +4,7 @@ import del from 'del';
 import config from './toolbox.json';
 import { styles, stylesLint } from './tasks/styles';
 import { scripts, scriptsLint } from './tasks/scripts';
+import vendors from './tasks/vendors';
 
 /**
  * Config
@@ -79,6 +80,7 @@ const build = gulp.series(
     scripts,
     images,
     svg,
+    vendors,
   ),
 );
 gulp.task('build', build);
@@ -88,4 +90,5 @@ gulp.task('watch', watchTask);
 
 gulp.task('styles', gulp.parallel(styles, stylesLint));
 gulp.task('scripts', gulp.parallel(scripts, scriptsLint));
+gulp.task('vendors', vendors);
 gulp.task('default', build);

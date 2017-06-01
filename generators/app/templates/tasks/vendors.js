@@ -7,51 +7,39 @@ const $ = loadPlugins();
 /*
 * CSS Vendors
 */
-export const cssVendors = (done) => {
+const cssVendors = (done) => {
   if (config.vendors.css.length > 0) {
     return gulp.src(config.vendors.css)
       .pipe($.concat('vendors.min.css'))
-      .pipe($.cleanCss())
+      .pipe($.cssnano())
       .pipe($.size({title: 'CSS VENDORS', showFiles: true}))
-      .pipe(gulp.dest(`${config.build}css`));
-  } else {
-    return done();
+      .pipe(gulp.dest(`${config.dest}css`));
   }
+  return done();
 };
 
 /*
 * JS Vendors
 */
-export const jsVendors = () => {
-  return gulp.src(config.vendors.js)
-    .pipe($.concat('vendors.min.js'))
-    .pipe($.uglify())
-    .pipe($.size({title: 'JS VENDORS', showFiles: true}))
-    .pipe(gulp.dest(`${config.build}js`));
+const jsVendors = (done) => {
+  if (config.vendors.js.length > 0) {
+    return gulp.src(config.vendors.js)
+      .pipe($.concat('vendors.min.js'))
+      .pipe($.size({title: 'JS VENDORS', showFiles: true}))
+      .pipe(gulp.dest(`${config.dest}js`));
+  }
+  return done();
 };
 
 /*
 * Fonts Sources
 */
-export const fontsVendors = () => {
-  return gulp.src(config.vendors.fonts)
+const fontsVendors = () => {
+  return gulp.src(config.fonts)
     .pipe($.size({title: 'FONTS'}))
-    .pipe(gulp.dest(`${config.build}fonts`));
+    .pipe(gulp.dest(`${config.dest}fonts`));
 };
 
-/*
-* Polyfills Sources
-*/
-export const polyfillsVendors = () => {
-  return gulp.src(config.vendors.polyfills)
-    .pipe($.concat('polyfills.min.js'))
-    .pipe($.uglify())
-    .pipe($.size({title: 'POLYFILLS', showFiles: true}))
-    .pipe(gulp.dest(`${config.build}js`));
-};
+const vendors = gulp.parallel(cssVendors, jsVendors, fontsVendors);
 
-/*
-* Build vendors dependencies
-*/
-export const vendors = gulp.series(cssVendors, jsVendors, fontsVendors, polyfillsVendors);
-export const vendorsTask = gulp.task('vendors', vendors);
+export default vendors;
