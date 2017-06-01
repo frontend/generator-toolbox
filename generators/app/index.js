@@ -158,7 +158,8 @@ module.exports = class extends Generator {
       this.templatePath('assets/base.scss'),
       this.destinationPath(`${this.props.src}components/base.scss`),
       {
-        bootstrap: this.props.bootstrap
+        bootstrap: this.props.bootstrap,
+        icons: this.props.icons,
       }
     );
     this.fs.write(this.destinationPath(`${this.props.src}config/variables.scss`), '@charset \'utf-8\';\n');

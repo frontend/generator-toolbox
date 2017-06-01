@@ -2,7 +2,8 @@
 
 // init:
 @import '../config/variables';<% if (bootstrap) { %>
-@import '../config/bootstrap';<% } %>
+@import '../config/bootstrap';<% } %><% if (icons == 'font') { %>
+@import '../fonts/icon';<% } %>
 
 // atoms:
 
