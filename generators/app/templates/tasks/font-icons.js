@@ -1,37 +1,36 @@
 import gulp from 'gulp';
 import config from '../toolbox.json';
-import slug from 'slug';
 
 import loadPlugins from 'gulp-load-plugins';
 const $ = loadPlugins();
 
-const name = slug(config.iconsFontName).toLowerCase();
+const name = config.iconsFontName;
 
 /*
  * Build icons font and stylesheets
  */
-export const icons = () => {
-  return gulp.src(`${config.assets}icons/**/*.svg`)
+const icons = () => {
+  return gulp.src(`${config.src}icons/**/*.svg`)
     .pipe($.iconfont({
       fontName: name,
       appendCodepoints: true,
-      normalize:true,
-      fontHeight: 1001
+      normalize: true,
+      fontHeight: 1001,
     }))
-    .on('glyphs', function(glyphs) {
+    .on('glyphs', (glyphs) => {
       gulp.src('node_modules/toolbox-utils/templates/_icons.scss')
         .pipe($.consolidate('lodash', {
-          glyphs: glyphs.map(function(glyph) {
+          glyphs: glyphs.map((glyph) => {
             return { name: glyph.name, codepoint: glyph.unicode[0].charCodeAt(0) };
           }),
           fontName: name,
           fontPath: '../fonts/',
-          className: name
+          className: name,
         }))
         .pipe($.rename(`${name}.scss`))
-        .pipe(gulp.dest(`${config.assets}sass/`));
+        .pipe(gulp.dest(`${config.src}fonts`));
     })
-    .pipe(gulp.dest(`${config.build}fonts`));
+    .pipe(gulp.dest(`${config.dest}fonts`));
 };
 
-export const iconsTask = gulp.task('icons', icons);
+export default icons;

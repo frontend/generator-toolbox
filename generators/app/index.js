@@ -39,12 +39,12 @@ module.exports = class extends Generator {
     return this.prompt([{
       type: 'input',
       name: 'name',
-      message: 'What\'s the name of your project ?',
+      message: 'What\'s the name of your project?',
       default: 'Toolbox'
     }, {
       type: 'checkbox',
       name: 'options',
-      message: 'What would you like to use in your project ?',
+      message: 'What would you like to use in your project?',
       choices: [{
         name: 'Framework (Bootstrap 4)',
         value: 'bootstrap',
@@ -59,14 +59,26 @@ module.exports = class extends Generator {
         checked: true
       }]
     }, {
+      type: 'list',
+      name: 'icons',
+      message: 'How should your icons be generated?',
+      default: 'svg',
+      choices: [{
+        name: 'I want the SVG icons goodness',
+        value: 'svg'
+      }, {
+        name: 'Gimme good old font icons.',
+        value: 'font'
+      }]
+    }, {
       type: 'input',
       name: 'src',
-      message: 'Where would you like to put your assets ?',
+      message: 'Where would you like to put your assets?',
       default: 'assets/'
     }, {
       type: 'input',
       name: 'dest',
-      message: 'Where would you like to put your build ?',
+      message: 'Where would you like to put your build?',
       default: function (answers) {
         return answers.src.indexOf('assets') !== -1 ? answers.src.replace(/assets\/?$/, 'build/') : 'build/'; // eslint-disable-line
       }
@@ -208,6 +220,10 @@ module.exports = class extends Generator {
       this.templatePath('tasks/single.js'),
       this.destinationPath('tasks/single.js')
     );
+    this.fs.copy(
+      this.templatePath(`tasks/${this.props.icons}-icons.js`),
+      this.destinationPath('tasks/icons.js')
+    );
 
     // Create empty dirs
     for (let dir of emptyDirs) {
@@ -245,6 +261,12 @@ module.exports = class extends Generator {
 
     if (this.props.bootstrap) {
       packagesToInstall.push(packages.bootstrap);
+    }
+
+    if (this.props.icons == 'font') {
+      for (const key in packages.fontIcon) {
+        packagesToInstall.push([packages.fontIcon[key]]);
+      }
     }
 
     this.yarnInstall(packagesToInstall);

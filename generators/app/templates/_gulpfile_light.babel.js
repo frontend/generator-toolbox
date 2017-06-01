@@ -7,6 +7,7 @@ import { styles, stylesLint } from './tasks/styles';
 import { scripts, scriptsLint } from './tasks/scripts';
 import vendors from './tasks/vendors';
 import single from './tasks/single';
+import icons from './tasks/icons';
 
 /**
  * Config
@@ -69,6 +70,7 @@ const build = gulp.series(
     copyAssets,
     vendors,
     single,
+    icons,
   ),
 );
 gulp.task('build', build);
@@ -79,5 +81,6 @@ gulp.task('watch', watchTask);
 gulp.task('styles', gulp.parallel(styles, stylesLint));
 gulp.task('scripts', gulp.parallel(scripts, scriptsLint));
 gulp.task('vendors', vendors);
+gulp.task('icons', icons);
 gulp.task('single', gulp.series(single));
 gulp.task('default', build);

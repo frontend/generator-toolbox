@@ -32,5 +32,11 @@
     "stylelint-order",
     "yargs"
   ],
-  "bootstrap": "bootstrap@4.0.0-alpha.6"
+  "bootstrap": "bootstrap@4.0.0-alpha.6",
+  "fontIcon": [
+    "gulp-consolidate",
+    "gulp-iconfont",
+    "gulp-rename",
+    "toolbox-utils"
+  ]
 }
