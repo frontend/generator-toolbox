@@ -10,13 +10,16 @@ import single from './tasks/single';
 import icons from './tasks/icons';
 
 /**
+ * Clean
+ *
+ * Removes the build directory. Avoids issues with deleted files.
+ */
+const clean = () => del([config.dest]);
+gulp.task('clean', clean);
+
+/**
  * Config
  */
-const src = {
-  scss: `${config.src}sass/**/*.s+(a|c)ss`,
-  scripts: `${config.src}js/**/*.js`,
-};
-
 const copyPaths = [{
   src: `${config.src}images/**/*`,
   dest: `${config.dest}/images`,
@@ -26,15 +29,10 @@ const copyPaths = [{
 }, {
   src: `${config.src}favicons/**/*`,
   dest: `${config.dest}/favicons`,
+}, {
+  src: `${config.src}fonts/**/*`,
+  dest: `${config.dest}/fonts`,
 }];
-
-/**
- * Clean
- *
- * Removes the build directory. Avoids issues with deleted files.
- */
-const clean = () => del([config.dest]);
-gulp.task('clean', clean);
 
 /**
  * Copy stuff
@@ -46,16 +44,6 @@ const copyAssets = () => {
   }));
 };
 gulp.task('copy-assets', copyAssets);
-
-/**
- * Watch changes
- *
- * Will watch your files and rebuild everything on the fly.
- */
-const watch = () => {
-  // Watch CSS changes
-  gulp.watch(src.scss, gulp.parallel(stylesLint, styles));
-};
 
 /**
  * Gulp Tasks
@@ -74,9 +62,6 @@ const build = gulp.series(
   ),
 );
 gulp.task('build', build);
-
-const watchTask = gulp.series('build', watch);
-gulp.task('watch', watchTask);
 
 gulp.task('styles', gulp.parallel(styles, stylesLint));
 gulp.task('scripts', gulp.parallel(scripts, scriptsLint));

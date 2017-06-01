@@ -165,7 +165,14 @@ module.exports = class extends Generator {
     this.fs.write(this.destinationPath(`${this.props.src}config/variables.scss`), '@charset \'utf-8\';\n');
 
     // Scripts
-    this.fs.write(this.destinationPath(`${this.props.src}components/base.js`), "// You will use that file to import all your scripts\n// Ex: import gallery from './gallery';\n");
+    this.fs.copyTpl(
+      this.templatePath('assets/base.js'),
+      this.destinationPath(`${this.props.src}components/base.js`),
+      {
+        bootstrap: this.props.bootstrap,
+        svgIcons: this.props.icons === 'svg',
+      }
+    );
 
     // Images
     emptyDirs.push('images');
@@ -177,6 +184,14 @@ module.exports = class extends Generator {
     emptyDirs.push('fonts');
     // Favicons
     this.fs.write(this.destinationPath(`${this.props.src}favicons/README.md`), '# Favicons\n\nGo on [realfavicongenerator.net](https://realfavicongenerator.net) to generate your favicon kit! (and remove this file when done)\n');
+
+    // Icons
+    if (this.props.icons === 'svg') {
+      this.fs.copy(
+        this.templatePath('assets/svg-icons.js'),
+        this.destinationPath(`${this.props.src}icons/svg-icons.js`)
+      );
+    }
 
     // WE WANT BOOTSTRAP
     if (this.props.bootstrap) {
@@ -221,9 +236,12 @@ module.exports = class extends Generator {
       this.templatePath('tasks/single.js'),
       this.destinationPath('tasks/single.js')
     );
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath(`tasks/${this.props.icons}-icons.js`),
-      this.destinationPath('tasks/icons.js')
+      this.destinationPath('tasks/icons.js'),
+      {
+        iconsPath: this.props.dest + 'icons/icons.svg'
+      }
     );
 
     // Create empty dirs
@@ -264,9 +282,13 @@ module.exports = class extends Generator {
       packagesToInstall.push(packages.bootstrap);
     }
 
-    if (this.props.icons == 'font') {
+    if (this.props.icons === 'font') {
       for (const key in packages.fontIcon) {
         packagesToInstall.push([packages.fontIcon[key]]);
+      }
+    } else if (this.props.icons === 'svg') {
+      for (const key in packages.svgIcon) {
+        packagesToInstall.push([packages.svgIcon[key]]);
       }
     }
 

@@ -38,5 +38,11 @@
     "gulp-iconfont",
     "gulp-rename",
     "toolbox-utils"
+  ],
+  "svgIcon": [
+    "gulp-rename",
+    "gulp-cheerio",
+    "gulp-svgstore",
+    "gulp-svgo"
   ]
 }
