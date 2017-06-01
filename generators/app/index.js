@@ -43,24 +43,19 @@ module.exports = class extends Generator {
       default: 'Toolbox'
     }, {
       type: 'checkbox',
-      name: 'tools',
-      message: 'What would you like to use in your project ? (unselect the ones you don\'t want) ',
+      name: 'options',
+      message: 'What would you like to use in your project ?',
       choices: [{
-        name: 'Styleguide',
-        value: 'styleguide',
-        checked: true
-      }, {
         name: 'Framework (Bootstrap 4)',
         value: 'bootstrap',
         checked: true
-      }]
-    }, {
-      type: 'checkbox',
-      name: 'others',
-      message: 'Other optional stuff',
-      choices: [{
+      }, {
         name: 'Create Antistatique humans.txt',
         value: 'humans',
+        checked: true
+      }, {
+        name: 'Create CHANGELOG.md and VERSION files',
+        value: 'changelog',
         checked: true
       }]
     }, {
@@ -77,28 +72,19 @@ module.exports = class extends Generator {
       }
     }])
     .then(answers => {
-      answers.slug = slug(answers.name);
+      answers.slug = slug(answers.name, {lower: true});
 
-      answers.contentful = this.options.contentful || false;
-      answers.tests = this.options.tests || false;
-
-      // Tools
-      var tools = answers.tools;
-      function hasTool(tool) {
-        return tools.indexOf(tool) !== -1;
+      // Get options
+      var options = answers.options;
+      function hasOption(tool) {
+        return options.indexOf(tool) !== -1;
       }
 
-      answers.styleguide = hasTool('styleguide');
-      answers.bootstrap = hasTool('bootstrap');
+      answers.bootstrap = hasOption('bootstrap');
+      answers.humans = hasOption('humans');
+      answers.changelog = hasOption('changelog');
 
-      // Others
-      var others = answers.others;
-      function hasOther(tool) {
-        return others.indexOf(tool) !== -1;
-      }
-
-      answers.humans = hasOther('humans');
-
+      // Make sure we have a "/" at the end of the paths
       if (answers.src.slice(-1) !== '/') {
         answers.src += '/';
       }
@@ -107,6 +93,7 @@ module.exports = class extends Generator {
         answers.dest += '/';
       }
 
+      // Generate the path to /node_modules from assets or build directory
       answers.fromSrcToTop = '../'.repeat(answers.src.replace(/^\/|\/$/, '').split('/').length + 1);
 
       this.props = answers;
@@ -120,8 +107,8 @@ module.exports = class extends Generator {
       this.templatePath('_package.json'),
       this.destinationPath('package.json'),
       {
-        name: this.props.name,
-        assets: this.props.assets,
+        name: this.props.slug,
+        assets: this.props.src,
       }
     );
 
@@ -130,19 +117,17 @@ module.exports = class extends Generator {
       this.destinationPath('.gitignore'),
       {
         dest: this.props.dest,
-        styleguide: this.props.styleguide,
       }
     );
 
     this.fs.copyTpl(
-      this.templatePath('_gulp_config.json'),
-      this.destinationPath('gulp_config.json'),
+      this.templatePath('_toolbox.json'),
+      this.destinationPath('toolbox.json'),
       {
-        styleguide: this.props.styleguide,
         bootstrap: this.props.bootstrap,
         src: this.props.src,
         dest: this.props.dest,
-        assets: this.props.assets,
+        assets: this.props.src,
       }
     );
 
@@ -157,74 +142,64 @@ module.exports = class extends Generator {
     );
 
     // Styles
-    this.fs.copyTpl(
-      this.templatePath('assets/sass/_main.scss'),
-      this.destinationPath(`${this.props.src}sass/main.scss`),
-      {
-        styleguide: this.props.styleguide,
-        bootstrap: this.props.bootstrap
-      }
-    );
     this.fs.copy(
       this.templatePath('tasks/styles.js'),
       this.destinationPath('tasks/styles.js')
     );
-    emptyDirs.push(
-      'sass/atoms/',
-      'sass/molecules/',
-      'sass/organisms/',
-      'sass/pages/'
+    this.fs.copyTpl(
+      this.templatePath('assets/base.scss'),
+      this.destinationPath(`${this.props.src}components/base.scss`),
+      {
+        bootstrap: this.props.bootstrap
+      }
     );
-
-    // Images
-    emptyDirs.push('img');
-    // SVG
-    emptyDirs.push('svg');
+    this.fs.write(this.destinationPath(`${this.props.src}config/variables.scss`), '@charset \'utf-8\';\n');
 
     // Scripts
-    this.fs.copy(
-      this.templatePath('assets/js/index.js'),
-      this.destinationPath(`${this.props.src}js/index.js`)
-    );
+    this.fs.write(this.destinationPath(`${this.props.src}components/base.js`), "// You will use that file to import all your scripts\n// Ex: import gallery from './gallery';\n");
 
-    this.fs.write(this.destinationPath(`${this.props.src}sass/main-variables.scss`), '@charset \'utf-8\';\n');
+    // Images
+    emptyDirs.push('images');
+    // SVG
+    emptyDirs.push('svg');
+    // Icons
+    emptyDirs.push('icons');
+    // Fonts
+    emptyDirs.push('fonts');
+    // Favicons
+    this.fs.write(this.destinationPath(`${this.props.src}favicons/README.md`), '# Favicons\n\nGo on [realfavicongenerator.net](https://realfavicongenerator.net) to generate your favicon kit! (and remove this file when done)\n');
 
     // WE WANT BOOTSTRAP
     if (this.props.bootstrap) {
       this.fs.copyTpl(
-        this.templatePath('assets/sass/_bootstrap.scss'),
-        this.destinationPath(`${this.props.src}sass/bootstrap.scss`),
+        this.templatePath('config/_bootstrap.scss'),
+        this.destinationPath(`${this.props.src}config/bootstrap.scss`),
         {
           fromSrcToTop: this.props.fromSrcToTop
         }
       );
     }
 
-    // WE WANT THE STYLEGUIDE
-    if (this.props.styleguide) {
-      this.fs.copyTpl(
-        this.templatePath('assets/sass/_styleguide.scss'),
-        this.destinationPath(`${this.props.src}sass/styleguide.scss`),
-        {
-          fromSrcToTop: this.props.fromSrcToTop
-        }
-      );
+    this.fs.copyTpl(
+      this.templatePath('config/_styleguide.scss'),
+      this.destinationPath(`${this.props.src}config/styleguide.scss`),
+      {
+        fromSrcToTop: this.props.fromSrcToTop
+      }
+    );
 
-      emptyDirs.push(
-        'components/atoms/',
-        'components/molecules/',
-        'components/organisms/',
-        'components/pages/'
-      );
-    } else {
-      // WE DON'T WANT THE STYLEGUIDE
+    emptyDirs.push(
+      'components/atoms/',
+      'components/molecules/',
+      'components/organisms/',
+      'components/pages/'
+    );
 
-      // Scripts
-      this.fs.copy(
-        this.templatePath('tasks/scripts_light.js'),
-        this.destinationPath('tasks/scripts.js')
-      );
-    }
+    // Scripts
+    this.fs.copy(
+      this.templatePath('tasks/scripts_light.js'),
+      this.destinationPath('tasks/scripts.js')
+    );
 
     // Create empty dirs
     for (let dir of emptyDirs) {
@@ -233,13 +208,16 @@ module.exports = class extends Generator {
 
     // Others
     this.fs.write(this.destinationPath('README.md'), `# ${this.props.name}\n\nPlease document your project here!`);
-    this.fs.write(this.destinationPath('CHANGELOG.md'), `# CHANGELOG\n\n**0.0.0 (${new Date().toLocaleDateString()})**\n  - init project\n`);
-    this.fs.write(this.destinationPath('VERSION'), '0.0.0');
+    if (this.props.changelog) {
+      this.fs.write(this.destinationPath('CHANGELOG.md'), `# CHANGELOG\n\n## 0.0.0 (${new Date().toLocaleDateString()})\n\n  - init project\n`);
+      this.fs.write(this.destinationPath('VERSION'), '0.0.0');
+    }
     this.fs.copy(
       this.templatePath('tasks/helpers.js'),
       this.destinationPath('tasks/helpers.js')
     );
 
+    // Write humans.txt
     if (this.props.humans) {
       const that = this;
       curl.request({ url: 'https://raw.githubusercontent.com/antistatique/humans.txt/master/humans.txt' }, function (err, data) {
@@ -249,106 +227,18 @@ module.exports = class extends Generator {
   }
 
   install() {
-    let packages = [];
-    const extraPackages = this.fs.readJSON(this.templatePath('_package_extra.json'));
+    let packagesToInstall = [];
+    const packages = this.fs.readJSON(this.templatePath('_packages.json'));
 
-    if (this.props.styleguide) {
-      packages.push(extraPackages.styleguide);
+    // Add the required packages
+    for (const key in packages.base) {
+      packagesToInstall.push([packages.base[key]]);
     }
 
     if (this.props.bootstrap) {
-      packages.push(extraPackages.bootstrap);
+      packagesToInstall.push(packages.bootstrap);
     }
 
-    this.yarnInstall(packages);
+    this.yarnInstall(packagesToInstall);
   }
 };
-
-// Module.exports = yeoman.Base.extend({
-//
-//   writing: {
-//     app: function () {
-//       this.template('_package.json', 'package.json');
-//       this.template('_gulp_config.json', 'gulp_config.json');
-//       this.template('_gulpfile.babel.js', 'gulpfile.babel.js');
-//
-//       this.copy('tasks/clean.js', 'tasks/clean.js');
-//       this.copy('tasks/server.js', 'tasks/server.js');
-//       this.copy('tasks/deploy.js', 'tasks/deploy.js');
-//       this.copy('tasks/images.js', 'tasks/images.js');
-//       this.copy('tasks/icons.js', 'tasks/icons.js');
-//       this.copy('tasks/favicons.js', 'tasks/favicons.js');
-//       this.template('tasks/_metalsmith.js', 'tasks/metalsmith.js');
-//       this.copy('tasks/filters.js', 'tasks/filters.js');
-//       this.copy('tasks/single.js', 'tasks/single.js');
-//       this.copy('tasks/styles.js', 'tasks/styles.js');
-//       this.copy('tasks/scripts.js', 'tasks/scripts.js');
-//       this.copy('tasks/vendors.js', 'tasks/vendors.js');
-//
-//       if (this.fabricator) {
-//         mkdirp.sync(this.assets + 'components');
-//         mkdirp.sync(this.assets + 'components/atoms');
-//         mkdirp.sync(this.assets + 'components/molecules');
-//         mkdirp.sync(this.assets + 'components/organisms');
-//         mkdirp.sync(this.assets + 'components/pages');
-//         this.directory('assets/templates', this.assets + 'templates');
-//         this.directory('assets/data', this.assets + 'data');
-//         this.directory('assets/docs', this.assets + 'docs');
-//         mkdirp.sync(this.assets + 'sass');
-//         mkdirp.sync(this.assets + 'sass/atoms');
-//         mkdirp.sync(this.assets + 'sass/molecules');
-//         mkdirp.sync(this.assets + 'sass/organisms');
-//         mkdirp.sync(this.assets + 'sass/pages');
-//         this.template('assets/sass/styleguide.scss', this.assets + 'sass/styleguide.scss');
-//         this.copy('assets/sass/styleguide-variables.scss', this.assets + 'sass/styleguide-variables.scss');
-//       }
-//
-//       this.directory('assets/js', this.assets + 'js');
-//
-//       mkdirp.sync(this.assets + 'img');
-//       mkdirp.sync(this.assets + 'svg');
-//       mkdirp.sync(this.assets + 'fonts');
-//       mkdirp.sync(this.assets + 'icons');
-//       mkdirp.sync(this.assets + 'favicons');
-//
-//       if (this.bootstrap) {
-//         this.template('assets/sass/bootstrap.scss', this.assets + 'sass/bootstrap.scss');
-//       }
-//
-//       this.template('assets/sass/_main.scss', this.assets + 'sass/main.scss');
-//       this.copy('assets/sass/main-variables.scss', this.assets + 'sass/main-variables.scss');
-//
-//       if (this.tests) {
-//         this.directory('tests', 'tests');
-//         mkdirp.sync('tests/unit');
-//         mkdirp.sync('tests/navigation');
-//         this.copy('tasks/tests-regression.js', 'tasks/tests-regression.js');
-//         this.copy('tasks/tests-unit.js', 'tasks/tests-unit.js');
-//         this.copy('tasks/tests-navigation.js', 'tasks/tests-navigation.js');
-//       }
-//     },
-//
-//     projectfiles: function () {
-//       this.template('babelrc', '.babelrc');
-//       this.copy('editorconfig', '.editorconfig');
-//       this.copy('webpack.dev.config.js', 'webpack.dev.config.js');
-//       this.copy('webpack.prod.config.js', 'webpack.prod.config.js');
-//       this.copy('gitattributes', '.gitattributes');
-//       this.template('gitignore', '.gitignore');
-//       this.copy('eslintrc', '.eslintrc');
-//       this.template('_stylelintrc', '.stylelintrc');
-//
-//       if (this.contentful) {
-//         this.template('env', '.env');
-//       }
-//     }
-//   },
-//
-//   install: function () {
-//     if (!this.options['skip-install']) {
-//       this.spawnCommand('yarn').on('error', function () {
-//         console.error(chalk.red('Can\'t run ') + chalk.blue('yarn') + chalk.red(' command because it wasn\'t found. Please run ') + chalk.cyan('npm install -g yarn') + chalk.red(' and try again.'));
-//       });
-//     }
-//   }
-// });
