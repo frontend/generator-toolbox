@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import del from 'del';
 
-import config from './gulp_config.json';
+import config from './toolbox.json';
 import { styles, stylesLint } from './tasks/styles';
 import { scripts, scriptsLint } from './tasks/scripts';
 
@@ -83,4 +83,6 @@ gulp.task('build', build);
 const watchTask = gulp.series('build', watch);
 gulp.task('watch', watchTask);
 
+gulp.task('styles', gulp.parallel(styles, stylesLint));
+gulp.task('scripts', gulp.parallel(scripts, scriptsLint));
 gulp.task('default', build);

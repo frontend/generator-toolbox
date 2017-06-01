@@ -1,6 +1,6 @@
 import gulp from 'gulp';
 import webpack from 'webpack';
-import config from '../gulp_config.json';
+import config from '../toolbox.json';
 import webpackSettings from '../webpack.prod.config';
 import yargs from 'yargs';
 

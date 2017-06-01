@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 
-import config from '../gulp_config.json';
+import config from '../toolbox.json';
 import errorAlert from './helpers';
 
 const $ = gulpLoadPlugins();

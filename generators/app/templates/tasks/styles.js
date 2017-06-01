@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 
-import config from '../gulp_config.json';
+import config from '../toolbox.json';
 import errorAlert from './helpers';
 
 const $ = gulpLoadPlugins();
@@ -10,8 +10,8 @@ const $ = gulpLoadPlugins();
  * Config
  */
 const src = {
-  mainScss: `${config.src}/sass/main.s+(a|c)ss`,
-  scss: `${config.src}sass/**/*.s+(a|c)ss`,
+  mainScss: `${config.src}components/base.scss`,
+  scss: `${config.src}components/**/*.scss`,
 };
 
 const dest = {
@@ -40,7 +40,7 @@ export const styles = () => {
 };
 
 export const stylesLint = () => {
-  return gulp.src(`${config.src}**/*.s+(a|c)ss`)
+  return gulp.src(src.scss)
     .pipe($.plumber({ errorHandler: errorAlert }))
     .pipe($.postcss(
       [

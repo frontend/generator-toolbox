@@ -195,10 +195,14 @@ module.exports = class extends Generator {
       'components/pages/'
     );
 
-    // Scripts
+    // Tasks
     this.fs.copy(
       this.templatePath('tasks/scripts_light.js'),
       this.destinationPath('tasks/scripts.js')
+    );
+    this.fs.copy(
+      this.templatePath('tasks/vendors.js'),
+      this.destinationPath('tasks/vendors.js')
     );
 
     // Create empty dirs

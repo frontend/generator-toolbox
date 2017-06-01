@@ -1,5 +1,5 @@
 import gulp from 'gulp';
-import config from '../gulp_config.json';
+import config from '../toolbox.json';
 import slug from 'slug';
 
 import loadPlugins from 'gulp-load-plugins';
