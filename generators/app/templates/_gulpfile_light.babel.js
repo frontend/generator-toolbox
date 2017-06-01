@@ -29,6 +29,7 @@ const dest = {
  * Removes the build directory. Avoids issues with deleted files.
  */
 const clean = () => del([config.dest]);
+gulp.task('clean', clean);
 
 /**
  * Copy images
@@ -40,6 +41,7 @@ const images = () => {
   return gulp.src(src.img)
     .pipe(gulp.dest(dest.img));
 };
+gulp.task('images', images);
 
 /**
  * Copy SVG
@@ -51,6 +53,7 @@ const svg = () => {
   return gulp.src(src.svg)
     .pipe(gulp.dest(dest.svg));
 };
+gulp.task('svg', svg);
 
 /**
  * Watch changes
