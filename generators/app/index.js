@@ -142,10 +142,6 @@ module.exports = class extends Generator {
     );
 
     // Styles
-    this.fs.copy(
-      this.templatePath('tasks/styles.js'),
-      this.destinationPath('tasks/styles.js')
-    );
     this.fs.copyTpl(
       this.templatePath('assets/base.scss'),
       this.destinationPath(`${this.props.src}components/base.scss`),
@@ -197,12 +193,20 @@ module.exports = class extends Generator {
 
     // Tasks
     this.fs.copy(
+      this.templatePath('tasks/styles.js'),
+      this.destinationPath('tasks/styles.js')
+    );
+    this.fs.copy(
       this.templatePath('tasks/scripts_light.js'),
       this.destinationPath('tasks/scripts.js')
     );
     this.fs.copy(
       this.templatePath('tasks/vendors.js'),
       this.destinationPath('tasks/vendors.js')
+    );
+    this.fs.copy(
+      this.templatePath('tasks/single.js'),
+      this.destinationPath('tasks/single.js')
     );
 
     // Create empty dirs

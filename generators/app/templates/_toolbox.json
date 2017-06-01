@@ -1,6 +1,7 @@
 {
   "src": "<%= src %>",
   "dest": "<%= dest %>",
+  "ghpages": "<%= dest %>",
   "images": [
     "<%= dest %>images/**/*"
   ],
