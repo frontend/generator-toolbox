@@ -8,12 +8,14 @@ const $ = loadPlugins();
 /**
  * Deploy to GH pages
  */
-export const single = (done) => {
-  return merge().isEmpty() ? done() : merge(config.singles.map(single => {
-    return gulp.src(single.source)
-      .pipe(single.name ? $.rename(single.name) : $.util.noop())
-      .pipe(gulp.dest(single.destination));
+const single = (done) => {
+  // Return if singles are empty
+  if (!config.singles || !config.singles[Object.keys(config.singles)[0]].src) return done();
+
+  return merge(config.singles.map((item) => {
+    return gulp.src(item.src)
+      .pipe(gulp.dest(item.dest));
   }));
 };
 
-export const singleTask = gulp.task('single', single);
+export default single;

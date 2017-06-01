@@ -30,10 +30,8 @@
       "node_modules/bootstrap/js/dist/util.js"
     <% } %>]
   },
-  "singles": [
-    {
-      "source": "",
-      "destination": ""
-    }
-  ]
+  "singles": [{
+    "src": "",
+    "dest": ""
+  }]
 }

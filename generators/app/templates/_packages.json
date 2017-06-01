@@ -24,6 +24,7 @@
     "gulp-sourcemaps",
     "gulp-stylelint",
     "gulp-util",
+    "merge-stream",
     "postcss-reporter",
     "postcss-scss",
     "stylelint",
