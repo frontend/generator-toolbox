@@ -10,7 +10,8 @@ const $ = gulpLoadPlugins();
  * Config
  */
 const src = {
-  scripts: `${config.src}js/**/*.js`,
+  base: `${config.src}components/base.js`,
+  scripts: `${config.src}components/**/*.js`,
 };
 
 const dest = {
@@ -21,7 +22,7 @@ const dest = {
  * Scripts
  */
 export const scripts = () => {
-  return gulp.src(src.scripts)
+  return gulp.src(src.base)
     .pipe($.sourcemaps.init())
     .pipe($.plumber({ errorHandler: errorAlert }))
     .pipe($.babel())
