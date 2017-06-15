@@ -144,16 +144,10 @@ module.exports = class extends Generator {
     );
 
     this.fs.copy(
-      this.templatePath('_gulpfile_light.babel.js'),
-      this.destinationPath('gulpfile.babel.js')
-    );
-
-    this.fs.copy(
       this.templatePath('editorconfig'),
       this.destinationPath('.editorconfig')
     );
 
-    // Styles
     this.fs.copyTpl(
       this.templatePath('assets/base.scss'),
       this.destinationPath(`${this.props.src}components/base.scss`),
@@ -219,31 +213,6 @@ module.exports = class extends Generator {
       'components/pages/'
     );
 
-    // Tasks
-    this.fs.copy(
-      this.templatePath('tasks/styles.js'),
-      this.destinationPath('tasks/styles.js')
-    );
-    this.fs.copy(
-      this.templatePath('tasks/scripts_light.js'),
-      this.destinationPath('tasks/scripts.js')
-    );
-    this.fs.copy(
-      this.templatePath('tasks/vendors.js'),
-      this.destinationPath('tasks/vendors.js')
-    );
-    this.fs.copy(
-      this.templatePath('tasks/single.js'),
-      this.destinationPath('tasks/single.js')
-    );
-    this.fs.copyTpl(
-      this.templatePath(`tasks/${this.props.icons}-icons.js`),
-      this.destinationPath('tasks/icons.js'),
-      {
-        iconsPath: this.props.dest + 'icons/icons.svg'
-      }
-    );
-
     // Create empty dirs
     for (let dir of emptyDirs) {
       this.fs.write(this.destinationPath(`${this.props.src}${dir}/.gitkeep`), '');
@@ -255,10 +224,6 @@ module.exports = class extends Generator {
       this.fs.write(this.destinationPath('CHANGELOG.md'), `# CHANGELOG\n\n## 0.0.0 (${new Date().toLocaleDateString()})\n\n  - init project\n`);
       this.fs.write(this.destinationPath('VERSION'), '0.0.0');
     }
-    this.fs.copy(
-      this.templatePath('tasks/helpers.js'),
-      this.destinationPath('tasks/helpers.js')
-    );
 
     // Write humans.txt
     if (this.props.humans) {
@@ -269,27 +234,13 @@ module.exports = class extends Generator {
     }
   }
 
-  install() {
+  async install() {
     let packagesToInstall = [];
-    const packages = this.fs.readJSON(this.templatePath('_packages.json'));
+    const packages = await this.fs.readJSON(this.templatePath('_packages.json'));
 
     // Add the required packages
     for (const key in packages.base) {
       packagesToInstall.push([packages.base[key]]);
-    }
-
-    if (this.props.bootstrap) {
-      packagesToInstall.push(packages.bootstrap);
-    }
-
-    if (this.props.icons === 'font') {
-      for (const key in packages.fontIcon) {
-        packagesToInstall.push([packages.fontIcon[key]]);
-      }
-    } else if (this.props.icons === 'svg') {
-      for (const key in packages.svgIcon) {
-        packagesToInstall.push([packages.svgIcon[key]]);
-      }
     }
 
     this.yarnInstall(packagesToInstall);

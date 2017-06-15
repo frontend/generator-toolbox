@@ -1,48 +1,5 @@
 {
   "base": [
-    "autoprefixer",
-    "babel-eslint",
-    "babel-preset-es2015",
-    "babel-register",
-    "browserify",
-    "cssnano",
-    "del",
-    "eslint-config-airbnb",
-    "eslint-plugin-import",
-    "eslint-plugin-jsx-a11y",
-    "eslint-plugin-react",
-    "github:gulpjs/gulp#4.0",
-    "gulp-babel",
-    "gulp-concat",
-    "gulp-eslint",
-    "gulp-load-plugins",
-    "gulp-notify",
-    "gulp-plumber",
-    "gulp-postcss",
-    "gulp-sass",
-    "gulp-size",
-    "gulp-sourcemaps",
-    "gulp-stylelint",
-    "gulp-util",
-    "merge-stream",
-    "postcss-reporter",
-    "postcss-scss",
-    "stylelint",
-    "stylelint-config-standard",
-    "stylelint-order",
-    "yargs"
-  ],
-  "bootstrap": "bootstrap@4.0.0-alpha.6",
-  "fontIcon": [
-    "gulp-consolidate",
-    "gulp-iconfont",
-    "gulp-rename",
-    "toolbox-utils"
-  ],
-  "svgIcon": [
-    "gulp-rename",
-    "gulp-cheerio",
-    "gulp-svgstore",
-    "gulp-svgo"
+    "bootstrap@4.0.0-alpha.6"
   ]
 }

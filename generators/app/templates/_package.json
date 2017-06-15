@@ -4,21 +4,17 @@
   "license": "MIT",
   "main": "index.html",
   "scripts": {
-    "build": "yarn && gulp build",
-    "watch": "yarn && gulp watch"
+    "start": "toolbox serve",
+    "build": "toolbox build",
+    "deploy": "toolbox deploy"
   },
   "browserslist": [
     "> 1% in CH",
     "last 2 versions"
   ],
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  },
   "eslintConfig": {
     "parser": "babel-eslint",
-    "extends": "airbnb",
+    "extends": "./node_modules/toolbox-utils/node_modules/eslint-config-airbnb",
     "env": {
       "browser": true
     },
@@ -32,10 +28,10 @@
   },
   "stylelint": {
     "ignoreFiles": [
-      "<%= assets %>sass/main.scss",
-      "<%= assets %>sass/main-variables.scss"
+      "assets/sass/main.scss",
+      "assets/sass/main-variables.scss"
     ],
-    "extends": "stylelint-config-standard",
+    "extends": "./node_modules/toolbox-utils/node_modules/stylelint-config-standard",
     "rules": {
       "at-rule-no-vendor-prefix": true,
       "media-feature-name-no-vendor-prefix": true,
