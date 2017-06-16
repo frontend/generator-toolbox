@@ -1,6 +1,2 @@
 node_modules
-dist
-build
-.sass-cache
-.publish
-*.DS_Store
+coverage
