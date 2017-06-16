@@ -3,6 +3,7 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const slug = require('slug');
 const pathExists = require('path-exists');
+const fs = require('fs');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -52,7 +53,7 @@ module.exports = class extends Generator {
     });
   }
 
-  writing() {
+  async writing() {
     const componentPath = `${this.promptValues.src}components/${this.props.type}/${this.props.slug}/`;
 
     // Kill process if the component is already created
@@ -82,17 +83,16 @@ module.exports = class extends Generator {
     // Import the SCSS file in base.scss
     const mainCSS = this.destinationPath(`${this.promptValues.src}/components/base.scss`);
     if (pathExists.sync(mainCSS)) {
-      let body = this.fs.readFileSync(mainCSS);
-      const importer = `@import '${this.props.type}/${this.props.slug}/${this.props.slug};\n`;
+      let body = await fs.readFileSync(mainCSS).toString();
+      const importer = `@import '${this.props.type}/${this.props.slug}/${this.props.slug}';\n`;
 
       // Add the line only if not already there
       if (body.indexOf(importer) < 0) {
         // Regex to append the new line at the end of the whole block of code
         const regex = new RegExp(`(// ${this.props.type}:\n(?:.+\n)+)`);
-        console.log(regex);
         body = body.replace(regex, '$1' + importer);
-        this.fs.writeFileSync(mainCSS, body);
-        this.log(chalk.yellow(`   update`) + 'base.scss');
+        fs.writeFileSync(mainCSS, body);
+        this.log(chalk.yellow(`   update`) + ' base.scss');
       } else {
         this.log(chalk.red(`${importer} was already found!`) + '\nMake sure your component doesn\'t already exist.');
       }
