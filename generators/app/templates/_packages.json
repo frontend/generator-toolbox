@@ -1,5 +1,6 @@
 {
   "base": [
-    "bootstrap@4.0.0-alpha.6"
+    "bootstrap@4.0.0-alpha.6",
+    "toolbox-utils@latest"
   ]
 }
