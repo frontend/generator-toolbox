@@ -7,11 +7,10 @@
     "url": "https://github.com/frontend"
   },
   "files": [
-    "app",
-    "component",
-    "script"
+    "generators/app",
+    "generators/generate"
   ],
-  "main": "app/index.js",
+  "main": "generators/app/index.js",
   "keywords": [
     "yeoman-generator",
     "generator-toolbox",

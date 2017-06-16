@@ -26,63 +26,61 @@ const toolboxSay = function() {
 /* eslint-enable */
 
 module.exports = class extends Generator {
-  constructor(args, opts) {
-    super(args, opts);
-
-    this.option('contentful'); // This method adds support for a `--contentful` flag
-  }
-
   prompting() {
     // Have Yeoman greet the user.
     this.log(toolboxSay());
 
-    return this.prompt([{
-      type: 'input',
-      name: 'name',
-      message: 'What\'s the name of your project?',
-      default: 'Toolbox'
-    }, {
-      type: 'checkbox',
-      name: 'options',
-      message: 'What would you like to use in your project?',
-      choices: [{
-        name: 'Framework (Bootstrap 4)',
-        value: 'bootstrap',
-        checked: true
+    return this.prompt([
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What\'s the name of your project?',
+        default: 'Toolbox'
       }, {
-        name: 'Create Antistatique humans.txt',
-        value: 'humans',
-        checked: true
+        type: 'checkbox',
+        name: 'options',
+        message: 'What would you like to use in your project?',
+        choices: [{
+          name: 'Framework (Bootstrap 4)',
+          value: 'bootstrap',
+          checked: true
+        }, {
+          name: 'Create Antistatique humans.txt',
+          value: 'humans',
+          checked: true
+        }, {
+          name: 'Create CHANGELOG.md and VERSION files',
+          value: 'changelog',
+          checked: true
+        }]
       }, {
-        name: 'Create CHANGELOG.md and VERSION files',
-        value: 'changelog',
-        checked: true
-      }]
-    }, {
-      type: 'list',
-      name: 'icons',
-      message: 'How should your icons be generated?',
-      default: 'svg',
-      choices: [{
-        name: 'I want the SVG icons goodness',
-        value: 'svg'
+        type: 'list',
+        name: 'icons',
+        message: 'How should your icons be generated?',
+        default: 'svg',
+        choices: [{
+          name: 'I want the SVG icons goodness',
+          value: 'svg'
+        }, {
+          name: 'Gimme good old font icons.',
+          value: 'font'
+        }]
       }, {
-        name: 'Gimme good old font icons.',
-        value: 'font'
-      }]
-    }, {
-      type: 'input',
-      name: 'src',
-      message: 'Where would you like to put your assets?',
-      default: 'assets/'
-    }, {
-      type: 'input',
-      name: 'dest',
-      message: 'Where would you like to put your build?',
-      default: function (answers) {
-        return answers.src.indexOf('assets') !== -1 ? answers.src.replace(/assets\/?$/, 'build/') : 'build/'; // eslint-disable-line
+        type: 'input',
+        name: 'src',
+        message: 'Where would you like to put your assets?',
+        default: 'assets/',
+        store: true
+      }, {
+        type: 'input',
+        name: 'dest',
+        message: 'Where would you like to put your build?',
+        default: function (answers) {
+          return answers.src.indexOf('assets') !== -1 ? answers.src.replace(/assets\/?$/, 'build/') : 'build/'; // eslint-disable-line
+        },
+        store: true
       }
-    }])
+    ])
     .then(answers => {
       answers.slug = slug(answers.name, {lower: true});
 
