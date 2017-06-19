@@ -31,7 +31,7 @@
       "assets/sass/main.scss",
       "assets/sass/main-variables.scss"
     ],
-    "extends": "./node_modules/toolbox-utils/node_modules/stylelint-config-standard",
+    "extends": "stylelint-config-standard",
     "rules": {
       "at-rule-no-vendor-prefix": true,
       "media-feature-name-no-vendor-prefix": true,
