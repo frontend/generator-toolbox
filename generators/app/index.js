@@ -3,6 +3,8 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const slug = require('slug');
 const curl = require('curlrequest');
+const updateNotifier = require('update-notifier');
+const pkg = require('../../package.json');
 
 /* eslint-disable */
 const toolboxSay = function() {
@@ -26,6 +28,15 @@ const toolboxSay = function() {
 /* eslint-enable */
 
 module.exports = class extends Generator {
+  initializing() {
+    // Checks for available update and returns an instance
+    const notifier = updateNotifier({pkg});
+    // Notify using the built-in convenience method
+    notifier.notify();
+    // `notifier.update` contains some useful info about the update
+    console.log(notifier.update);
+  }
+
   prompting() {
     // Have Yeoman greet the user.
     this.log(toolboxSay());
