@@ -205,13 +205,8 @@ module.exports = class extends Generator {
       );
     }
 
-    this.fs.copyTpl(
-      this.templatePath('config/_styleguide.scss'),
-      this.destinationPath(`${this.props.src}config/styleguide.scss`),
-      {
-        fromSrcToTop: this.props.fromSrcToTop
-      }
-    );
+    this.fs.write(this.destinationPath(`${this.props.src}config/styleguide.scss`), "@charset 'utf-8';\n\n@import 'variables';\n");
+    this.fs.write(this.destinationPath(`${this.props.src}config/data.json`), "{\n  \n}\n");
 
     emptyDirs.push(
       'components/atoms/',
