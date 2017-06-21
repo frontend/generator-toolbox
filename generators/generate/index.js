@@ -89,7 +89,7 @@ module.exports = class extends Generator {
       // Add the line only if not already there
       if (body.indexOf(importer) < 0) {
         // Regex to append the new line at the end of the whole block of code
-        const regex = new RegExp(`(// ${this.props.type}:\n(?:.+\n)+)`);
+        const regex = new RegExp(`(\/\/ ${this.props.type}:\n(?:.+\n)*)`);
         body = body.replace(regex, '$1' + importer);
         fs.writeFileSync(mainCSS, body);
         this.log(chalk.yellow(`   update`) + ' base.scss');
