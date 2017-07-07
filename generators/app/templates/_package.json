@@ -14,7 +14,7 @@
   ],
   "eslintConfig": {
     "parser": "babel-eslint",
-    "extends": "./node_modules/toolbox-utils/node_modules/eslint-config-airbnb",
+    "extends": "eslint-config-airbnb",
     "env": {
       "browser": true
     },
