@@ -207,6 +207,7 @@ module.exports = class extends Generator {
 
     this.fs.write(this.destinationPath(`${this.props.src}config/styleguide.scss`), "@charset 'utf-8';\n\n@import 'variables';\n");
     this.fs.write(this.destinationPath(`${this.props.src}config/data.json`), "{\n  \n}\n");
+    this.fs.write(this.destinationPath(`${this.props.src}config/colors.json`), '{\n  "Black": "#000"\n  "White": "#fff"\n}\n');
 
     emptyDirs.push(
       'components/atoms/',
