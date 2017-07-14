@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+// init:
+@import '../config/variables';<% if (bootstrap) { %>
+@import '../config/bootstrap';<% } %><% if (icons == 'font') { %>
+@import '../fonts/icon';<% } %>
+
+// Don't edit the following sections, they should always be preceded by a blank
+// line and have exactly those names for the `$ yo toolbox:generate` command
+// to work
+
+//
+// atoms:
+
+//
+// molecules:
+
+//
+// organisms:
