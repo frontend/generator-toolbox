@@ -27,7 +27,7 @@ const toolboxSay = function() {
 
 module.exports = class extends Generator {
   initializing() {
-    notifyUpdates: function() {
+    notifyUpdates: () => {
       require('update-notifier')({ pkg: require(path.resolve(__dirname, '../../package.json')), updateCheckInterval: 1}).notify({ defer: false });
     }
   }
