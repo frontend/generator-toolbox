@@ -217,6 +217,8 @@ module.exports = class extends Generator {
     for (let dir of emptyDirs) {
       this.fs.write(this.destinationPath(`${this.props.src}${dir}/.gitkeep`), '');
     }
+    // Create docs dir
+    this.fs.write(this.destinationPath('docs/index.md'), `# ${this.props.name}\n\nThis is the homepage content.`);
 
     // Others
     this.fs.write(this.destinationPath('README.md'), `# ${this.props.name}\n\nPlease document your project here!`);

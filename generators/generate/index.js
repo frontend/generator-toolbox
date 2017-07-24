@@ -54,50 +54,61 @@ module.exports = class extends Generator {
   }
 
   async writing() {
-    const componentPath = `${this.promptValues.src}components/${this.props.type}/${this.props.slug}/`;
+    if (this.props.type !== 'doc') {
+      const componentPath = `${this.promptValues.src}components/${this.props.type}/${this.props.slug}/`;
 
-    // Kill process if the component is already created
-    if (pathExists.sync(this.destinationPath(componentPath))) {
-      this.log(chalk.red(`The "${this.props.name}" component already exists!`) + '\nPlease choose another name.');
-      process.exit(1);
-    }
+      // Kill process if the component is already created
+      if (pathExists.sync(this.destinationPath(componentPath))) {
+        this.log(chalk.red(`The "${this.props.name}" component already exists!`) + '\nPlease choose another name.');
+        process.exit(1);
+      }
 
-    // Generate Twig file
-    this.fs.write(
-      this.destinationPath(`${componentPath}/${this.props.slug}.twig`),
-      `<!-- 🛠 ${this.props.name} component -->\n`
-    );
+      // Generate Twig file
+      this.fs.write(
+        this.destinationPath(`${componentPath}/${this.props.slug}.twig`),
+        `<!-- 🛠 ${this.props.name} component -->\n`
+      );
 
-    // Generate SCSS file
-    this.fs.write(
-      this.destinationPath(`${componentPath}/${this.props.slug}.scss`),
-      '@charset \'utf-8\';\n'
-    );
+      // Generate YAML file
+      this.fs.write(
+        this.destinationPath(`${componentPath}/${this.props.slug}.yml`),
+        `title: ${this.props.name}\nname: ${this.props.slug}`
+      );
 
-    // Generate YAML file
-    this.fs.write(
-      this.destinationPath(`${componentPath}/${this.props.slug}.yml`),
-      `title: ${this.props.name}\nname: ${this.props.slug}`
-    );
+      if (this.props.type !== 'pages') {
+        // Generate SCSS file
+        this.fs.write(
+          this.destinationPath(`${componentPath}/${this.props.slug}.scss`),
+          '@charset \'utf-8\';\n'
+        );
 
-    // Import the SCSS file in base.scss
-    const mainCSS = this.destinationPath(`${this.promptValues.src}/components/base.scss`);
-    if (pathExists.sync(mainCSS)) {
-      let body = await fs.readFileSync(mainCSS).toString();
-      const importer = `@import '${this.props.type}/${this.props.slug}/${this.props.slug}';\n`;
+        // Import the SCSS file in base.scss
+        const mainCSS = this.destinationPath(`${this.promptValues.src}/components/base.scss`);
+        if (pathExists.sync(mainCSS)) {
+          let body = await fs.readFileSync(mainCSS).toString();
+          const importer = `@import '${this.props.type}/${this.props.slug}/${this.props.slug}';\n`;
 
-      // Add the line only if not already there
-      if (body.indexOf(importer) < 0) {
-        // Regex to append the new line at the end of the whole block of code
-        const regex = new RegExp(`(\/\/ ${this.props.type}:\n(?:.+\n)*)`);
-        body = body.replace(regex, '$1' + importer);
-        fs.writeFileSync(mainCSS, body);
-        this.log(chalk.yellow(`   update`) + ' base.scss');
-      } else {
-        this.log(chalk.red(`${importer} was already found!`) + '\nMake sure your component doesn\'t already exist.');
+          // Add the line only if not already there
+          if (body.indexOf(importer) < 0) {
+            // Regex to append the new line at the end of the whole block of code
+            const regex = new RegExp(`(\/\/ ${this.props.type}:\n(?:.+\n)*)`);
+            body = body.replace(regex, '$1' + importer);
+            fs.writeFileSync(mainCSS, body);
+            this.log(chalk.yellow(`   update`) + ' base.scss');
+          } else {
+            this.log(chalk.red(`${importer} was already found!`) + '\nMake sure your component doesn\'t already exist.');
+          }
+        } else {
+          this.log(chalk.red(`We couldn't find the "base.scss" file.`) + `\nPlease manually update your main scss file to import the new "${this.props.slug}.scss".`);
+        }
       }
     } else {
-      this.log(chalk.red(`We couldn't find the "base.scss" file.`) + `\nPlease manually update your main scss file to import the new "${this.props.slug}.scss".`);
+      // Generate Markdown file
+      this.fs.write(
+        this.destinationPath(`docs/${this.props.slug}.md`),
+        `# ${this.props.name}\n`
+      );
     }
   }
+
 };
