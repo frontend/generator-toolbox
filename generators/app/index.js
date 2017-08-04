@@ -43,6 +43,15 @@ module.exports = class extends Generator {
         message: 'What\'s the name of your project?',
         default: 'Toolbox'
       }, {
+        type: 'input',
+        name: 'remote',
+        message: 'What\'s the URL of your repo?',
+        default: function (answers) {
+          const slugName = slug(answers.name, {lower: true});
+          return `git@github.com:antistatique/${slugName}.git`;
+        },
+        store: true,
+      }, {
         type: 'checkbox',
         name: 'options',
         message: 'What would you like to use in your project?',
@@ -144,6 +153,7 @@ module.exports = class extends Generator {
         src: this.props.src,
         dest: this.props.dest,
         assets: this.props.src,
+        remote: this.props.remote,
       }
     );
 
