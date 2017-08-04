@@ -45,7 +45,9 @@ module.exports = class extends Generator {
       type: 'input',
       name: 'name',
       message: 'What\'s the title of your component?',
-      default: 'My Component'
+      default: function (answers) {
+        return answers.type === 'doc' ? 'Documentation' : 'My Component';
+      },
     }]).then(answers => {
       answers.slug = slug(answers.name, {lower: true});
 
@@ -105,7 +107,7 @@ module.exports = class extends Generator {
     } else {
       // Generate Markdown file
       this.fs.write(
-        this.destinationPath(`docs/${this.props.slug}.md`),
+        this.destinationPath(`${this.promptValues.src}/../docs/${this.props.slug}.md`),
         `# ${this.props.name}\n`
       );
     }
