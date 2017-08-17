@@ -44,8 +44,8 @@ module.exports = class extends Generator {
         default: 'Toolbox'
       }, {
         type: 'input',
-        name: 'remote',
-        message: 'What\'s the URL of your repo?',
+        name: 'repo',
+        message: 'What\'s the git URL of your repo?',
         default: function (answers) {
           const slugName = slug(answers.name, {lower: true});
           return `git@github.com:antistatique/${slugName}.git`;
@@ -134,6 +134,7 @@ module.exports = class extends Generator {
       {
         name: this.props.slug,
         assets: this.props.src,
+        repo: this.props.repo,
       }
     );
 
