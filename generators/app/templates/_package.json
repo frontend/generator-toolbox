@@ -3,10 +3,14 @@
   "version": "0.0.0",
   "license": "MIT",
   "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "<%= repo %>"
+  },
   "scripts": {
     "start": "toolbox serve",
     "build": "toolbox build",
-    "deploy": "toolbox deploy"
+    "deploy": "toolbox build styleguide && toolbox deploy"
   },
   "browserslist": [
     "> 1% in CH",

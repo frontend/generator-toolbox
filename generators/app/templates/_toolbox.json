@@ -2,6 +2,7 @@
   "src": "<%= src %>",
   "dest": "<%= dest %>",
   "ghpages": "<%= dest %>",
+  "remote": "<%= remote %>",
   "images": [
     "<%= dest %>images/**/*"
   ],
