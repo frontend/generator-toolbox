@@ -35,6 +35,9 @@
       "assets/sass/main.scss",
       "assets/sass/main-variables.scss"
     ],
+    "plugins": [
+      "stylelint-order"
+    ],
     "extends": "stylelint-config-standard",
     "rules": {
       "at-rule-no-vendor-prefix": true,
@@ -42,39 +45,39 @@
       "property-no-vendor-prefix": true,
       "selector-no-vendor-prefix": true,
       "value-no-vendor-prefix": true,
-      "selector-pseudo-element-colon-notation": "single"
-    },
-    "order/order": [
-      "custom-properties",
-      "dollar-variables",
-      "declarations",
-      "at-rules",
-      "rules"
-    ],
-    "order/properties-order": [
-      "content",
-      "display",
-      "flex",
-      "position",
-      "top",
-      "right",
-      "bottom",
-      "left",
-      "float",
-      "width",
-      "height",
-      "margin",
-      "padding",
-      "background",
-      "border",
-      "font-familly",
-      "font-size",
-      "line-height",
-      "font-weight",
-      "font-style",
-      "color",
-      "transform",
-      "transition"
-    ]
+      "selector-pseudo-element-colon-notation": "single",
+      "order/order": [
+        "custom-properties",
+        "dollar-variables",
+        "declarations",
+        "at-rules",
+        "rules"
+      ],
+      "order/properties-order": [
+        "content",
+        "display",
+        "flex",
+        "position",
+        "top",
+        "right",
+        "bottom",
+        "left",
+        "float",
+        "width",
+        "height",
+        "margin",
+        "padding",
+        "background",
+        "border",
+        "font-familly",
+        "font-size",
+        "line-height",
+        "font-weight",
+        "font-style",
+        "color",
+        "transform",
+        "transition"
+      ]
+    }
   }
 }
