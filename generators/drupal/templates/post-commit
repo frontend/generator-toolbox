@@ -1,0 +1,10 @@
+echo "\n🚔  \033[0;32mRunning Code Sniffer Drupal & DrupalPractice for /web/modules/custom ...\033[0m"
+./vendor/bin/phpcs --config-set installed_paths `pwd`/vendor/drupal/coder/coder_sniffer
+./vendor/bin/phpcs --standard=Drupal --colors --extensions=php,module,inc,install,test,profile,theme,css,info,txt --ignore=*.md,*.info.yml --encoding=utf-8 ./web/modules/custom
+./vendor/bin/phpcs --standard=DrupalPractice --colors --extensions=php,module,inc,install,test,profile,theme,css,info,txt --ignore=*.md,*.info.yml --encoding=utf-8 ./web/modules/custom
+
+echo "\n💩  \033[0;32mRunning PHP Mess Detector ...\033[0m"
+./vendor/bin/phpmd ./web/modules/custom text ./phpmd.xml --suffixes php,module,inc,install,test,profile,theme,css,info,txt
+
+echo "\n🛂  \033[0;32mRunning PHP Copy/Paste Detector ...\033[0m"
+./vendor/bin/phpcpd ./web/modules/custom --names=*.php,*.module,*.inc,*.install,*.test,*.profile,*.theme,*.css,*.info,*.txt --names-exclude=*.md,*.info.yml --progress --ansi
