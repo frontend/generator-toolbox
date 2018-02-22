@@ -32,8 +32,9 @@
   },
   "stylelint": {
     "ignoreFiles": [
-      "assets/sass/main.scss",
-      "assets/sass/main-variables.scss"
+      "<%= assets %>components/base.scss",
+      "<%= assets %>config/bootstrap.scss",
+      "<%= assets %>config/bootstrap-variables.scss"
     ],
     "plugins": [
       "stylelint-order"
