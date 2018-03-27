@@ -69,18 +69,6 @@ module.exports = class extends Generator {
           checked: true
         }]
       }, {
-        type: 'list',
-        name: 'icons',
-        message: 'How should your icons be generated?',
-        default: 'svg',
-        choices: [{
-          name: 'I want the SVG icons goodness',
-          value: 'svg'
-        }, {
-          name: 'Gimme good old font icons.',
-          value: 'font'
-        }]
-      }, {
         type: 'input',
         name: 'src',
         message: 'Where would you like to put your assets?',
@@ -108,6 +96,9 @@ module.exports = class extends Generator {
       answers.bootstrap = hasOption('bootstrap');
       answers.humans = hasOption('humans');
       answers.changelog = hasOption('changelog');
+
+      // Store 'svg' for icons, maybe we'll add a FontAwesome option later.
+      answers.icon = 'svg';
 
       // Make sure we have a "/" at the end of the paths
       if (answers.src.slice(-1) !== '/') {
