@@ -78,21 +78,29 @@ module.exports = class extends Generator {
   }
 
   async writing() {
-    const variant = this.props.variant.toLowerCase();
+    const variant = {
+      name: slug(this.props.variant, { lower: true }),
+      title: this.props.variant,
+      notes: `The ${this.props.variant} variant.\n`,
+      background: '',
+      wrapper: '',
+    };
 
-    const componentPath = `${this.promptValues.src}components/${this.props.component.category}/${this.props.component.component}/`;
+    const variantPath = `${this.promptValues.src}components/${this.props.component.category}/${this.props.component.component}/${this.props.component.component}`;
 
     // Generate Twig file
     this.fs.write(
-      this.destinationPath(`${componentPath}/${this.props.component.component}-${variant}.twig`),
-      `<!-- 🛠 Variant ${this.props.variant} -->\n`
+      this.destinationPath(`${variantPath}-${variant.name}.twig`),
+      `<!-- 🛠 Variant ${variant.title} -->\n`
     );
 
     // Generate Config in YAML file
-    const config = yaml.readSync(this.destinationPath(`${componentPath}/${this.props.component.component}.yml`));
+    const configPath = this.destinationPath(`${variantPath}.yml`);
+    const config = yaml.readSync(configPath);
 
     config.variants = config.variants ? [...config.variants, variant] : [variant];
-    yaml.write(this.destinationPath(`${componentPath}/${this.props.component.component}.yml`), config);
+
+    yaml.write(configPath, config);
   }
 
 };
