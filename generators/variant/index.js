@@ -101,6 +101,7 @@ module.exports = class extends Generator {
     config.variants = config.variants ? [...config.variants, variant] : [variant];
 
     yaml.write(configPath, config);
+    this.log(chalk.yellow(`   update `) + `${variantPath}.yml`);
   }
 
 };
