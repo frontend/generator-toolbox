@@ -67,17 +67,17 @@ module.exports = class extends Generator {
           checked: true
         }]
       }, {
-        type: 'list',
-        name: 'icons',
-        message: 'How should your icons be generated?',
-        default: 'svg',
-        choices: [{
-          name: 'I want the SVG icons goodness',
-          value: 'svg'
-        }, {
-          name: 'Gimme good old font icons.',
-          value: 'font'
-        }]
+        type: 'input',
+        name: 'atomic',
+        message: 'What kind of components hierarchy you want to use ?\n  Separated by a less-than sign (<)',
+        default: 'atoms<molecules<organisms',
+        validate: (input) => {
+          if (!input.includes('<') || input.includes(' ')) {
+            this.log(`\n${chalk.red('  Please enter a valid hierarchy using "<" and no spaces')}\n`);
+            return false;
+          }
+          return true;
+        }
       }, {
         type: 'input',
         name: 'src',
@@ -88,7 +88,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'dest',
         message: 'Where would you like to put your build?',
-        default: function (answers) {
+        default: (answers) => {
           return answers.src.indexOf('assets') !== -1 ? answers.src.replace(/assets\/?$/, 'build/') : 'build/'; // eslint-disable-line
         },
         store: true
@@ -166,7 +166,7 @@ module.exports = class extends Generator {
       this.destinationPath(`${this.props.src}components/base.scss`),
       {
         bootstrap: this.props.bootstrap,
-        icons: this.props.icons,
+        icons: 'svg',
       }
     );
     this.fs.write(this.destinationPath(`${this.props.src}config/variables.scss`), '@charset \'utf-8\';\n');
@@ -177,7 +177,7 @@ module.exports = class extends Generator {
       this.destinationPath(`${this.props.src}components/base.js`),
       {
         bootstrap: this.props.bootstrap,
-        svgIcons: this.props.icons === 'svg',
+        svgIcons: true,
       }
     );
 
@@ -193,12 +193,10 @@ module.exports = class extends Generator {
     this.fs.write(this.destinationPath(`${this.props.src}favicons/README.md`), '# Favicons\n\nGo on [realfavicongenerator.net](https://realfavicongenerator.net) to generate your favicon kit! (and remove this file when done)\n');
 
     // Icons
-    if (this.props.icons === 'svg') {
-      this.fs.copy(
-        this.templatePath('assets/svg-icons.js'),
-        this.destinationPath(`${this.props.src}icons/svg-icons.js`)
-      );
-    }
+    this.fs.copy(
+      this.templatePath('assets/svg-icons.js'),
+      this.destinationPath(`${this.props.src}icons/svg-icons.js`)
+    );
 
     // WE WANT BOOTSTRAP
     if (this.props.bootstrap) {
@@ -216,9 +214,7 @@ module.exports = class extends Generator {
     this.fs.write(this.destinationPath(`${this.props.src}config/colors.json`), '{\n  "Black": "#000",\n  "White": "#fff"\n}\n');
 
     emptyDirs.push(
-      'components/atoms/',
-      'components/molecules/',
-      'components/organisms/',
+      ...this.props.atomic.split('<').map(item => `components/${item}/`),
       'components/pages/'
     );
 
