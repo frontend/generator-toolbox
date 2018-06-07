@@ -84,6 +84,10 @@ module.exports = class extends Generator {
 
   async writing() {
     const variant = this.props.variant.toLowerCase();
+    const variantObject = {
+      name: variant,
+      title: this.props.variant,
+    };
 
     const componentPath = `${this.promptValues.src}components/${this.props.component.category}/${this.props.component.component}/`;
 
@@ -96,7 +100,7 @@ module.exports = class extends Generator {
     // Generate Config in YAML file
     const config = yaml.readSync(this.destinationPath(`${componentPath}/${this.props.component.component}.yml`));
 
-    config.variants = config.variants ? [...config.variants, variant] : [variant];
+    config.variants = config.variants ? [...config.variants, variantObject] : [variantObject];
     yaml.write(this.destinationPath(`${componentPath}/${this.props.component.component}.yml`), config);
   }
 
