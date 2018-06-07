@@ -69,7 +69,8 @@ module.exports = class extends Generator {
       }, {
         type: 'input',
         name: 'atomic',
-        message: 'What kind of components hierarchy you want to use ?\n  Separated by a less-than sign (<)',
+        message: 'What kind of components hierarchy do you want to use ?\n  Separated by a less-than sign (<)',
+        store: true,
         default: 'atoms<molecules<organisms',
         validate: (input) => {
           if (!input.includes('<') || input.includes(' ')) {
