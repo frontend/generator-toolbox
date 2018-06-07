@@ -167,6 +167,7 @@ module.exports = class extends Generator {
       this.destinationPath(`${this.props.src}components/base.scss`),
       {
         bootstrap: this.props.bootstrap,
+        atomic: this.props.atomic.split('<'),
         icons: 'svg',
       }
     );

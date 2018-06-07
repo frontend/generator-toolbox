@@ -7,6 +7,29 @@ const fs = require('fs');
 
 const checkUpdate = require('../check-update');
 
+const defaultStructure = [
+  {
+    name: 'Atom',
+    value: 'atoms'
+  }, {
+    name: 'Molecule',
+    value: 'molecules'
+  }, {
+    name: 'Organism',
+    value: 'organisms'
+  }
+];
+
+const pages = [
+  {
+    name: 'Page',
+    value: 'pages'
+  }, {
+    name: 'Doc Page',
+    value: 'doc'
+  }
+];
+
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
@@ -23,28 +46,20 @@ module.exports = class extends Generator {
   async prompting() {
     await checkUpdate().then(res => this.log(res));
 
+    let fileStructure = [...defaultStructure, ...pages];
+    if (this.promptValues.atomic) {
+      const currentStructure = this.promptValues.atomic.split('<').map((item) => ({
+        name: item,
+        value: item,
+      }));
+      fileStructure = [...currentStructure, ...pages];
+    }
+
     return this.prompt([{
       type: 'list',
       name: 'type',
       message: 'What kind of component do you want?',
-      choices: [
-        {
-          name: 'Atom',
-          value: 'atoms'
-        }, {
-          name: 'Molecule',
-          value: 'molecules'
-        }, {
-          name: 'Organism',
-          value: 'organisms'
-        }, {
-          name: 'Page',
-          value: 'pages'
-        }, {
-          name: 'Doc Page',
-          value: 'doc'
-        }
-      ]
+      choices: fileStructure
     }, {
       type: 'input',
       name: 'name',

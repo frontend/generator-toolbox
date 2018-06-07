@@ -16,7 +16,8 @@ module.exports = class extends Generator {
 
     this.promptValues = this.config.getAll().promptValues;
 
-    const dirs = ['atoms', 'molecules', 'organisms', 'pages'];
+    let dirs = ['atoms', 'molecules', 'organisms'];
+    if (this.promptValues.atomic) dirs = this.promptValues.atomic.split('<');
     this.components = [];
 
     dirs.forEach(dir => {
