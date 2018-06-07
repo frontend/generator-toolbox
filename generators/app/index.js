@@ -4,6 +4,8 @@ const chalk = require('chalk');
 const slug = require('slug');
 const curl = require('curlrequest');
 
+const checkUpdate = require('../check-update');
+
 /* eslint-disable */
 const toolboxSay = function() {
   return  '                                             '+'\n'+
@@ -26,13 +28,9 @@ const toolboxSay = function() {
 /* eslint-enable */
 
 module.exports = class extends Generator {
-  initializing() {
-    notifyUpdates: () => {
-      require('update-notifier')({ pkg: require(path.resolve(__dirname, '../../package.json')), updateCheckInterval: 1}).notify({ defer: false });
-    }
-  }
+  async prompting() {
+    await checkUpdate().then(res => this.log(res));
 
-  prompting() {
     // Have Yeoman greet the user.
     this.log(toolboxSay());
 

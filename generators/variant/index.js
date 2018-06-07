@@ -7,6 +7,8 @@ const fs = require('fs');
 const autocomplete = require('inquirer-autocomplete-prompt');
 const yaml = require('node-yaml');
 
+const checkUpdate = require('../check-update');
+
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
@@ -39,7 +41,9 @@ module.exports = class extends Generator {
     }
   }
 
-  prompting() {
+  async prompting() {
+    await checkUpdate().then(res => this.log(res));
+
     const choices = this.components.map(component => ({
       name: component.component,
       value: component

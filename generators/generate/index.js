@@ -5,6 +5,8 @@ const slug = require('slug');
 const pathExists = require('path-exists');
 const fs = require('fs');
 
+const checkUpdate = require('../check-update');
+
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
@@ -18,7 +20,9 @@ module.exports = class extends Generator {
     }
   }
 
-  prompting() {
+  async prompting() {
+    await checkUpdate().then(res => this.log(res));
+
     return this.prompt([{
       type: 'list',
       name: 'type',
