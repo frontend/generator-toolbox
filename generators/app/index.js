@@ -236,7 +236,7 @@ module.exports = class extends Generator {
     this.fs.write(this.destinationPath('docs/index.md'), `# ${this.props.name}\n\nThis is the homepage content.`);
 
     // Others
-    this.fs.write(this.destinationPath('README.md'), `# ${this.props.name}\n\nPlease document your project here!`);
+    this.fs.write(this.destinationPath('README.md'), `# ${this.props.name}\n\nPlease document your project here!\n\n## To start\n- **serve** your project : \`$ yarn start\`\n- **build** your project : \`$ yarn build\`\n- **deploy** your gh-pages : \`$ yarn deploy\`\n- **publish** your frontend build : \`$ sh ./publish.sh VERSION<0.0.0> ON_NPM<true>\`\n`);
     if (this.props.changelog) {
       this.fs.write(this.destinationPath('CHANGELOG.md'), `# CHANGELOG\n\n## 0.0.0 (${new Date().toLocaleDateString()})\n\n  - init project\n`);
       this.fs.write(this.destinationPath('VERSION'), '0.0.0');
