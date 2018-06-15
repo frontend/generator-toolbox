@@ -1,7 +1,6 @@
 'use strict';
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
-const slug = require('slug');
 const pathExists = require('path-exists');
 const fs = require('fs');
 
