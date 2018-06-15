@@ -9,11 +9,7 @@
 // line and have exactly those names for the `$ yo toolbox:generate` command
 // to work
 
+<% atomic.forEach(function (item) { %>
 //
-// atoms:
-
-//
-// molecules:
-
-//
-// organisms:
+// <%= item %>:
+<% }) %>
