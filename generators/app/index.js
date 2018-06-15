@@ -153,13 +153,21 @@ module.exports = class extends Generator {
         src: this.props.src,
         dest: this.props.dest,
         assets: this.props.src,
-        remote: this.props.remote,
+        remote: this.props.remote
       }
     );
 
     this.fs.copy(
       this.templatePath('editorconfig'),
       this.destinationPath('.editorconfig')
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('_publish.sh'),
+      this.destinationPath('publish.sh'),
+      {
+        dest: this.props.dest
+      }
     );
 
     this.fs.copyTpl(
