@@ -1,6 +1,6 @@
 {
   "name": "generator-toolbox",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "description": "Yeoman generator",
   "homepage": "http://frontend.github.io/toolbox/",
   "author": {
@@ -8,7 +8,9 @@
   },
   "files": [
     "generators/app",
-    "generators/generate"
+    "generators/generate",
+    "generators/variant",
+    "check-update.js"
   ],
   "main": "generators/app/index.js",
   "keywords": [
