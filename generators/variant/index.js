@@ -1,11 +1,12 @@
 'use strict';
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
-const slug = require('slug');
 const pathExists = require('path-exists');
 const fs = require('fs');
 const autocomplete = require('inquirer-autocomplete-prompt');
 const yaml = require('node-yaml');
+
+const checkUpdate = require('../check-update');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -14,7 +15,8 @@ module.exports = class extends Generator {
 
     this.promptValues = this.config.getAll().promptValues;
 
-    const dirs = ['atoms', 'molecules', 'organisms', 'pages'];
+    let dirs = ['atoms', 'molecules', 'organisms'];
+    if (this.promptValues.atomic) dirs = this.promptValues.atomic.split('<');
     this.components = [];
 
     dirs.forEach(dir => {
@@ -39,7 +41,9 @@ module.exports = class extends Generator {
     }
   }
 
-  prompting() {
+  async prompting() {
+    await checkUpdate().then(res => this.log(res));
+
     const choices = this.components.map(component => ({
       name: component.component,
       value: component
@@ -81,7 +85,7 @@ module.exports = class extends Generator {
     const variant = {
       name: slug(this.props.variant, { lower: true }),
       title: this.props.variant,
-      notes: `The ${this.props.variant} variant.\n`,
+      notes: `\n`,
       background: '',
       wrapper: '',
     };
@@ -98,10 +102,8 @@ module.exports = class extends Generator {
     const configPath = this.destinationPath(`${variantPath}.yml`);
     const config = yaml.readSync(configPath);
 
-    config.variants = config.variants ? [...config.variants, variant] : [variant];
-
-    yaml.write(configPath, config);
-    this.log(chalk.yellow(`   update `) + `${variantPath}.yml`);
+    config.variants = config.variants ? [...config.variants, variantObject] : [variantObject];
+    yaml.write(this.destinationPath(`${componentPath}/${this.props.component.component}.yml`), config);
   }
 
 };

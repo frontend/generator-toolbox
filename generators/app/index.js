@@ -4,6 +4,8 @@ const chalk = require('chalk');
 const slug = require('slug');
 const curl = require('curlrequest');
 
+const checkUpdate = require('../check-update');
+
 /* eslint-disable */
 const toolboxSay = function() {
   return  '                                             '+'\n'+
@@ -26,13 +28,9 @@ const toolboxSay = function() {
 /* eslint-enable */
 
 module.exports = class extends Generator {
-  initializing() {
-    notifyUpdates: () => {
-      require('update-notifier')({ pkg: require(path.resolve(__dirname, '../../package.json')), updateCheckInterval: 1}).notify({ defer: false });
-    }
-  }
+  async prompting() {
+    await checkUpdate().then(res => this.log(res));
 
-  prompting() {
     // Have Yeoman greet the user.
     this.log(toolboxSay());
 
@@ -70,6 +68,19 @@ module.exports = class extends Generator {
         }]
       }, {
         type: 'input',
+        name: 'atomic',
+        message: 'What kind of components hierarchy do you want to use ?\n  Separated by a less-than sign (<)',
+        store: true,
+        default: 'atoms<molecules<organisms',
+        validate: (input) => {
+          if (!input.includes('<') || input.includes(' ')) {
+            this.log(`\n${chalk.red('  Please enter a valid hierarchy using "<" and no spaces')}\n`);
+            return false;
+          }
+          return true;
+        }
+      }, {
+        type: 'input',
         name: 'src',
         message: 'Where would you like to put your assets?',
         default: 'assets/',
@@ -78,7 +89,7 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'dest',
         message: 'Where would you like to put your build?',
-        default: function (answers) {
+        default: (answers) => {
           return answers.src.indexOf('assets') !== -1 ? answers.src.replace(/assets\/?$/, 'build/') : 'build/'; // eslint-disable-line
         },
         store: true
@@ -145,7 +156,7 @@ module.exports = class extends Generator {
         src: this.props.src,
         dest: this.props.dest,
         assets: this.props.src,
-        remote: this.props.remote,
+        remote: this.props.remote
       }
     );
 
@@ -155,11 +166,20 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
+      this.templatePath('_publish.sh'),
+      this.destinationPath('publish.sh'),
+      {
+        dest: this.props.dest
+      }
+    );
+
+    this.fs.copyTpl(
       this.templatePath('assets/base.scss'),
       this.destinationPath(`${this.props.src}components/base.scss`),
       {
         bootstrap: this.props.bootstrap,
-        icons: this.props.icons,
+        atomic: this.props.atomic.split('<'),
+        icons: 'svg',
       }
     );
     this.fs.write(this.destinationPath(`${this.props.src}config/variables.scss`), '@charset \'utf-8\';\n');
@@ -170,7 +190,7 @@ module.exports = class extends Generator {
       this.destinationPath(`${this.props.src}components/base.js`),
       {
         bootstrap: this.props.bootstrap,
-        svgIcons: this.props.icons === 'svg',
+        svgIcons: true,
       }
     );
 
@@ -186,12 +206,10 @@ module.exports = class extends Generator {
     this.fs.write(this.destinationPath(`${this.props.src}favicons/README.md`), '# Favicons\n\nGo on [realfavicongenerator.net](https://realfavicongenerator.net) to generate your favicon kit! (and remove this file when done)\n');
 
     // Icons
-    if (this.props.icons === 'svg') {
-      this.fs.copy(
-        this.templatePath('assets/svg-icons.js'),
-        this.destinationPath(`${this.props.src}icons/svg-icons.js`)
-      );
-    }
+    this.fs.copy(
+      this.templatePath('assets/svg-icons.js'),
+      this.destinationPath(`${this.props.src}icons/svg-icons.js`)
+    );
 
     // WE WANT BOOTSTRAP
     if (this.props.bootstrap) {
@@ -209,9 +227,7 @@ module.exports = class extends Generator {
     this.fs.write(this.destinationPath(`${this.props.src}config/colors.json`), '{\n  "Black": "#000",\n  "White": "#fff"\n}\n');
 
     emptyDirs.push(
-      'components/atoms/',
-      'components/molecules/',
-      'components/organisms/',
+      ...this.props.atomic.split('<').map(item => `components/${item}/`),
       'components/pages/'
     );
 
@@ -223,7 +239,7 @@ module.exports = class extends Generator {
     this.fs.write(this.destinationPath('docs/index.md'), `# ${this.props.name}\n\nThis is the homepage content.`);
 
     // Others
-    this.fs.write(this.destinationPath('README.md'), `# ${this.props.name}\n\nPlease document your project here!`);
+    this.fs.write(this.destinationPath('README.md'), `# ${this.props.name}\n\nPlease document your project here!\n\n## To start\n- **serve** your project : \`$ yarn start\`\n- **build** your project : \`$ yarn build\`\n- **deploy** your gh-pages : \`$ yarn deploy\`\n- **publish** your frontend build : \`$ sh ./publish.sh VERSION<0.0.0> ON_NPM<true>\`\n`);
     if (this.props.changelog) {
       this.fs.write(this.destinationPath('CHANGELOG.md'), `# CHANGELOG\n\n## 0.0.0 (${new Date().toLocaleDateString()})\n\n  - init project\n`);
       this.fs.write(this.destinationPath('VERSION'), '0.0.0');
