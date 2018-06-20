@@ -37,9 +37,14 @@
       "<%= assets %>config/bootstrap-variables.scss"
     ],
     "plugins": [
-      "stylelint-order"
+      "stylelint-order",
+      "stylelint-a11y",
+      "stylelint-declaration-block-no-ignored-properties",
+      "stylelint-high-performance-animation",
+      "stylelint-scss",
+      "stylelint-declaration-strict-value"
     ],
-    "extends": "stylelint-config-standard",
+    "extends": "stylelint-config-recommended-scss",
     "rules": {
       "at-rule-no-vendor-prefix": true,
       "media-feature-name-no-vendor-prefix": true,
@@ -47,6 +52,15 @@
       "selector-no-vendor-prefix": true,
       "value-no-vendor-prefix": true,
       "selector-pseudo-element-colon-notation": "single",
+      "plugin/no-low-performance-animation-properties": true,
+      "plugin/declaration-block-no-ignored-properties": true,
+      "scale-unlimited/declaration-strict-value": [
+        ["/color/", "fill", "stroke", "font-size"], {
+        "ignoreKeywords": {
+          "": ["currentColor", "transparent", "inherit"],
+          "font-size": ["currentColor", "inherit"]
+        }
+      }],
       "order/order": [
         "custom-properties",
         "dollar-variables",
@@ -57,7 +71,7 @@
       "order/properties-order": [
         "content",
         "display",
-        "flex",
+        "/flex/",
         "position",
         "top",
         "right",
@@ -78,7 +92,12 @@
         "color",
         "transform",
         "transition"
-      ]
+      ],
+      "a11y/media-prefers-reduced-motion": [true, { "severity": "warning" }],
+      "a11y/no-outline-none": [true, { "severity": "warning" }],
+      "a11y/font-size-is-readable": [true, { "severity": "warning" }],
+      "a11y/no-obsolete-element": [true, { "severity": "warning" }],
+      "a11y/no-text-align-justify": [true, { "severity": "warning" }]
     }
   }
 }

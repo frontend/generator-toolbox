@@ -5,6 +5,7 @@ const pathExists = require('path-exists');
 const fs = require('fs');
 const autocomplete = require('inquirer-autocomplete-prompt');
 const yaml = require('node-yaml');
+const slug = require('slug');
 
 const checkUpdate = require('../check-update');
 
@@ -82,10 +83,11 @@ module.exports = class extends Generator {
   }
 
   async writing() {
+    const slugName = slug(this.props.variant, {lower: true});
     const variant = {
-      name: slug(this.props.variant, { lower: true }),
+      name: slugName,
       title: this.props.variant,
-      notes: `\n`,
+      notes: `Describe the ${slugName} variant here.\n`,
       background: '',
       wrapper: '',
     };
@@ -102,8 +104,8 @@ module.exports = class extends Generator {
     const configPath = this.destinationPath(`${variantPath}.yml`);
     const config = yaml.readSync(configPath);
 
-    config.variants = config.variants ? [...config.variants, variantObject] : [variantObject];
-    yaml.write(this.destinationPath(`${componentPath}/${this.props.component.component}.yml`), config);
+    config.variants = config.variants ? [...config.variants, variant] : [variant];
+    yaml.write(this.destinationPath(configPath), config);
   }
 
 };
