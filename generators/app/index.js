@@ -108,6 +108,9 @@ module.exports = class extends Generator {
       answers.humans = hasOption('humans');
       answers.changelog = hasOption('changelog');
 
+      // Store 'svg' for icons, maybe we'll add a FontAwesome option later.
+      answers.icon = 'svg';
+
       // Make sure we have a "/" at the end of the paths
       if (answers.src.slice(-1) !== '/') {
         answers.src += '/';
@@ -217,6 +220,10 @@ module.exports = class extends Generator {
           fromSrcToTop: this.props.fromSrcToTop
         }
       );
+      const that = this;
+      curl.request({url: 'https://raw.githubusercontent.com/twbs/bootstrap/v4-dev/scss/_variables.scss'}, function (err, data) {
+        that.fs.write(that.destinationPath(`${that.props.src}config/bootstrap-variables.scss`), data);
+      });
     }
 
     this.fs.write(this.destinationPath(`${this.props.src}config/styleguide.scss`), "@charset 'utf-8';\n\n@import 'variables';\n");

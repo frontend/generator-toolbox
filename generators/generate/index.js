@@ -3,6 +3,8 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const pathExists = require('path-exists');
 const fs = require('fs');
+const yaml = require('node-yaml');
+const slug = require('slug');
 
 const checkUpdate = require('../check-update');
 
@@ -73,7 +75,8 @@ module.exports = class extends Generator {
 
   async writing() {
     if (this.props.type !== 'doc') {
-      const componentPath = `${this.promptValues.src}components/${this.props.type}/${this.props.slug}/`;
+      const componentPath = `${this.promptValues.src}components/${this.props.type}/${this.props.slug}`;
+      const filePath = `${componentPath}/${this.props.slug}`;
 
       // Kill process if the component is already created
       if (pathExists.sync(this.destinationPath(componentPath))) {
@@ -82,21 +85,30 @@ module.exports = class extends Generator {
       }
 
       // Generate Twig file
-      this.fs.write(
-        this.destinationPath(`${componentPath}/${this.props.slug}.twig`),
+      await this.fs.write(
+        this.destinationPath(`${filePath}.twig`),
         `<!-- 🛠 ${this.props.name} component -->\n`
       );
 
       // Generate YAML file
-      this.fs.write(
-        this.destinationPath(`${componentPath}/${this.props.slug}.yml`),
-        `title: ${this.props.name}\nname: ${this.props.slug}`
-      );
+      const config = {
+        name: this.props.slug,
+        title: this.props.name,
+        notes: `Describe the ${this.props.slug} component here.\n`,
+        wrapper: '',
+        background: '',
+      };
+
+      if (!fs.existsSync(componentPath)) {
+        await fs.mkdirSync(componentPath);
+      }
+      await yaml.write(this.destinationPath(`${filePath}.yml`), config);
+      this.log(chalk.green(`   create`) + ` ${filePath}.yml`);
 
       if (this.props.type !== 'pages') {
         // Generate SCSS file
         this.fs.write(
-          this.destinationPath(`${componentPath}/${this.props.slug}.scss`),
+          this.destinationPath(`${filePath}.scss`),
           '@charset \'utf-8\';\n'
         );
 

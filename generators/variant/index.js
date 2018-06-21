@@ -5,6 +5,7 @@ const pathExists = require('path-exists');
 const fs = require('fs');
 const autocomplete = require('inquirer-autocomplete-prompt');
 const yaml = require('node-yaml');
+const slug = require('slug');
 
 const checkUpdate = require('../check-update');
 
@@ -82,25 +83,29 @@ module.exports = class extends Generator {
   }
 
   async writing() {
-    const variant = this.props.variant.toLowerCase();
-    const variantObject = {
-      name: variant,
+    const slugName = slug(this.props.variant, {lower: true});
+    const variant = {
+      name: slugName,
       title: this.props.variant,
+      notes: `Describe the ${slugName} variant here.\n`,
+      background: '',
+      wrapper: '',
     };
 
-    const componentPath = `${this.promptValues.src}components/${this.props.component.category}/${this.props.component.component}/`;
+    const variantPath = `${this.promptValues.src}components/${this.props.component.category}/${this.props.component.component}/${this.props.component.component}`;
 
     // Generate Twig file
     this.fs.write(
-      this.destinationPath(`${componentPath}/${this.props.component.component}-${variant}.twig`),
-      `<!-- 🛠 Variant ${this.props.variant} -->\n`
+      this.destinationPath(`${variantPath}-${variant.name}.twig`),
+      `<!-- 🛠 Variant ${variant.title} -->\n`
     );
 
     // Generate Config in YAML file
-    const config = yaml.readSync(this.destinationPath(`${componentPath}/${this.props.component.component}.yml`));
+    const configPath = this.destinationPath(`${variantPath}.yml`);
+    const config = yaml.readSync(configPath);
 
-    config.variants = config.variants ? [...config.variants, variantObject] : [variantObject];
-    yaml.write(this.destinationPath(`${componentPath}/${this.props.component.component}.yml`), config);
+    config.variants = config.variants ? [...config.variants, variant] : [variant];
+    yaml.write(this.destinationPath(configPath), config);
   }
 
 };
