@@ -3,6 +3,7 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const pathExists = require('path-exists');
 const fs = require('fs');
+const slug = require('slug');
 
 const checkUpdate = require('../check-update');
 
